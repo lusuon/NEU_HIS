@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.CaseMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.Case">
+<mapper namespace="org.neu.his.dao.CaseMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.Case">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="case_no" jdbcType="INTEGER" property="case_no" />
     <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
@@ -82,7 +82,7 @@
     allergy, body_inspection, suggestion, attention, inspection_result, diagnose_result, 
     advise, case_status, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.CaseExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.CaseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -134,13 +134,13 @@
     delete from case
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.CaseExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.CaseExample">
     delete from case
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.Case">
+  <insert id="insert" parameterType="org.neu.his.entity.Case">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -157,7 +157,7 @@
       #{diagnose_result,jdbcType=VARCHAR}, #{advise,jdbcType=VARCHAR}, #{case_status,jdbcType=INTEGER}, 
       #{is_deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.Case">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.Case">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -257,7 +257,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.CaseExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.CaseExample" resultType="java.lang.Long">
     select count(*) from case
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -341,7 +341,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.Case">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.Case">
     update case
     <set>
       <if test="case_no != null">
@@ -392,7 +392,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.Case">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.Case">
     update case
     set case_no = #{case_no,jdbcType=INTEGER},
       reg_id = #{reg_id,jdbcType=INTEGER},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.PaymentDtlMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.PaymentDtl">
+<mapper namespace="org.neu.his.dao.PaymentDtlMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.PaymentDtl">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
     <result column="invoice_no" jdbcType="INTEGER" property="invoice_no" />
@@ -82,7 +82,7 @@
     dept_id, prescription_generation_time, generator_id, payment_operation_time, operator_id, 
     method, related_refund_id, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.PaymentDtlExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.PaymentDtlExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -134,13 +134,13 @@
     delete from payment_dtl
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.PaymentDtlExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.PaymentDtlExample">
     delete from payment_dtl
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.PaymentDtl">
+  <insert id="insert" parameterType="org.neu.his.entity.PaymentDtl">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -157,7 +157,7 @@
       #{operator_id,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR}, #{related_refund_id,jdbcType=INTEGER}, 
       #{is_deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.PaymentDtl">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.PaymentDtl">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -257,7 +257,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.PaymentDtlExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.PaymentDtlExample" resultType="java.lang.Long">
     select count(*) from payment_dtl
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -341,7 +341,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.PaymentDtl">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.PaymentDtl">
     update payment_dtl
     <set>
       <if test="reg_id != null">
@@ -392,7 +392,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.PaymentDtl">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.PaymentDtl">
     update payment_dtl
     set reg_id = #{reg_id,jdbcType=INTEGER},
       invoice_no = #{invoice_no,jdbcType=INTEGER},

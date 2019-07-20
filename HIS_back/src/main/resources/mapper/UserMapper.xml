@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.DAO.userManagementMapper.UserMapper">
+<mapper namespace="org.neu.dao.userManagementMapper.UserMapper">
   <resultMap id="BaseResultMap" type="entity.User">
     <!--
       WARNING - @mbg.generated  This element was generated on Sat Jul 20 14:35:23 CST 2019. by MyBatis Generator, do not modify.

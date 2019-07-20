@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.CategoryPaymentMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.CategoryPayment">
+<mapper namespace="org.neu.his.dao.CategoryPaymentMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.CategoryPayment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="category_name" jdbcType="VARCHAR" property="category_name" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, code, category_name, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.CategoryPaymentExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.CategoryPaymentExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -120,13 +120,13 @@
     delete from category_payment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.CategoryPaymentExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.CategoryPaymentExample">
     delete from category_payment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.CategoryPayment">
+  <insert id="insert" parameterType="org.neu.his.entity.CategoryPayment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -135,7 +135,7 @@
     values (#{code,jdbcType=VARCHAR}, #{category_name,jdbcType=VARCHAR}, #{is_deleted,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.CategoryPayment">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.CategoryPayment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -163,7 +163,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.CategoryPaymentExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.CategoryPaymentExample" resultType="java.lang.Long">
     select count(*) from category_payment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -199,7 +199,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.CategoryPayment">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.CategoryPayment">
     update category_payment
     <set>
       <if test="code != null">
@@ -214,7 +214,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.CategoryPayment">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.CategoryPayment">
     update category_payment
     set code = #{code,jdbcType=VARCHAR},
       category_name = #{category_name,jdbcType=VARCHAR},

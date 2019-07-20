@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.TemplateDtlNonDrugMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.TemplateDtlNonDrug">
+<mapper namespace="org.neu.his.dao.TemplateDtlNonDrugMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.TemplateDtlNonDrug">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="item_id" jdbcType="INTEGER" property="item_id" />
     <result column="template_id" jdbcType="INTEGER" property="template_id" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, item_id, template_id, check_part, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.TemplateDtlNonDrugExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.TemplateDtlNonDrugExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -121,13 +121,13 @@
     delete from template_dtl_non_drug
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.TemplateDtlNonDrugExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.TemplateDtlNonDrugExample">
     delete from template_dtl_non_drug
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.TemplateDtlNonDrug">
+  <insert id="insert" parameterType="org.neu.his.entity.TemplateDtlNonDrug">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -136,7 +136,7 @@
     values (#{item_id,jdbcType=INTEGER}, #{template_id,jdbcType=INTEGER}, #{check_part,jdbcType=VARCHAR}, 
       #{is_deleted,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.TemplateDtlNonDrug">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.TemplateDtlNonDrug">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -170,7 +170,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.TemplateDtlNonDrugExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.TemplateDtlNonDrugExample" resultType="java.lang.Long">
     select count(*) from template_dtl_non_drug
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -210,7 +210,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.TemplateDtlNonDrug">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.TemplateDtlNonDrug">
     update template_dtl_non_drug
     <set>
       <if test="item_id != null">
@@ -228,7 +228,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.TemplateDtlNonDrug">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.TemplateDtlNonDrug">
     update template_dtl_non_drug
     set item_id = #{item_id,jdbcType=INTEGER},
       template_id = #{template_id,jdbcType=INTEGER},

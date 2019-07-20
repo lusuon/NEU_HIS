@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.CategoryDiseaseMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.CategoryDisease">
+<mapper namespace="org.neu.his.dao.CategoryDiseaseMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.CategoryDisease">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="category_name" jdbcType="VARCHAR" property="category_name" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List">
     id, code, category_name, sequence, disease_flag, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.CategoryDiseaseExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.CategoryDiseaseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -122,13 +122,13 @@
     delete from category_disease
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.CategoryDiseaseExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.CategoryDiseaseExample">
     delete from category_disease
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.CategoryDisease">
+  <insert id="insert" parameterType="org.neu.his.entity.CategoryDisease">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -137,7 +137,7 @@
     values (#{code,jdbcType=VARCHAR}, #{category_name,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR}, 
       #{disease_flag,jdbcType=INTEGER}, #{is_deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.CategoryDisease">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.CategoryDisease">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -177,7 +177,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.CategoryDiseaseExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.CategoryDiseaseExample" resultType="java.lang.Long">
     select count(*) from category_disease
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -221,7 +221,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.CategoryDisease">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.CategoryDisease">
     update category_disease
     <set>
       <if test="code != null">
@@ -242,7 +242,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.CategoryDisease">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.CategoryDisease">
     update category_disease
     set code = #{code,jdbcType=VARCHAR},
       category_name = #{category_name,jdbcType=VARCHAR},

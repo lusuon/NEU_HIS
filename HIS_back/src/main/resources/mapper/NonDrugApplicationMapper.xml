@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.NonDrugApplicationMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.NonDrugApplication">
+<mapper namespace="org.neu.his.dao.NonDrugApplicationMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.NonDrugApplication">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="case_id" jdbcType="INTEGER" property="case_id" />
     <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
@@ -85,7 +85,7 @@
     generate_time, generate_doctor_id, checker_id, recorder_id, check_time, check_result, 
     result_time, application_status, record_category, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.NonDrugApplicationExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.NonDrugApplicationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -137,13 +137,13 @@
     delete from non_drug_application
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.NonDrugApplicationExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.NonDrugApplicationExample">
     delete from non_drug_application
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.NonDrugApplication">
+  <insert id="insert" parameterType="org.neu.his.entity.NonDrugApplication">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -162,7 +162,7 @@
       #{application_status,jdbcType=INTEGER}, #{record_category,jdbcType=INTEGER}, #{is_deleted,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.NonDrugApplication">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.NonDrugApplication">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -280,7 +280,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.NonDrugApplicationExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.NonDrugApplicationExample" resultType="java.lang.Long">
     select count(*) from non_drug_application
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -376,7 +376,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.NonDrugApplication">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.NonDrugApplication">
     update non_drug_application
     <set>
       <if test="case_id != null">
@@ -436,7 +436,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.NonDrugApplication">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.NonDrugApplication">
     update non_drug_application
     set case_id = #{case_id,jdbcType=INTEGER},
       reg_id = #{reg_id,jdbcType=INTEGER},

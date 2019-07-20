@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.ConstantMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.Constant">
+<mapper namespace="org.neu.his.dao.ConstantMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.Constant">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category_id" jdbcType="INTEGER" property="category_id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, category_id, code, constant_name, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.ConstantExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.ConstantExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -121,13 +121,13 @@
     delete from constant
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.ConstantExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.ConstantExample">
     delete from constant
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.Constant">
+  <insert id="insert" parameterType="org.neu.his.entity.Constant">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -136,7 +136,7 @@
     values (#{category_id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{constant_name,jdbcType=VARCHAR}, 
       #{is_deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.Constant">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.Constant">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -170,7 +170,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.ConstantExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.ConstantExample" resultType="java.lang.Long">
     select count(*) from constant
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -210,7 +210,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.Constant">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.Constant">
     update constant
     <set>
       <if test="category_id != null">
@@ -228,7 +228,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.Constant">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.Constant">
     update constant
     set category_id = #{category_id,jdbcType=INTEGER},
       code = #{code,jdbcType=VARCHAR},

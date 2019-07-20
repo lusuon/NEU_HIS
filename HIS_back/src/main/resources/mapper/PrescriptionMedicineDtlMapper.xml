@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.neu.dao.PrescriptionMedicineDtlMapper">
-  <resultMap id="BaseResultMap" type="org.neu.entity.PrescriptionMedicineDtl">
+<mapper namespace="org.neu.his.dao.PrescriptionMedicineDtlMapper">
+  <resultMap id="BaseResultMap" type="org.neu.his.entity.PrescriptionMedicineDtl">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="prescription_id" jdbcType="INTEGER" property="prescription_id" />
     <result column="medicine_id" jdbcType="INTEGER" property="medicine_id" />
@@ -74,7 +74,7 @@
     id, prescription_id, medicine_id, method, dosage, frequency, quantity, prescription_status, 
     is_deleted
   </sql>
-  <select id="selectByExample" parameterType="org.neu.entity.PrescriptionMedicineDtlExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.neu.his.entity.PrescriptionMedicineDtlExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -126,13 +126,13 @@
     delete from prescription_medicine_dtl
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.neu.entity.PrescriptionMedicineDtlExample">
+  <delete id="deleteByExample" parameterType="org.neu.his.entity.PrescriptionMedicineDtlExample">
     delete from prescription_medicine_dtl
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.neu.entity.PrescriptionMedicineDtl">
+  <insert id="insert" parameterType="org.neu.his.entity.PrescriptionMedicineDtl">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -143,7 +143,7 @@
       #{dosage,jdbcType=VARCHAR}, #{frequency,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, 
       #{prescription_status,jdbcType=INTEGER}, #{is_deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.neu.entity.PrescriptionMedicineDtl">
+  <insert id="insertSelective" parameterType="org.neu.his.entity.PrescriptionMedicineDtl">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -201,7 +201,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.neu.entity.PrescriptionMedicineDtlExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.neu.his.entity.PrescriptionMedicineDtlExample" resultType="java.lang.Long">
     select count(*) from prescription_medicine_dtl
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -257,7 +257,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.PrescriptionMedicineDtl">
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.his.entity.PrescriptionMedicineDtl">
     update prescription_medicine_dtl
     <set>
       <if test="prescription_id != null">
@@ -287,7 +287,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.neu.entity.PrescriptionMedicineDtl">
+  <update id="updateByPrimaryKey" parameterType="org.neu.his.entity.PrescriptionMedicineDtl">
     update prescription_medicine_dtl
     set prescription_id = #{prescription_id,jdbcType=INTEGER},
       medicine_id = #{medicine_id,jdbcType=INTEGER},
