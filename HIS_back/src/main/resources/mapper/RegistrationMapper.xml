@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.neu.dao.RegistrationMapper">
+  <resultMap id="BaseResultMap" type="org.neu.entity.Registration">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_no" jdbcType="INTEGER" property="case_no" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patient_name" />
+    <result column="sex" jdbcType="SMALLINT" property="sex" />
+    <result column="personal_id" jdbcType="VARCHAR" property="personal_id" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="age_type" jdbcType="VARCHAR" property="age_type" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="see_date" jdbcType="DATE" property="see_date" />
+    <result column="noon" jdbcType="VARCHAR" property="noon" />
+    <result column="dept_id" jdbcType="INTEGER" property="dept_id" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctor_id" />
+    <result column="reg_level_id" jdbcType="INTEGER" property="reg_level_id" />
+    <result column="settlement_type" jdbcType="VARCHAR" property="settlement_type" />
+    <result column="need_case_book" jdbcType="BIT" property="need_case_book" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="reg_time" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="inspection_status" jdbcType="INTEGER" property="inspection_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_no, patient_name, sex, personal_id, birthday, age, age_type, address, see_date, 
+    noon, dept_id, doctor_id, reg_level_id, settlement_type, need_case_book, reg_time, 
+    operator, inspection_status, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="org.neu.entity.RegistrationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKeyWithLogicalDelete" parameterType="map" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where id = #{id,jdbcType=INTEGER}
+      and is_deleted = 
+    <choose>
+      <when test="andLogicalDeleted">
+        '1'
+      </when>
+      <otherwise>
+        '0'
+      </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from registration
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.neu.entity.RegistrationExample">
+    delete from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.neu.entity.Registration">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into registration (case_no, patient_name, sex, 
+      personal_id, birthday, age, 
+      age_type, address, see_date, 
+      noon, dept_id, doctor_id, 
+      reg_level_id, settlement_type, need_case_book, 
+      reg_time, operator, inspection_status, 
+      is_deleted)
+    values (#{case_no,jdbcType=INTEGER}, #{patient_name,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{personal_id,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{age,jdbcType=INTEGER}, 
+      #{age_type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{see_date,jdbcType=DATE}, 
+      #{noon,jdbcType=VARCHAR}, #{dept_id,jdbcType=INTEGER}, #{doctor_id,jdbcType=INTEGER}, 
+      #{reg_level_id,jdbcType=INTEGER}, #{settlement_type,jdbcType=VARCHAR}, #{need_case_book,jdbcType=BIT}, 
+      #{reg_time,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{inspection_status,jdbcType=INTEGER}, 
+      #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.neu.entity.Registration">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into registration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        case_no,
+      </if>
+      <if test="patient_name != null">
+        patient_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="personal_id != null">
+        personal_id,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="age_type != null">
+        age_type,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="see_date != null">
+        see_date,
+      </if>
+      <if test="noon != null">
+        noon,
+      </if>
+      <if test="dept_id != null">
+        dept_id,
+      </if>
+      <if test="doctor_id != null">
+        doctor_id,
+      </if>
+      <if test="reg_level_id != null">
+        reg_level_id,
+      </if>
+      <if test="settlement_type != null">
+        settlement_type,
+      </if>
+      <if test="need_case_book != null">
+        need_case_book,
+      </if>
+      <if test="reg_time != null">
+        reg_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="inspection_status != null">
+        inspection_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="patient_name != null">
+        #{patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="personal_id != null">
+        #{personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="age_type != null">
+        #{age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="see_date != null">
+        #{see_date,jdbcType=DATE},
+      </if>
+      <if test="noon != null">
+        #{noon,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_level_id != null">
+        #{reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="settlement_type != null">
+        #{settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="need_case_book != null">
+        #{need_case_book,jdbcType=BIT},
+      </if>
+      <if test="reg_time != null">
+        #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="inspection_status != null">
+        #{inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.neu.entity.RegistrationExample" resultType="java.lang.Long">
+    select count(*) from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update registration
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_no != null">
+        case_no = #{record.case_no,jdbcType=INTEGER},
+      </if>
+      <if test="record.patient_name != null">
+        patient_name = #{record.patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=SMALLINT},
+      </if>
+      <if test="record.personal_id != null">
+        personal_id = #{record.personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.age_type != null">
+        age_type = #{record.age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.see_date != null">
+        see_date = #{record.see_date,jdbcType=DATE},
+      </if>
+      <if test="record.noon != null">
+        noon = #{record.noon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept_id != null">
+        dept_id = #{record.dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctor_id != null">
+        doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_level_id != null">
+        reg_level_id = #{record.reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.settlement_type != null">
+        settlement_type = #{record.settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.need_case_book != null">
+        need_case_book = #{record.need_case_book,jdbcType=BIT},
+      </if>
+      <if test="record.reg_time != null">
+        reg_time = #{record.reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=INTEGER},
+      </if>
+      <if test="record.inspection_status != null">
+        inspection_status = #{record.inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update registration
+    set id = #{record.id,jdbcType=INTEGER},
+      case_no = #{record.case_no,jdbcType=INTEGER},
+      patient_name = #{record.patient_name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      personal_id = #{record.personal_id,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      age = #{record.age,jdbcType=INTEGER},
+      age_type = #{record.age_type,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      see_date = #{record.see_date,jdbcType=DATE},
+      noon = #{record.noon,jdbcType=VARCHAR},
+      dept_id = #{record.dept_id,jdbcType=INTEGER},
+      doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      reg_level_id = #{record.reg_level_id,jdbcType=INTEGER},
+      settlement_type = #{record.settlement_type,jdbcType=VARCHAR},
+      need_case_book = #{record.need_case_book,jdbcType=BIT},
+      reg_time = #{record.reg_time,jdbcType=TIMESTAMP},
+      operator = #{record.operator,jdbcType=INTEGER},
+      inspection_status = #{record.inspection_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.Registration">
+    update registration
+    <set>
+      <if test="case_no != null">
+        case_no = #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="patient_name != null">
+        patient_name = #{patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="personal_id != null">
+        personal_id = #{personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="age_type != null">
+        age_type = #{age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="see_date != null">
+        see_date = #{see_date,jdbcType=DATE},
+      </if>
+      <if test="noon != null">
+        noon = #{noon,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        dept_id = #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        doctor_id = #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_level_id != null">
+        reg_level_id = #{reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="settlement_type != null">
+        settlement_type = #{settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="need_case_book != null">
+        need_case_book = #{need_case_book,jdbcType=BIT},
+      </if>
+      <if test="reg_time != null">
+        reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="inspection_status != null">
+        inspection_status = #{inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.neu.entity.Registration">
+    update registration
+    set case_no = #{case_no,jdbcType=INTEGER},
+      patient_name = #{patient_name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      personal_id = #{personal_id,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=INTEGER},
+      age_type = #{age_type,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      see_date = #{see_date,jdbcType=DATE},
+      noon = #{noon,jdbcType=VARCHAR},
+      dept_id = #{dept_id,jdbcType=INTEGER},
+      doctor_id = #{doctor_id,jdbcType=INTEGER},
+      reg_level_id = #{reg_level_id,jdbcType=INTEGER},
+      settlement_type = #{settlement_type,jdbcType=VARCHAR},
+      need_case_book = #{need_case_book,jdbcType=BIT},
+      reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      inspection_status = #{inspection_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="logicalDeleteByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update registration set is_deleted = 1
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="logicalDeleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update registration set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="entity.Registration">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_no" jdbcType="INTEGER" property="case_no" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patient_name" />
+    <result column="sex" jdbcType="SMALLINT" property="sex" />
+    <result column="personal_id" jdbcType="VARCHAR" property="personal_id" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="age_type" jdbcType="VARCHAR" property="age_type" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="see_date" jdbcType="DATE" property="see_date" />
+    <result column="noon" jdbcType="VARCHAR" property="noon" />
+    <result column="dept_id" jdbcType="INTEGER" property="dept_id" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctor_id" />
+    <result column="reg_level_id" jdbcType="INTEGER" property="reg_level_id" />
+    <result column="settlement_type" jdbcType="VARCHAR" property="settlement_type" />
+    <result column="need_case_book" jdbcType="BIT" property="need_case_book" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="reg_time" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="inspection_status" jdbcType="INTEGER" property="inspection_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_no, patient_name, sex, personal_id, birthday, age, age_type, address, see_date, 
+    noon, dept_id, doctor_id, reg_level_id, settlement_type, need_case_book, reg_time, 
+    operator, inspection_status, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="entity.RegistrationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from registration
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.RegistrationExample">
+    delete from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.Registration">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into registration (case_no, patient_name, sex, 
+      personal_id, birthday, age, 
+      age_type, address, see_date, 
+      noon, dept_id, doctor_id, 
+      reg_level_id, settlement_type, need_case_book, 
+      reg_time, operator, inspection_status, 
+      is_deleted)
+    values (#{case_no,jdbcType=INTEGER}, #{patient_name,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{personal_id,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{age,jdbcType=INTEGER}, 
+      #{age_type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{see_date,jdbcType=DATE}, 
+      #{noon,jdbcType=VARCHAR}, #{dept_id,jdbcType=INTEGER}, #{doctor_id,jdbcType=INTEGER}, 
+      #{reg_level_id,jdbcType=INTEGER}, #{settlement_type,jdbcType=VARCHAR}, #{need_case_book,jdbcType=BIT}, 
+      #{reg_time,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{inspection_status,jdbcType=INTEGER}, 
+      #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Registration">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into registration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        case_no,
+      </if>
+      <if test="patient_name != null">
+        patient_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="personal_id != null">
+        personal_id,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="age_type != null">
+        age_type,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="see_date != null">
+        see_date,
+      </if>
+      <if test="noon != null">
+        noon,
+      </if>
+      <if test="dept_id != null">
+        dept_id,
+      </if>
+      <if test="doctor_id != null">
+        doctor_id,
+      </if>
+      <if test="reg_level_id != null">
+        reg_level_id,
+      </if>
+      <if test="settlement_type != null">
+        settlement_type,
+      </if>
+      <if test="need_case_book != null">
+        need_case_book,
+      </if>
+      <if test="reg_time != null">
+        reg_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="inspection_status != null">
+        inspection_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="patient_name != null">
+        #{patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="personal_id != null">
+        #{personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="age_type != null">
+        #{age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="see_date != null">
+        #{see_date,jdbcType=DATE},
+      </if>
+      <if test="noon != null">
+        #{noon,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_level_id != null">
+        #{reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="settlement_type != null">
+        #{settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="need_case_book != null">
+        #{need_case_book,jdbcType=BIT},
+      </if>
+      <if test="reg_time != null">
+        #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="inspection_status != null">
+        #{inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.RegistrationExample" resultType="java.lang.Long">
+    select count(*) from registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update registration
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_no != null">
+        case_no = #{record.case_no,jdbcType=INTEGER},
+      </if>
+      <if test="record.patient_name != null">
+        patient_name = #{record.patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=SMALLINT},
+      </if>
+      <if test="record.personal_id != null">
+        personal_id = #{record.personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.age_type != null">
+        age_type = #{record.age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.see_date != null">
+        see_date = #{record.see_date,jdbcType=DATE},
+      </if>
+      <if test="record.noon != null">
+        noon = #{record.noon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept_id != null">
+        dept_id = #{record.dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctor_id != null">
+        doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_level_id != null">
+        reg_level_id = #{record.reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.settlement_type != null">
+        settlement_type = #{record.settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.need_case_book != null">
+        need_case_book = #{record.need_case_book,jdbcType=BIT},
+      </if>
+      <if test="record.reg_time != null">
+        reg_time = #{record.reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=INTEGER},
+      </if>
+      <if test="record.inspection_status != null">
+        inspection_status = #{record.inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update registration
+    set id = #{record.id,jdbcType=INTEGER},
+      case_no = #{record.case_no,jdbcType=INTEGER},
+      patient_name = #{record.patient_name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      personal_id = #{record.personal_id,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      age = #{record.age,jdbcType=INTEGER},
+      age_type = #{record.age_type,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      see_date = #{record.see_date,jdbcType=DATE},
+      noon = #{record.noon,jdbcType=VARCHAR},
+      dept_id = #{record.dept_id,jdbcType=INTEGER},
+      doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      reg_level_id = #{record.reg_level_id,jdbcType=INTEGER},
+      settlement_type = #{record.settlement_type,jdbcType=VARCHAR},
+      need_case_book = #{record.need_case_book,jdbcType=BIT},
+      reg_time = #{record.reg_time,jdbcType=TIMESTAMP},
+      operator = #{record.operator,jdbcType=INTEGER},
+      inspection_status = #{record.inspection_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Registration">
+    update registration
+    <set>
+      <if test="case_no != null">
+        case_no = #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="patient_name != null">
+        patient_name = #{patient_name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="personal_id != null">
+        personal_id = #{personal_id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="age_type != null">
+        age_type = #{age_type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="see_date != null">
+        see_date = #{see_date,jdbcType=DATE},
+      </if>
+      <if test="noon != null">
+        noon = #{noon,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        dept_id = #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        doctor_id = #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_level_id != null">
+        reg_level_id = #{reg_level_id,jdbcType=INTEGER},
+      </if>
+      <if test="settlement_type != null">
+        settlement_type = #{settlement_type,jdbcType=VARCHAR},
+      </if>
+      <if test="need_case_book != null">
+        need_case_book = #{need_case_book,jdbcType=BIT},
+      </if>
+      <if test="reg_time != null">
+        reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="inspection_status != null">
+        inspection_status = #{inspection_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Registration">
+    update registration
+    set case_no = #{case_no,jdbcType=INTEGER},
+      patient_name = #{patient_name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      personal_id = #{personal_id,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=INTEGER},
+      age_type = #{age_type,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      see_date = #{see_date,jdbcType=DATE},
+      noon = #{noon,jdbcType=VARCHAR},
+      dept_id = #{dept_id,jdbcType=INTEGER},
+      doctor_id = #{doctor_id,jdbcType=INTEGER},
+      reg_level_id = #{reg_level_id,jdbcType=INTEGER},
+      settlement_type = #{settlement_type,jdbcType=VARCHAR},
+      need_case_book = #{need_case_book,jdbcType=BIT},
+      reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      inspection_status = #{inspection_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.neu.dao.CaseMapper">
+  <resultMap id="BaseResultMap" type="org.neu.entity.Case">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_no" jdbcType="INTEGER" property="case_no" />
+    <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
+    <result column="symptom" jdbcType="VARCHAR" property="symptom" />
+    <result column="current_medi_history" jdbcType="VARCHAR" property="current_medi_history" />
+    <result column="current_disease_treatment" jdbcType="VARCHAR" property="current_disease_treatment" />
+    <result column="medi_history" jdbcType="VARCHAR" property="medi_history" />
+    <result column="allergy" jdbcType="VARCHAR" property="allergy" />
+    <result column="body_inspection" jdbcType="VARCHAR" property="body_inspection" />
+    <result column="suggestion" jdbcType="VARCHAR" property="suggestion" />
+    <result column="attention" jdbcType="VARCHAR" property="attention" />
+    <result column="inspection_result" jdbcType="VARCHAR" property="inspection_result" />
+    <result column="diagnose_result" jdbcType="VARCHAR" property="diagnose_result" />
+    <result column="advise" jdbcType="VARCHAR" property="advise" />
+    <result column="case_status" jdbcType="INTEGER" property="case_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_no, reg_id, symptom, current_medi_history, current_disease_treatment, medi_history, 
+    allergy, body_inspection, suggestion, attention, inspection_result, diagnose_result, 
+    advise, case_status, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="org.neu.entity.CaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKeyWithLogicalDelete" parameterType="map" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from case
+    where id = #{id,jdbcType=INTEGER}
+      and is_deleted = 
+    <choose>
+      <when test="andLogicalDeleted">
+        '1'
+      </when>
+      <otherwise>
+        '0'
+      </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from case
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.neu.entity.CaseExample">
+    delete from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.neu.entity.Case">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into case (case_no, reg_id, symptom, 
+      current_medi_history, current_disease_treatment, 
+      medi_history, allergy, body_inspection, 
+      suggestion, attention, inspection_result, 
+      diagnose_result, advise, case_status, 
+      is_deleted)
+    values (#{case_no,jdbcType=INTEGER}, #{reg_id,jdbcType=INTEGER}, #{symptom,jdbcType=VARCHAR}, 
+      #{current_medi_history,jdbcType=VARCHAR}, #{current_disease_treatment,jdbcType=VARCHAR}, 
+      #{medi_history,jdbcType=VARCHAR}, #{allergy,jdbcType=VARCHAR}, #{body_inspection,jdbcType=VARCHAR}, 
+      #{suggestion,jdbcType=VARCHAR}, #{attention,jdbcType=VARCHAR}, #{inspection_result,jdbcType=VARCHAR}, 
+      #{diagnose_result,jdbcType=VARCHAR}, #{advise,jdbcType=VARCHAR}, #{case_status,jdbcType=INTEGER}, 
+      #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.neu.entity.Case">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into case
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        case_no,
+      </if>
+      <if test="reg_id != null">
+        reg_id,
+      </if>
+      <if test="symptom != null">
+        symptom,
+      </if>
+      <if test="current_medi_history != null">
+        current_medi_history,
+      </if>
+      <if test="current_disease_treatment != null">
+        current_disease_treatment,
+      </if>
+      <if test="medi_history != null">
+        medi_history,
+      </if>
+      <if test="allergy != null">
+        allergy,
+      </if>
+      <if test="body_inspection != null">
+        body_inspection,
+      </if>
+      <if test="suggestion != null">
+        suggestion,
+      </if>
+      <if test="attention != null">
+        attention,
+      </if>
+      <if test="inspection_result != null">
+        inspection_result,
+      </if>
+      <if test="diagnose_result != null">
+        diagnose_result,
+      </if>
+      <if test="advise != null">
+        advise,
+      </if>
+      <if test="case_status != null">
+        case_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null">
+        #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="current_medi_history != null">
+        #{current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="current_disease_treatment != null">
+        #{current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="medi_history != null">
+        #{medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null">
+        #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="body_inspection != null">
+        #{body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null">
+        #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null">
+        #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="inspection_result != null">
+        #{inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnose_result != null">
+        #{diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="case_status != null">
+        #{case_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.neu.entity.CaseExample" resultType="java.lang.Long">
+    select count(*) from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update case
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_no != null">
+        case_no = #{record.case_no,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_id != null">
+        reg_id = #{record.reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.symptom != null">
+        symptom = #{record.symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current_medi_history != null">
+        current_medi_history = #{record.current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current_disease_treatment != null">
+        current_disease_treatment = #{record.current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medi_history != null">
+        medi_history = #{record.medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allergy != null">
+        allergy = #{record.allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body_inspection != null">
+        body_inspection = #{record.body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suggestion != null">
+        suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attention != null">
+        attention = #{record.attention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspection_result != null">
+        inspection_result = #{record.inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diagnose_result != null">
+        diagnose_result = #{record.diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advise != null">
+        advise = #{record.advise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.case_status != null">
+        case_status = #{record.case_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update case
+    set id = #{record.id,jdbcType=INTEGER},
+      case_no = #{record.case_no,jdbcType=INTEGER},
+      reg_id = #{record.reg_id,jdbcType=INTEGER},
+      symptom = #{record.symptom,jdbcType=VARCHAR},
+      current_medi_history = #{record.current_medi_history,jdbcType=VARCHAR},
+      current_disease_treatment = #{record.current_disease_treatment,jdbcType=VARCHAR},
+      medi_history = #{record.medi_history,jdbcType=VARCHAR},
+      allergy = #{record.allergy,jdbcType=VARCHAR},
+      body_inspection = #{record.body_inspection,jdbcType=VARCHAR},
+      suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      attention = #{record.attention,jdbcType=VARCHAR},
+      inspection_result = #{record.inspection_result,jdbcType=VARCHAR},
+      diagnose_result = #{record.diagnose_result,jdbcType=VARCHAR},
+      advise = #{record.advise,jdbcType=VARCHAR},
+      case_status = #{record.case_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.Case">
+    update case
+    <set>
+      <if test="case_no != null">
+        case_no = #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        reg_id = #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null">
+        symptom = #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="current_medi_history != null">
+        current_medi_history = #{current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="current_disease_treatment != null">
+        current_disease_treatment = #{current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="medi_history != null">
+        medi_history = #{medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null">
+        allergy = #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="body_inspection != null">
+        body_inspection = #{body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null">
+        suggestion = #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null">
+        attention = #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="inspection_result != null">
+        inspection_result = #{inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnose_result != null">
+        diagnose_result = #{diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        advise = #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="case_status != null">
+        case_status = #{case_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.neu.entity.Case">
+    update case
+    set case_no = #{case_no,jdbcType=INTEGER},
+      reg_id = #{reg_id,jdbcType=INTEGER},
+      symptom = #{symptom,jdbcType=VARCHAR},
+      current_medi_history = #{current_medi_history,jdbcType=VARCHAR},
+      current_disease_treatment = #{current_disease_treatment,jdbcType=VARCHAR},
+      medi_history = #{medi_history,jdbcType=VARCHAR},
+      allergy = #{allergy,jdbcType=VARCHAR},
+      body_inspection = #{body_inspection,jdbcType=VARCHAR},
+      suggestion = #{suggestion,jdbcType=VARCHAR},
+      attention = #{attention,jdbcType=VARCHAR},
+      inspection_result = #{inspection_result,jdbcType=VARCHAR},
+      diagnose_result = #{diagnose_result,jdbcType=VARCHAR},
+      advise = #{advise,jdbcType=VARCHAR},
+      case_status = #{case_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="logicalDeleteByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update case set is_deleted = 1
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="logicalDeleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update case set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="entity.Case">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_no" jdbcType="INTEGER" property="case_no" />
+    <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
+    <result column="symptom" jdbcType="VARCHAR" property="symptom" />
+    <result column="current_medi_history" jdbcType="VARCHAR" property="current_medi_history" />
+    <result column="current_disease_treatment" jdbcType="VARCHAR" property="current_disease_treatment" />
+    <result column="medi_history" jdbcType="VARCHAR" property="medi_history" />
+    <result column="allergy" jdbcType="VARCHAR" property="allergy" />
+    <result column="body_inspection" jdbcType="VARCHAR" property="body_inspection" />
+    <result column="suggestion" jdbcType="VARCHAR" property="suggestion" />
+    <result column="attention" jdbcType="VARCHAR" property="attention" />
+    <result column="inspection_result" jdbcType="VARCHAR" property="inspection_result" />
+    <result column="diagnose_result" jdbcType="VARCHAR" property="diagnose_result" />
+    <result column="advise" jdbcType="VARCHAR" property="advise" />
+    <result column="case_status" jdbcType="INTEGER" property="case_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_no, reg_id, symptom, current_medi_history, current_disease_treatment, medi_history, 
+    allergy, body_inspection, suggestion, attention, inspection_result, diagnose_result, 
+    advise, case_status, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="entity.CaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from case
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.CaseExample">
+    delete from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.Case">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into case (case_no, reg_id, symptom, 
+      current_medi_history, current_disease_treatment, 
+      medi_history, allergy, body_inspection, 
+      suggestion, attention, inspection_result, 
+      diagnose_result, advise, case_status, 
+      is_deleted)
+    values (#{case_no,jdbcType=INTEGER}, #{reg_id,jdbcType=INTEGER}, #{symptom,jdbcType=VARCHAR}, 
+      #{current_medi_history,jdbcType=VARCHAR}, #{current_disease_treatment,jdbcType=VARCHAR}, 
+      #{medi_history,jdbcType=VARCHAR}, #{allergy,jdbcType=VARCHAR}, #{body_inspection,jdbcType=VARCHAR}, 
+      #{suggestion,jdbcType=VARCHAR}, #{attention,jdbcType=VARCHAR}, #{inspection_result,jdbcType=VARCHAR}, 
+      #{diagnose_result,jdbcType=VARCHAR}, #{advise,jdbcType=VARCHAR}, #{case_status,jdbcType=INTEGER}, 
+      #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Case">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into case
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        case_no,
+      </if>
+      <if test="reg_id != null">
+        reg_id,
+      </if>
+      <if test="symptom != null">
+        symptom,
+      </if>
+      <if test="current_medi_history != null">
+        current_medi_history,
+      </if>
+      <if test="current_disease_treatment != null">
+        current_disease_treatment,
+      </if>
+      <if test="medi_history != null">
+        medi_history,
+      </if>
+      <if test="allergy != null">
+        allergy,
+      </if>
+      <if test="body_inspection != null">
+        body_inspection,
+      </if>
+      <if test="suggestion != null">
+        suggestion,
+      </if>
+      <if test="attention != null">
+        attention,
+      </if>
+      <if test="inspection_result != null">
+        inspection_result,
+      </if>
+      <if test="diagnose_result != null">
+        diagnose_result,
+      </if>
+      <if test="advise != null">
+        advise,
+      </if>
+      <if test="case_status != null">
+        case_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_no != null">
+        #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null">
+        #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="current_medi_history != null">
+        #{current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="current_disease_treatment != null">
+        #{current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="medi_history != null">
+        #{medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null">
+        #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="body_inspection != null">
+        #{body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null">
+        #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null">
+        #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="inspection_result != null">
+        #{inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnose_result != null">
+        #{diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="case_status != null">
+        #{case_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.CaseExample" resultType="java.lang.Long">
+    select count(*) from case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update case
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_no != null">
+        case_no = #{record.case_no,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_id != null">
+        reg_id = #{record.reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.symptom != null">
+        symptom = #{record.symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current_medi_history != null">
+        current_medi_history = #{record.current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current_disease_treatment != null">
+        current_disease_treatment = #{record.current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medi_history != null">
+        medi_history = #{record.medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allergy != null">
+        allergy = #{record.allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body_inspection != null">
+        body_inspection = #{record.body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suggestion != null">
+        suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attention != null">
+        attention = #{record.attention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspection_result != null">
+        inspection_result = #{record.inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diagnose_result != null">
+        diagnose_result = #{record.diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advise != null">
+        advise = #{record.advise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.case_status != null">
+        case_status = #{record.case_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update case
+    set id = #{record.id,jdbcType=INTEGER},
+      case_no = #{record.case_no,jdbcType=INTEGER},
+      reg_id = #{record.reg_id,jdbcType=INTEGER},
+      symptom = #{record.symptom,jdbcType=VARCHAR},
+      current_medi_history = #{record.current_medi_history,jdbcType=VARCHAR},
+      current_disease_treatment = #{record.current_disease_treatment,jdbcType=VARCHAR},
+      medi_history = #{record.medi_history,jdbcType=VARCHAR},
+      allergy = #{record.allergy,jdbcType=VARCHAR},
+      body_inspection = #{record.body_inspection,jdbcType=VARCHAR},
+      suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      attention = #{record.attention,jdbcType=VARCHAR},
+      inspection_result = #{record.inspection_result,jdbcType=VARCHAR},
+      diagnose_result = #{record.diagnose_result,jdbcType=VARCHAR},
+      advise = #{record.advise,jdbcType=VARCHAR},
+      case_status = #{record.case_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Case">
+    update case
+    <set>
+      <if test="case_no != null">
+        case_no = #{case_no,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        reg_id = #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null">
+        symptom = #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="current_medi_history != null">
+        current_medi_history = #{current_medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="current_disease_treatment != null">
+        current_disease_treatment = #{current_disease_treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="medi_history != null">
+        medi_history = #{medi_history,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null">
+        allergy = #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="body_inspection != null">
+        body_inspection = #{body_inspection,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null">
+        suggestion = #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null">
+        attention = #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="inspection_result != null">
+        inspection_result = #{inspection_result,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnose_result != null">
+        diagnose_result = #{diagnose_result,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        advise = #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="case_status != null">
+        case_status = #{case_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Case">
+    update case
+    set case_no = #{case_no,jdbcType=INTEGER},
+      reg_id = #{reg_id,jdbcType=INTEGER},
+      symptom = #{symptom,jdbcType=VARCHAR},
+      current_medi_history = #{current_medi_history,jdbcType=VARCHAR},
+      current_disease_treatment = #{current_disease_treatment,jdbcType=VARCHAR},
+      medi_history = #{medi_history,jdbcType=VARCHAR},
+      allergy = #{allergy,jdbcType=VARCHAR},
+      body_inspection = #{body_inspection,jdbcType=VARCHAR},
+      suggestion = #{suggestion,jdbcType=VARCHAR},
+      attention = #{attention,jdbcType=VARCHAR},
+      inspection_result = #{inspection_result,jdbcType=VARCHAR},
+      diagnose_result = #{diagnose_result,jdbcType=VARCHAR},
+      advise = #{advise,jdbcType=VARCHAR},
+      case_status = #{case_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

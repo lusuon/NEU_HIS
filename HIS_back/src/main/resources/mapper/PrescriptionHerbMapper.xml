@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.neu.dao.PrescriptionHerbMapper">
+  <resultMap id="BaseResultMap" type="org.neu.entity.PrescriptionHerb">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_id" jdbcType="INTEGER" property="case_id" />
+    <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctor_id" />
+    <result column="prescription_name" jdbcType="VARCHAR" property="prescription_name" />
+    <result column="generate_time" jdbcType="DATE" property="generate_time" />
+    <result column="prescription_type" jdbcType="VARCHAR" property="prescription_type" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="frequency" jdbcType="VARCHAR" property="frequency" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="treatment" jdbcType="VARCHAR" property="treatment" />
+    <result column="treatment_detail" jdbcType="VARCHAR" property="treatment_detail" />
+    <result column="doctor_advice" jdbcType="VARCHAR" property="doctor_advice" />
+    <result column="prescription_status" jdbcType="INTEGER" property="prescription_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_id, reg_id, doctor_id, prescription_name, generate_time, prescription_type, 
+    quantity, frequency, method, treatment, treatment_detail, doctor_advice, prescription_status, 
+    is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="org.neu.entity.PrescriptionHerbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prescription_herb
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKeyWithLogicalDelete" parameterType="map" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from prescription_herb
+    where id = #{id,jdbcType=INTEGER}
+      and is_deleted = 
+    <choose>
+      <when test="andLogicalDeleted">
+        '1'
+      </when>
+      <otherwise>
+        '0'
+      </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from prescription_herb
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.neu.entity.PrescriptionHerbExample">
+    delete from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.neu.entity.PrescriptionHerb">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription_herb (case_id, reg_id, doctor_id, 
+      prescription_name, generate_time, prescription_type, 
+      quantity, frequency, method, 
+      treatment, treatment_detail, doctor_advice, 
+      prescription_status, is_deleted)
+    values (#{case_id,jdbcType=INTEGER}, #{reg_id,jdbcType=INTEGER}, #{doctor_id,jdbcType=INTEGER}, 
+      #{prescription_name,jdbcType=VARCHAR}, #{generate_time,jdbcType=DATE}, #{prescription_type,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{frequency,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{treatment,jdbcType=VARCHAR}, #{treatment_detail,jdbcType=VARCHAR}, #{doctor_advice,jdbcType=VARCHAR}, 
+      #{prescription_status,jdbcType=INTEGER}, #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.neu.entity.PrescriptionHerb">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription_herb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_id != null">
+        case_id,
+      </if>
+      <if test="reg_id != null">
+        reg_id,
+      </if>
+      <if test="doctor_id != null">
+        doctor_id,
+      </if>
+      <if test="prescription_name != null">
+        prescription_name,
+      </if>
+      <if test="generate_time != null">
+        generate_time,
+      </if>
+      <if test="prescription_type != null">
+        prescription_type,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="treatment != null">
+        treatment,
+      </if>
+      <if test="treatment_detail != null">
+        treatment_detail,
+      </if>
+      <if test="doctor_advice != null">
+        doctor_advice,
+      </if>
+      <if test="prescription_status != null">
+        prescription_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_id != null">
+        #{case_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="prescription_name != null">
+        #{prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="generate_time != null">
+        #{generate_time,jdbcType=DATE},
+      </if>
+      <if test="prescription_type != null">
+        #{prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment_detail != null">
+        #{treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor_advice != null">
+        #{doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription_status != null">
+        #{prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.neu.entity.PrescriptionHerbExample" resultType="java.lang.Long">
+    select count(*) from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update prescription_herb
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_id != null">
+        case_id = #{record.case_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_id != null">
+        reg_id = #{record.reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctor_id != null">
+        doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.prescription_name != null">
+        prescription_name = #{record.prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.generate_time != null">
+        generate_time = #{record.generate_time,jdbcType=DATE},
+      </if>
+      <if test="record.prescription_type != null">
+        prescription_type = #{record.prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.frequency != null">
+        frequency = #{record.frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treatment != null">
+        treatment = #{record.treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treatment_detail != null">
+        treatment_detail = #{record.treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctor_advice != null">
+        doctor_advice = #{record.doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prescription_status != null">
+        prescription_status = #{record.prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update prescription_herb
+    set id = #{record.id,jdbcType=INTEGER},
+      case_id = #{record.case_id,jdbcType=INTEGER},
+      reg_id = #{record.reg_id,jdbcType=INTEGER},
+      doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      prescription_name = #{record.prescription_name,jdbcType=VARCHAR},
+      generate_time = #{record.generate_time,jdbcType=DATE},
+      prescription_type = #{record.prescription_type,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=INTEGER},
+      frequency = #{record.frequency,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      treatment = #{record.treatment,jdbcType=VARCHAR},
+      treatment_detail = #{record.treatment_detail,jdbcType=VARCHAR},
+      doctor_advice = #{record.doctor_advice,jdbcType=VARCHAR},
+      prescription_status = #{record.prescription_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.neu.entity.PrescriptionHerb">
+    update prescription_herb
+    <set>
+      <if test="case_id != null">
+        case_id = #{case_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        reg_id = #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        doctor_id = #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="prescription_name != null">
+        prescription_name = #{prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="generate_time != null">
+        generate_time = #{generate_time,jdbcType=DATE},
+      </if>
+      <if test="prescription_type != null">
+        prescription_type = #{prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        treatment = #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment_detail != null">
+        treatment_detail = #{treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor_advice != null">
+        doctor_advice = #{doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription_status != null">
+        prescription_status = #{prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.neu.entity.PrescriptionHerb">
+    update prescription_herb
+    set case_id = #{case_id,jdbcType=INTEGER},
+      reg_id = #{reg_id,jdbcType=INTEGER},
+      doctor_id = #{doctor_id,jdbcType=INTEGER},
+      prescription_name = #{prescription_name,jdbcType=VARCHAR},
+      generate_time = #{generate_time,jdbcType=DATE},
+      prescription_type = #{prescription_type,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      frequency = #{frequency,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      treatment = #{treatment,jdbcType=VARCHAR},
+      treatment_detail = #{treatment_detail,jdbcType=VARCHAR},
+      doctor_advice = #{doctor_advice,jdbcType=VARCHAR},
+      prescription_status = #{prescription_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="logicalDeleteByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update prescription_herb set is_deleted = 1
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="logicalDeleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    update prescription_herb set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="entity.PrescriptionHerb">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_id" jdbcType="INTEGER" property="case_id" />
+    <result column="reg_id" jdbcType="INTEGER" property="reg_id" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctor_id" />
+    <result column="prescription_name" jdbcType="VARCHAR" property="prescription_name" />
+    <result column="generate_time" jdbcType="DATE" property="generate_time" />
+    <result column="prescription_type" jdbcType="VARCHAR" property="prescription_type" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="frequency" jdbcType="VARCHAR" property="frequency" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="treatment" jdbcType="VARCHAR" property="treatment" />
+    <result column="treatment_detail" jdbcType="VARCHAR" property="treatment_detail" />
+    <result column="doctor_advice" jdbcType="VARCHAR" property="doctor_advice" />
+    <result column="prescription_status" jdbcType="INTEGER" property="prescription_status" />
+    <result column="is_deleted" jdbcType="BIT" property="is_deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, case_id, reg_id, doctor_id, prescription_name, generate_time, prescription_type, 
+    quantity, frequency, method, treatment, treatment_detail, doctor_advice, prescription_status, 
+    is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="entity.PrescriptionHerbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prescription_herb
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from prescription_herb
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.PrescriptionHerbExample">
+    delete from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.PrescriptionHerb">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription_herb (case_id, reg_id, doctor_id, 
+      prescription_name, generate_time, prescription_type, 
+      quantity, frequency, method, 
+      treatment, treatment_detail, doctor_advice, 
+      prescription_status, is_deleted)
+    values (#{case_id,jdbcType=INTEGER}, #{reg_id,jdbcType=INTEGER}, #{doctor_id,jdbcType=INTEGER}, 
+      #{prescription_name,jdbcType=VARCHAR}, #{generate_time,jdbcType=DATE}, #{prescription_type,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{frequency,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{treatment,jdbcType=VARCHAR}, #{treatment_detail,jdbcType=VARCHAR}, #{doctor_advice,jdbcType=VARCHAR}, 
+      #{prescription_status,jdbcType=INTEGER}, #{is_deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.PrescriptionHerb">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription_herb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="case_id != null">
+        case_id,
+      </if>
+      <if test="reg_id != null">
+        reg_id,
+      </if>
+      <if test="doctor_id != null">
+        doctor_id,
+      </if>
+      <if test="prescription_name != null">
+        prescription_name,
+      </if>
+      <if test="generate_time != null">
+        generate_time,
+      </if>
+      <if test="prescription_type != null">
+        prescription_type,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="treatment != null">
+        treatment,
+      </if>
+      <if test="treatment_detail != null">
+        treatment_detail,
+      </if>
+      <if test="doctor_advice != null">
+        doctor_advice,
+      </if>
+      <if test="prescription_status != null">
+        prescription_status,
+      </if>
+      <if test="is_deleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="case_id != null">
+        #{case_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="prescription_name != null">
+        #{prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="generate_time != null">
+        #{generate_time,jdbcType=DATE},
+      </if>
+      <if test="prescription_type != null">
+        #{prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment_detail != null">
+        #{treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor_advice != null">
+        #{doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription_status != null">
+        #{prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        #{is_deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.PrescriptionHerbExample" resultType="java.lang.Long">
+    select count(*) from prescription_herb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update prescription_herb
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.case_id != null">
+        case_id = #{record.case_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reg_id != null">
+        reg_id = #{record.reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctor_id != null">
+        doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.prescription_name != null">
+        prescription_name = #{record.prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.generate_time != null">
+        generate_time = #{record.generate_time,jdbcType=DATE},
+      </if>
+      <if test="record.prescription_type != null">
+        prescription_type = #{record.prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.frequency != null">
+        frequency = #{record.frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treatment != null">
+        treatment = #{record.treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treatment_detail != null">
+        treatment_detail = #{record.treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctor_advice != null">
+        doctor_advice = #{record.doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prescription_status != null">
+        prescription_status = #{record.prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_deleted != null">
+        is_deleted = #{record.is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update prescription_herb
+    set id = #{record.id,jdbcType=INTEGER},
+      case_id = #{record.case_id,jdbcType=INTEGER},
+      reg_id = #{record.reg_id,jdbcType=INTEGER},
+      doctor_id = #{record.doctor_id,jdbcType=INTEGER},
+      prescription_name = #{record.prescription_name,jdbcType=VARCHAR},
+      generate_time = #{record.generate_time,jdbcType=DATE},
+      prescription_type = #{record.prescription_type,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=INTEGER},
+      frequency = #{record.frequency,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      treatment = #{record.treatment,jdbcType=VARCHAR},
+      treatment_detail = #{record.treatment_detail,jdbcType=VARCHAR},
+      doctor_advice = #{record.doctor_advice,jdbcType=VARCHAR},
+      prescription_status = #{record.prescription_status,jdbcType=INTEGER},
+      is_deleted = #{record.is_deleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.PrescriptionHerb">
+    update prescription_herb
+    <set>
+      <if test="case_id != null">
+        case_id = #{case_id,jdbcType=INTEGER},
+      </if>
+      <if test="reg_id != null">
+        reg_id = #{reg_id,jdbcType=INTEGER},
+      </if>
+      <if test="doctor_id != null">
+        doctor_id = #{doctor_id,jdbcType=INTEGER},
+      </if>
+      <if test="prescription_name != null">
+        prescription_name = #{prescription_name,jdbcType=VARCHAR},
+      </if>
+      <if test="generate_time != null">
+        generate_time = #{generate_time,jdbcType=DATE},
+      </if>
+      <if test="prescription_type != null">
+        prescription_type = #{prescription_type,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        treatment = #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment_detail != null">
+        treatment_detail = #{treatment_detail,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor_advice != null">
+        doctor_advice = #{doctor_advice,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription_status != null">
+        prescription_status = #{prescription_status,jdbcType=INTEGER},
+      </if>
+      <if test="is_deleted != null">
+        is_deleted = #{is_deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.PrescriptionHerb">
+    update prescription_herb
+    set case_id = #{case_id,jdbcType=INTEGER},
+      reg_id = #{reg_id,jdbcType=INTEGER},
+      doctor_id = #{doctor_id,jdbcType=INTEGER},
+      prescription_name = #{prescription_name,jdbcType=VARCHAR},
+      generate_time = #{generate_time,jdbcType=DATE},
+      prescription_type = #{prescription_type,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      frequency = #{frequency,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      treatment = #{treatment,jdbcType=VARCHAR},
+      treatment_detail = #{treatment_detail,jdbcType=VARCHAR},
+      doctor_advice = #{doctor_advice,jdbcType=VARCHAR},
+      prescription_status = #{prescription_status,jdbcType=INTEGER},
+      is_deleted = #{is_deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
