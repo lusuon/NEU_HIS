@@ -1,0 +1,151 @@
+package com.neu.his.Dao;
+
+import com.neu.his.entity.Drug;
+import com.neu.his.entity.DrugExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.type.JdbcType;
+
+@Mapper
+public interface DrugMapper {
+    @SelectProvider(type=DrugSqlProvider.class, method="countByExample")
+    long countByExample(DrugExample example);
+
+    @DeleteProvider(type=DrugSqlProvider.class, method="deleteByExample")
+    int deleteByExample(DrugExample example);
+
+    @Delete({
+        "delete from drug",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    int deleteByPrimaryKey(Integer id);
+
+    @Insert({
+        "insert into drug (code, drug_name, ",
+        "standard, unit, ",
+        "factory, dosage, ",
+        "type_id, unit_price, ",
+        "pinyin_mnemonic_code, create_time, ",
+        "last_edit_time, is_deleted)",
+        "values (#{code,jdbcType=VARCHAR}, #{drugName,jdbcType=VARCHAR}, ",
+        "#{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, ",
+        "#{factory,jdbcType=VARCHAR}, #{dosage,jdbcType=INTEGER}, ",
+        "#{typeId,jdbcType=INTEGER}, #{unitPrice,jdbcType=DOUBLE}, ",
+        "#{pinyinMnemonicCode,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, ",
+        "#{lastEditTime,jdbcType=DATE}, #{isDeleted,jdbcType=BIT})"
+    })
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
+    int insert(Drug record);
+
+    @InsertProvider(type=DrugSqlProvider.class, method="insertSelective")
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
+    int insertSelective(Drug record);
+
+    @SelectProvider(type=DrugSqlProvider.class, method="selectByExample")
+    @Results({
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
+        @Result(column="drug_name", property="drugName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="standard", property="standard", jdbcType=JdbcType.VARCHAR),
+        @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
+        @Result(column="factory", property="factory", jdbcType=JdbcType.VARCHAR),
+        @Result(column="dosage", property="dosage", jdbcType=JdbcType.INTEGER),
+        @Result(column="type_id", property="typeId", jdbcType=JdbcType.INTEGER),
+        @Result(column="unit_price", property="unitPrice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="pinyin_mnemonic_code", property="pinyinMnemonicCode", jdbcType=JdbcType.VARCHAR),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.DATE),
+        @Result(column="last_edit_time", property="lastEditTime", jdbcType=JdbcType.DATE),
+        @Result(column="is_deleted", property="isDeleted", jdbcType=JdbcType.BIT)
+    })
+    List<Drug> selectByExample(DrugExample example);
+
+    @Select({
+        "select",
+        "id, code, drug_name, standard, unit, factory, dosage, type_id, unit_price, pinyin_mnemonic_code, ",
+        "create_time, last_edit_time, is_deleted",
+        "from drug",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    @Results({
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
+        @Result(column="drug_name", property="drugName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="standard", property="standard", jdbcType=JdbcType.VARCHAR),
+        @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
+        @Result(column="factory", property="factory", jdbcType=JdbcType.VARCHAR),
+        @Result(column="dosage", property="dosage", jdbcType=JdbcType.INTEGER),
+        @Result(column="type_id", property="typeId", jdbcType=JdbcType.INTEGER),
+        @Result(column="unit_price", property="unitPrice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="pinyin_mnemonic_code", property="pinyinMnemonicCode", jdbcType=JdbcType.VARCHAR),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.DATE),
+        @Result(column="last_edit_time", property="lastEditTime", jdbcType=JdbcType.DATE),
+        @Result(column="is_deleted", property="isDeleted", jdbcType=JdbcType.BIT)
+    })
+    Drug selectByPrimaryKey(Integer id);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table drug
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    Drug selectByPrimaryKeyWithLogicalDelete(@Param("id") Integer id, @Param("andLogicalDeleted") boolean andLogicalDeleted);
+
+    @UpdateProvider(type=DrugSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") Drug record, @Param("example") DrugExample example);
+
+    @UpdateProvider(type=DrugSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") Drug record, @Param("example") DrugExample example);
+
+    @UpdateProvider(type=DrugSqlProvider.class, method="updateByPrimaryKeySelective")
+    int updateByPrimaryKeySelective(Drug record);
+
+    @Update({
+        "update drug",
+        "set code = #{code,jdbcType=VARCHAR},",
+          "drug_name = #{drugName,jdbcType=VARCHAR},",
+          "standard = #{standard,jdbcType=VARCHAR},",
+          "unit = #{unit,jdbcType=VARCHAR},",
+          "factory = #{factory,jdbcType=VARCHAR},",
+          "dosage = #{dosage,jdbcType=INTEGER},",
+          "type_id = #{typeId,jdbcType=INTEGER},",
+          "unit_price = #{unitPrice,jdbcType=DOUBLE},",
+          "pinyin_mnemonic_code = #{pinyinMnemonicCode,jdbcType=VARCHAR},",
+          "create_time = #{createTime,jdbcType=DATE},",
+          "last_edit_time = #{lastEditTime,jdbcType=DATE},",
+          "is_deleted = #{isDeleted,jdbcType=BIT}",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    int updateByPrimaryKey(Drug record);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table drug
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    int logicalDeleteByExample(@Param("example") DrugExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table drug
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    int logicalDeleteByPrimaryKey(Integer id);
+}

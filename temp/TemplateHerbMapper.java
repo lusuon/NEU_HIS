@@ -1,0 +1,148 @@
+package com.neu.his.Dao;
+
+import com.neu.his.entity.TemplateHerb;
+import com.neu.his.entity.TemplateHerbExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.type.JdbcType;
+
+@Mapper
+public interface TemplateHerbMapper {
+    @SelectProvider(type=TemplateHerbSqlProvider.class, method="countByExample")
+    long countByExample(TemplateHerbExample example);
+
+    @DeleteProvider(type=TemplateHerbSqlProvider.class, method="deleteByExample")
+    int deleteByExample(TemplateHerbExample example);
+
+    @Delete({
+        "delete from template_herb",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    int deleteByPrimaryKey(Integer id);
+
+    @Insert({
+        "insert into template_herb (name, doctor_id, ",
+        "create_time, prescription_type, ",
+        "number, method, ",
+        "treatment, treatment_detail, ",
+        "doctor_advice, range, ",
+        "is_deleted)",
+        "values (#{name,jdbcType=VARCHAR}, #{doctorId,jdbcType=INTEGER}, ",
+        "#{createTime,jdbcType=TIMESTAMP}, #{prescriptionType,jdbcType=VARCHAR}, ",
+        "#{number,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR}, ",
+        "#{treatment,jdbcType=VARCHAR}, #{treatmentDetail,jdbcType=VARCHAR}, ",
+        "#{doctorAdvice,jdbcType=VARCHAR}, #{range,jdbcType=VARCHAR}, ",
+        "#{isDeleted,jdbcType=BIT})"
+    })
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
+    int insert(TemplateHerb record);
+
+    @InsertProvider(type=TemplateHerbSqlProvider.class, method="insertSelective")
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
+    int insertSelective(TemplateHerb record);
+
+    @SelectProvider(type=TemplateHerbSqlProvider.class, method="selectByExample")
+    @Results({
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="doctor_id", property="doctorId", jdbcType=JdbcType.INTEGER),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="prescription_type", property="prescriptionType", jdbcType=JdbcType.VARCHAR),
+        @Result(column="number", property="number", jdbcType=JdbcType.INTEGER),
+        @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
+        @Result(column="treatment", property="treatment", jdbcType=JdbcType.VARCHAR),
+        @Result(column="treatment_detail", property="treatmentDetail", jdbcType=JdbcType.VARCHAR),
+        @Result(column="doctor_advice", property="doctorAdvice", jdbcType=JdbcType.VARCHAR),
+        @Result(column="range", property="range", jdbcType=JdbcType.VARCHAR),
+        @Result(column="is_deleted", property="isDeleted", jdbcType=JdbcType.BIT)
+    })
+    List<TemplateHerb> selectByExample(TemplateHerbExample example);
+
+    @Select({
+        "select",
+        "id, name, doctor_id, create_time, prescription_type, number, method, treatment, ",
+        "treatment_detail, doctor_advice, range, is_deleted",
+        "from template_herb",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    @Results({
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="doctor_id", property="doctorId", jdbcType=JdbcType.INTEGER),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="prescription_type", property="prescriptionType", jdbcType=JdbcType.VARCHAR),
+        @Result(column="number", property="number", jdbcType=JdbcType.INTEGER),
+        @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
+        @Result(column="treatment", property="treatment", jdbcType=JdbcType.VARCHAR),
+        @Result(column="treatment_detail", property="treatmentDetail", jdbcType=JdbcType.VARCHAR),
+        @Result(column="doctor_advice", property="doctorAdvice", jdbcType=JdbcType.VARCHAR),
+        @Result(column="range", property="range", jdbcType=JdbcType.VARCHAR),
+        @Result(column="is_deleted", property="isDeleted", jdbcType=JdbcType.BIT)
+    })
+    TemplateHerb selectByPrimaryKey(Integer id);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table template_herb
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    TemplateHerb selectByPrimaryKeyWithLogicalDelete(@Param("id") Integer id, @Param("andLogicalDeleted") boolean andLogicalDeleted);
+
+    @UpdateProvider(type=TemplateHerbSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") TemplateHerb record, @Param("example") TemplateHerbExample example);
+
+    @UpdateProvider(type=TemplateHerbSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") TemplateHerb record, @Param("example") TemplateHerbExample example);
+
+    @UpdateProvider(type=TemplateHerbSqlProvider.class, method="updateByPrimaryKeySelective")
+    int updateByPrimaryKeySelective(TemplateHerb record);
+
+    @Update({
+        "update template_herb",
+        "set name = #{name,jdbcType=VARCHAR},",
+          "doctor_id = #{doctorId,jdbcType=INTEGER},",
+          "create_time = #{createTime,jdbcType=TIMESTAMP},",
+          "prescription_type = #{prescriptionType,jdbcType=VARCHAR},",
+          "number = #{number,jdbcType=INTEGER},",
+          "method = #{method,jdbcType=VARCHAR},",
+          "treatment = #{treatment,jdbcType=VARCHAR},",
+          "treatment_detail = #{treatmentDetail,jdbcType=VARCHAR},",
+          "doctor_advice = #{doctorAdvice,jdbcType=VARCHAR},",
+          "range = #{range,jdbcType=VARCHAR},",
+          "is_deleted = #{isDeleted,jdbcType=BIT}",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    int updateByPrimaryKey(TemplateHerb record);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table template_herb
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    int logicalDeleteByExample(@Param("example") TemplateHerbExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table template_herb
+     *
+     * @mbg.generated
+     * @project https://github.com/itfsw/mybatis-generator-plugin
+     */
+    int logicalDeleteByPrimaryKey(Integer id);
+}
