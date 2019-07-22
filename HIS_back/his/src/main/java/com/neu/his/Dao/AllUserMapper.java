@@ -3,13 +3,13 @@ package com.neu.his.Dao;
 import com.neu.his.entity.AllUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface AllUserMapper extends JpaRepository<AllUserEntity,Integer> {
     /**
-     * 获得指定科室下的所有医生
-     * @param ut
-     * @param d
+     * 获得所有医生
      * @return
      */
-    //public List<AllUserEntity> getAllUserEntitiesByUserTypeAndDeptIdAnd(int ut,int d);
+    public List<AllUserEntity> findAllByUserType(String ut);
 
 }

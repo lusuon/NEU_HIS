@@ -13,7 +13,7 @@ public class CategoryRegService {
     @Autowired
     CategoryRegMapper categoryRegMapper;
 
-    public List<CategoryRegEntity> getAll(){
+    public List<CategoryRegEntity> getAllCategoryReg(){
         return categoryRegMapper.findAll();
     }
 }
