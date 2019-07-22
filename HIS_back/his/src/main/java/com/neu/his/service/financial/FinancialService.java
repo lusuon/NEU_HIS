@@ -1,6 +1,6 @@
 package com.neu.his.service.financial;
 
-import com.neu.his.Dao.InvoiceMapper;
+import com.neu.his.Dao.interfaces.InvoiceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

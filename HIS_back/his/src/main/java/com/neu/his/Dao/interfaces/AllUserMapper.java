@@ -1,4 +1,4 @@
-package com.neu.his.Dao;
+package com.neu.his.Dao.interfaces;
 
 import com.neu.his.entity.AllUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +11,5 @@ public interface AllUserMapper extends JpaRepository<AllUserEntity,Integer> {
      * @return
      */
     public List<AllUserEntity> findAllByUserType(String ut);
-
+    public AllUserEntity findByUsername(String un);
 }

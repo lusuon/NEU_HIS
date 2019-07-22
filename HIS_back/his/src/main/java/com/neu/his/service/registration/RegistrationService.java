@@ -1,6 +1,10 @@
 package com.neu.his.service.registration;
 
-import com.neu.his.Dao.RegistrationMapper;
+import com.neu.his.Dao.impls.RegistrationImpl;
+import com.neu.his.Dao.interfaces.RegistrationMapper;
+
+
+import com.neu.his.entity.RegistrationEntity;
 import com.neu.his.entity.RegistrationEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +20,8 @@ import java.util.List;
 public class RegistrationService {
     @Autowired
     RegistrationMapper registrationMapper;
+
+
     /**
      * 根据病历号获取患者挂号记录;用户输入病历号，点击“搜索”，表格中列出当日，当前病历号下的所有挂号信息，
      * TODO:可以采用JSTL标签库的循环标签输出挂号列表，要求分页显示。
@@ -25,34 +31,22 @@ public class RegistrationService {
         return registrationMapper.findAllByCaseNo(c);
     }
 
+
+
     /**
-     * 选择某一行的挂号信息，点击退号，对退号操作进行校验，已经看诊的，不能退号，已经退号的，不能二次退号，退号成功，弹出提示框。
-     * “已退号”状态不能进行后续操作，如缴费，退费等
+     * 用于诊断页面，展示医生当天待诊 / 已诊断
+     * @return
      */
-    public boolean unregister(int unreg_id){
-        Configuration con = new Configuration();
-        con.configure();
-        SessionFactory sf = con.buildSessionFactory();
-        Session session= sf.openSession();
-        //2.设置查询过程字符串
-        String procName = "{call unreg(?)}";
-        //3.创建本地查询对象传入过程查询字符串
-        Query sqlquery = session.createSQLQuery(procName);
-        sqlquery.setParameter(0,unreg_id);
-        //5.执行过程返回结果集合回结果集合
-        List<Boolean> list = sqlquery.list();
-        //6.关闭session对象
-        session.close();
-        sf.close();
-        return list.get(0);
+    public List<RegistrationEntity> showPatientToSee(int doc_id) {
+        return registrationMapper.findPatients(doc_id,1);
     }
 
     /**
-     * 用于挂号页面，展示医生当天待诊 / 已诊断
+     * 用于诊断页面，展示医生当天已诊断
      * @return
      */
-    public List<RegistrationEntity> findAllRegistrationByCaseNo(Date d, int i){
-        return registrationMapper.findAllByRegTimeAndInspectionStatus(d,i);
+    public List<RegistrationEntity> showPatientSeen(int doc_id) {
+        return registrationMapper.findPatients(doc_id,2);
     }
 
     public RegistrationEntity findFirstByCaseNo(int c) {
@@ -69,37 +63,34 @@ public class RegistrationService {
 
 
     /**
-     * 调用挂号存储过程
+     * 调用注册存储过程
+     * @param reg_pid
+     * @param reg_name
+     * @param reg_sex
+     * @param reg_birth
+     * @param reg_addr
+     * @param reg_ins_date
+     * @param reg_noon
+     * @param reg_dept
+     * @param reg_doc
+     * @param reg_reg_level
+     * @param reg_settle
+     * @param reg_need
+     * @param reg_oper
      * @return
      */
-    public boolean register(String rpid,String rname,int rsex,String rbirth,String raddr,String rinsdate,String rnoon,int rdept,int rdoc,int rrlevel,int rsettle,int rneed,int roper){
-        ///1.获得session对象
-        Configuration con = new Configuration();
-        con.configure();
-        SessionFactory sf = con.buildSessionFactory();
-        Session session= sf.openSession();
-        //2.设置查询过程字符串
-        String procName = "{call reg(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-        //3.创建本地查询对象传入过程查询字符串
-        Query sqlquery = session.createSQLQuery(procName);
-        sqlquery.setParameter(0,rpid);
-        sqlquery.setParameter(1,rname);
-        sqlquery.setParameter(2,rsex);
-        sqlquery.setParameter(3,rbirth);
-        sqlquery.setParameter(4,raddr);
-        sqlquery.setParameter(5,rinsdate);
-        sqlquery.setParameter(6,rnoon);
-        sqlquery.setParameter(7,rdept);
-        sqlquery.setParameter(8,rdoc);
-        sqlquery.setParameter(9,rrlevel);
-        sqlquery.setParameter(10,rsettle);
-        sqlquery.setParameter(11,rneed);
-        sqlquery.setParameter(12,roper);
-        //5.执行过程返回结果集合回结果集合
-        List<Boolean> list = sqlquery.list();
-        //6.关闭session对象
-        session.close();
-        sf.close();
-        return list.get(0);
+    public boolean register(String reg_pid, String reg_name, int reg_sex, String reg_birth, String reg_addr, String reg_ins_date, String reg_noon, int reg_dept, int reg_doc, int reg_reg_level, int reg_settle, int reg_need, int reg_oper) {
+        return RegistrationImpl.register( reg_pid,  reg_name, reg_sex,  reg_birth,  reg_addr,  reg_ins_date,  reg_noon, reg_dept, reg_doc, reg_reg_level, reg_settle, reg_need, reg_oper);
     }
+
+    /**
+     * 调用退号存储过程
+     * @param unreg_id
+     * @return
+     */
+    public boolean unregister(int unreg_id) {
+        return RegistrationImpl.unregister(unreg_id);
+    }
+
+
 }

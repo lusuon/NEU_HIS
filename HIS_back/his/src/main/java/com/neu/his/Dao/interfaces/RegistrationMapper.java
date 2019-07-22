@@ -1,7 +1,10 @@
-package com.neu.his.Dao;
+package com.neu.his.Dao.interfaces;
 
 import com.neu.his.entity.RegistrationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -33,6 +36,13 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
      */
     public RegistrationEntity findTopByOrderByCaseNoDesc();
 
+    /**
+     * 找出该医生下待诊断 / 已诊断患者
+     * @param d
+     * @param i
+     * @return
+     */
+    @Query("select r from RegistrationEntity r where r.doctorId = ?1 and (r.seeDate = current_date) and r.inspectionStatus =?2 ")
+    List<RegistrationEntity> findPatients(int d,int i);
 
-    //public Integer reg(String rpid,String rname,int rsex,String rbirth,String raddr,String rinsdate,String rnoon,int rdept,int rdoc,int rrlevel,int rsettle,int rneed,int roper);
 }

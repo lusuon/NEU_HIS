@@ -2,6 +2,7 @@ package com.neu.his.controller.doctor;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
+import com.neu.his.service.doctor.DoctorService;
 import com.neu.his.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,23 +25,25 @@ public class SeeController {
     @Autowired
     RegistrationService registrationService;
     @Autowired
+    DoctorService doctorService;
+
 
 
     /**
      * 当日、未诊
      */
     @GetMapping("/doctor/toSee")
-    public CommonResponse showPatientToSee(){
-        List<RegistrationEntity> result;
-        return null;
+    public CommonResponse showPatientToSee(@RequestParam("doc_id") int doc_id){
+        List<RegistrationEntity> result = registrationService.showPatientToSee(doc_id);
+        return CommonResponse.succuess(result);
     }
     /**
      * 当日、以诊
      */
     @GetMapping("/doctor/seen")
-    public CommonResponse showPattientSeen(){
-        List<RegistrationEntity> result;
-        return null;
+    public CommonResponse showPatientSeen(@RequestParam("doc_id") int doc_id){
+        List<RegistrationEntity> result = registrationService.showPatientSeen(doc_id);
+        return CommonResponse.succuess(result);
     }
 
     /**
@@ -61,7 +64,18 @@ public class SeeController {
             @RequestParam(value="dia_res") String dia_res,
             @RequestParam(value="adv")String adv
     ){
-        boolean result = registrationService.see(unreg_id);
-        return result?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
+       boolean result = doctorService.see(reg_id,
+               sym,
+               cur_med_his,
+               cur_dis_tre,
+               med_his,
+               in_allergy,
+               bod_ins,
+               sug,
+               att,
+               ins_res,
+               dia_res,
+               adv);
+        return result?CommonResponse.succuess("Insert successfully"):CommonResponse.fail("Fail to unreg.");
     }
 }
