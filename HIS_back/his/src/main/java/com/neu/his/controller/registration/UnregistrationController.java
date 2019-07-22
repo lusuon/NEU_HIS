@@ -1,7 +1,7 @@
 package com.neu.his.controller.registration;
 
+import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.service.CategoryRegService;
 import com.neu.his.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,11 @@ public class UnregistrationController {
     @Autowired
     RegistrationService registrationService;
 
+    /**
+     * 根据病历号显示挂号信息
+     * @param c
+     * @return
+     */
     @GetMapping("/unregistration")
     public List<RegistrationEntity> getPatientRegistration(@RequestParam(value="case_no") int c){
         return registrationService.getRegistrationByCaseNo(c);
@@ -24,8 +29,11 @@ public class UnregistrationController {
     /**
      * 选择某一行的挂号信息，点击退号，对退号操作进行校验，已经看诊的，不能退号，已经退号的，不能二次退号，退号成功，弹出提示框。
      * “已退号”状态不能进行后续操作，如缴费，退费等
+     *  结果使用CommonResponse封装
      */
-    @PutMapping
-    public
+    @PutMapping("/unregistration")
+    public CommonResponse unregister(){
+        return null;
+    }
 
 }

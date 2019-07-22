@@ -26,13 +26,13 @@ public class SeeController {
      */
     @GetMapping("/doctor/toSee")
     public List<RegistrationEntity> showPatientToSee(){
-        return registrationService;
+        return null;
     }
     /**
      * 当日、以诊
      */
     @GetMapping("/doctor/seen")
     public List<RegistrationEntity> showPattientSeen(){
-        return registrationService;
+        return null;
     }
 }

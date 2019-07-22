@@ -20,4 +20,6 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
      * @return
      */
     public List<RegistrationEntity> findAllByRegTimeAndInspectionStatus(Date d,int i);
+
+    //public int unregister();
 }
