@@ -1,7 +1,7 @@
 package com.neu.his.controller.user;
 
 import com.neu.his.common.response.CommonResponse;
-import com.neu.his.service.LoginService;
+import com.neu.his.service.users.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

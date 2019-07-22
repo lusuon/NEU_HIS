@@ -1,4 +1,4 @@
-package com.neu.his.service;
+package com.neu.his.service.basic;
 
 import com.neu.his.Dao.DeptMapper;
 import com.neu.his.entity.DeptEntity;

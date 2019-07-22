@@ -1,4 +1,4 @@
-package com.neu.his.service;
+package com.neu.his.service.basic;
 
 import com.neu.his.Dao.CategoryRegMapper;
 import com.neu.his.entity.CategoryRegEntity;

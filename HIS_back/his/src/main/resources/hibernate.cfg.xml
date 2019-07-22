@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://127.0.0.1:3306/neu_his?serverTimezone=GMT%2B8</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">qpalzm</property>
+        <property name="connection.useUnicode">true</property>
+        <property name="connection.characterEncoding">UTF-8</property>
+        <mapping class="com.neu.his.entity.AllUserEntity"/>
+        <mapping class="com.neu.his.entity.CaseEntity"/>
+        <mapping class="com.neu.his.entity.CategoryConstantEntity"/>
+        <mapping class="com.neu.his.entity.CategoryDiseaseEntity"/>
+        <mapping class="com.neu.his.entity.CategoryPaymentEntity"/>
+        <mapping class="com.neu.his.entity.CategoryRegEntity"/>
+        <mapping class="com.neu.his.entity.CategorySettlementEntity"/>
+        <mapping class="com.neu.his.entity.ConstantEntity"/>
+        <mapping class="com.neu.his.entity.DeptEntity"/>
+        <mapping class="com.neu.his.entity.DiagnosisEntity"/>
+        <mapping class="com.neu.his.entity.DiseaseEntity"/>
+        <mapping class="com.neu.his.entity.DrugEntity"/>
+        <mapping class="com.neu.his.entity.InvoiceEntity"/>
+        <mapping class="com.neu.his.entity.NonDrugEntity"/>
+        <mapping class="com.neu.his.entity.NonDrugApplicationEntity"/>
+        <mapping class="com.neu.his.entity.OperatorSettlementEntity"/>
+        <mapping class="com.neu.his.entity.PaymentDtlEntity"/>
+        <mapping class="com.neu.his.entity.PrescriptionHerbEntity"/>
+        <mapping class="com.neu.his.entity.PrescriptionHerbDtlEntity"/>
+        <mapping class="com.neu.his.entity.PrescriptionMedicineEntity"/>
+        <mapping class="com.neu.his.entity.PrescriptionMedicineDtlEntity"/>
+        <mapping class="com.neu.his.entity.RegistrationEntity"/>
+        <mapping class="com.neu.his.entity.ScheduleEntity"/>
+        <mapping class="com.neu.his.entity.ScheduleRuleEntity"/>
+        <mapping class="com.neu.his.entity.TemplateDtlHerbEntity"/>
+        <mapping class="com.neu.his.entity.TemplateDtlMediEntity"/>
+        <mapping class="com.neu.his.entity.TemplateDtlNonDrugEntity"/>
+        <mapping class="com.neu.his.entity.TemplateHerbEntity"/>
+        <mapping class="com.neu.his.entity.TemplateMediEntity"/>
+        <mapping class="com.neu.his.entity.TemplateNonDrugEntity"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

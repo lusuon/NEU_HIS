@@ -1,4 +1,4 @@
-package com.neu.his.service;
+package com.neu.his.service.users;
 
 import com.neu.his.common.response.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;

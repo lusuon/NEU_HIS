@@ -2,7 +2,12 @@ package com.neu.his.controller.registration;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.service.*;
+import com.neu.his.service.basic.CategoryRegService;
+import com.neu.his.service.basic.ConstantService;
+import com.neu.his.service.basic.DeptService;
+import com.neu.his.service.financial.FinancialService;
+import com.neu.his.service.registration.RegistrationService;
+import com.neu.his.service.users.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+
 /**
- 1.5 使用病历号挂号，如果是第一次挂号，需要用户填写姓名，性别，出生日期，如果之前已经使用该病历号挂过号，输入病历号，直接列出以上用户信息。
- 1.6 点击“挂号”，使用JS实现表单验证，表单校验正确，提交表单，否则弹出错误提示信息，不提交表单。
- 1.7 保存挂号信息，为每次挂号生成系统唯一的挂号ID，挂号ID可以采用UUID生成，也可以采用数据库自增主键，挂号完成弹出成功提示。
+ * 实现挂号功能
  */
 @RestController
 public class RegistrationController {
@@ -59,6 +63,7 @@ public class RegistrationController {
     }
 
     /**
+     * 1.5 使用病历号挂号，如果是第一次挂号，需要用户填写姓名，性别，出生日期，如果之前已经使用该病历号挂过号，输入病历号，直接列出以上用户信息。
      * 根据病历号获取患者信息；前端需求，当返回响应对象的data字段为null，前端解除个人信息输入限制，允许输入个人信息创建病历
      * @param c
      * @return
@@ -73,10 +78,12 @@ public class RegistrationController {
 
 
     // restful 传参：http://liuyanwei.jumppo.com/2015/05/28/spring-2.html
-    // JPA调用存储过程：https://blog.csdn.net/chszs/article/details/50127823
-
+    // Hibernate 调用存储过程
     /**
-     * 挂号，直接调用存储过程\
+     *
+     1.6 点击“挂号”，使用JS实现表单验证，表单校验正确，提交表单，否则弹出错误提示信息，不提交表单。
+     1.7 保存挂号信息，为每次挂号生成系统唯一的挂号ID，挂号ID可以采用UUID生成，也可以采用数据库自增主键，挂号完成弹出成功提示。
+     * 挂号，直接调用存储过程
      * @return
      */
     @PostMapping("/registration")
@@ -95,7 +102,7 @@ public class RegistrationController {
             @RequestParam(value="reg_need") int reg_need,
             @RequestParam(value="reg_oper") int reg_oper
     ){
-        int result = registrationService.register(reg_pid,reg_name,reg_sex,reg_birth,reg_addr,reg_ins_date,reg_noon,reg_dept,reg_doc,reg_reg_level,reg_settle,reg_need,reg_oper);
-        return (result == 1)?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
+       boolean result = registrationService.register(reg_pid,reg_name,reg_sex,reg_birth,reg_addr,reg_ins_date,reg_noon,reg_dept,reg_doc,reg_reg_level,reg_settle,reg_need,reg_oper);
+       return result?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
     }
 }

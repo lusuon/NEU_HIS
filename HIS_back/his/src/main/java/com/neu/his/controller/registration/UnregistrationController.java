@@ -2,7 +2,7 @@ package com.neu.his.controller.registration;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.service.RegistrationService;
+import com.neu.his.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,8 +22,9 @@ public class UnregistrationController {
      * @return
      */
     @GetMapping("/unregistration")
-    public List<RegistrationEntity> getPatientRegistration(@RequestParam(value="case_no") int c){
-        return registrationService.findAllRegistrationByCaseNo(c);
+    public CommonResponse getPatientRegistration(@RequestParam(value="case_no") int c){
+        List<RegistrationEntity> result =  registrationService.findAllRegistrationByCaseNo(c);
+        return CommonResponse.succuess(result);
     }
 
     /**
@@ -32,8 +33,9 @@ public class UnregistrationController {
      *  结果使用CommonResponse封装
      */
     @PutMapping("/unregistration")
-    public CommonResponse unregister(){
-        return null;
+    public CommonResponse unregister(@RequestParam(value="unreg_id") int unreg_id){
+        boolean result = registrationService.unregister(unreg_id);
+        return result?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
     }
 
 }
