@@ -1,4 +1,4 @@
-package com.neu.his.controller;
+package com.neu.his.controller.registration;
 
 import com.neu.his.entity.RegistrationEntity;
 import com.neu.his.service.CategoryRegService;

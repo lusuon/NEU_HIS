@@ -1,4 +1,4 @@
-package com.neu.his.controller;
+package com.neu.his.controller.doctor;
 
 import com.neu.his.entity.RegistrationEntity;
 import com.neu.his.service.RegistrationService;
@@ -17,7 +17,7 @@ import java.util.List;
  * 3.5 保存后更改就诊信息，“已就诊”的患者不能执行退号操作
  */
 @RestController
-public class DoctorSeeController {
+public class SeeController {
     @Autowired
     RegistrationService registrationService;
 

@@ -5,6 +5,7 @@ import com.neu.his.entity.RegistrationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @Service
@@ -17,7 +18,7 @@ public class RegistrationService {
      * @return
      */
     public List<RegistrationEntity> getRegistrationByCaseNo(int c){
-        return registrationMapper.getByCaseNo(c);
+        return registrationMapper.findAllByCaseNo(c);
     }
 
     /**
@@ -25,5 +26,13 @@ public class RegistrationService {
      * “已退号”状态不能进行后续操作，如缴费，退费等
      */
     public void
+
+    /**
+     * 用于挂号页面，展示医生当天待诊 / 已诊断
+     * @return
+     */
+    public List<RegistrationEntity> getRegistrationByCaseNo(Data d, int i){
+        return registrationMapper.findAllByRegTimeAndInspectionStatus(d,i));
+    }
 
 }

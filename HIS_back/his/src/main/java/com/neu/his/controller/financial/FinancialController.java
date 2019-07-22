@@ -1,4 +1,4 @@
-package com.neu.his.controller;
+package com.neu.his.controller.financial;
 
 import org.springframework.web.bind.annotation.RestController;
 
