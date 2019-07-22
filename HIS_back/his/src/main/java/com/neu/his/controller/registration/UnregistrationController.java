@@ -23,7 +23,7 @@ public class UnregistrationController {
      */
     @GetMapping("/unregistration")
     public List<RegistrationEntity> getPatientRegistration(@RequestParam(value="case_no") int c){
-        return registrationService.getRegistrationByCaseNo(c);
+        return registrationService.findAllRegistrationByCaseNo(c);
     }
 
     /**
