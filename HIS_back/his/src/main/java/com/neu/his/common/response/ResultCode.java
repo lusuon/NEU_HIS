@@ -5,8 +5,8 @@ package com.neu.his.common.response;
  */
 public enum ResultCode {
     /* 成功状态码 */
-    SUCCESS(0, "Request is successful"),
-    FAIL(1, "Request is failed"),
+    SUCCESS(200, "Request is successful"),
+    FAIL(500, "Request is failed"),
     TOKEN_INVALID(40001, "Token is null or invalid"),
     ACCESS_DENIED(40003, "Access denied"),
     FAIL4DELETE(50001, "Delete failed"),

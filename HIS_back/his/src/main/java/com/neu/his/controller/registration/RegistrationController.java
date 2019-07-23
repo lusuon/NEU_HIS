@@ -2,6 +2,7 @@ package com.neu.his.controller.registration;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
+import com.neu.his.requestBodyClass.Patient;
 import com.neu.his.service.basic.CategoryRegService;
 import com.neu.his.service.basic.ConstantService;
 import com.neu.his.service.basic.DeptService;
@@ -9,15 +10,13 @@ import com.neu.his.service.financial.FinancialService;
 import com.neu.his.service.registration.RegistrationService;
 import com.neu.his.service.users.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
- * 实现挂号功能
+ * 实现挂号、退号功能
  */
 @RestController
 public class RegistrationController {
@@ -45,7 +44,7 @@ public class RegistrationController {
      *
      * @return
      */
-    @GetMapping("/registration/basic")
+    @GetMapping("/api/registration/basic")
     public CommonResponse getBasicInfo(){
         HashMap<String,Object> info = new HashMap<>();
         // 初始化性别
@@ -65,15 +64,21 @@ public class RegistrationController {
     /**
      * 1.5 使用病历号挂号，如果是第一次挂号，需要用户填写姓名，性别，出生日期，如果之前已经使用该病历号挂过号，输入病历号，直接列出以上用户信息。
      * 根据病历号获取患者信息；前端需求，当返回响应对象的data字段为null，前端解除个人信息输入限制，允许输入个人信息创建病历
-     * @param c
-     * @return
+     *
      */
-    @GetMapping("/registration/patient")
-    public CommonResponse getPatientInfo(
-            @RequestParam(value="case_no")int c
-    ){
-        RegistrationEntity patientRecord = registrationService.findFirstByCaseNo(c);
+    @GetMapping("/api/registration/first/{case_no}")
+    public CommonResponse getPatientInfo(@PathVariable("case_no") int case_no){
+        RegistrationEntity patientRecord = registrationService.findFirstByCaseNo(case_no);
         return CommonResponse.succuess(patientRecord);
+    }
+
+    /**
+     * 根据病历号显示所有挂号信息
+     */
+    @GetMapping("/api/unregistration/all/{case_no}")
+    public CommonResponse getPatientRegistrationRecord(@PathVariable("case_no") int case_no){
+        List<RegistrationEntity> result =  registrationService.findAllRegistrationByCaseNo(case_no);
+        return CommonResponse.succuess(result);
     }
 
 
@@ -86,23 +91,37 @@ public class RegistrationController {
      * 挂号，直接调用存储过程
      * @return
      */
-    @PostMapping("/registration")
+    @PostMapping("/api/registration")
     public CommonResponse register(
-            @RequestParam(value="reg_pid") String reg_pid,
-            @RequestParam(value="reg_name") String reg_name,
-            @RequestParam(value="reg_sex") int reg_sex,
-            @RequestParam(value="reg_birth") String reg_birth,
-            @RequestParam(value="reg_addr") String reg_addr,
-            @RequestParam(value="reg_ins_date") String reg_ins_date,
-            @RequestParam(value="reg_noon") String reg_noon,
-            @RequestParam(value="reg_dept") int reg_dept,
-            @RequestParam(value="reg_doc") int reg_doc,
-            @RequestParam(value="reg_reg_level") int reg_reg_level,
-            @RequestParam(value="reg_settle") int reg_settle,
-            @RequestParam(value="reg_need") int reg_need,
-            @RequestParam(value="reg_oper") int reg_oper
+            @RequestBody RegistrationInfo registrationInfo
     ){
+        @RequestParam(value="reg_pid") String reg_pid,
+        @RequestParam(value="reg_name") String reg_name,
+        @RequestParam(value="reg_sex") int reg_sex,
+        @RequestParam(value="reg_birth") String reg_birth,
+        @RequestParam(value="reg_addr") String reg_addr,
+        @RequestParam(value="reg_ins_date") String reg_ins_date,
+        @RequestParam(value="reg_noon") String reg_noon,
+        @RequestParam(value="reg_dept") int reg_dept,
+        @RequestParam(value="reg_doc") int reg_doc,
+        @RequestParam(value="reg_reg_level") int reg_reg_level,
+        @RequestParam(value="reg_settle") int reg_settle,
+        @RequestParam(value="reg_need") int reg_need,
+        @RequestParam(value="reg_oper") int reg_oper
        boolean result = registrationService.register(reg_pid,reg_name,reg_sex,reg_birth,reg_addr,reg_ins_date,reg_noon,reg_dept,reg_doc,reg_reg_level,reg_settle,reg_need,reg_oper);
        return result?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
+    }
+
+
+
+    /**
+     * 选择某一行的挂号信息，点击退号，对退号操作进行校验，已经看诊的，不能退号，已经退号的，不能二次退号，退号成功，弹出提示框。
+     * “已退号”状态不能进行后续操作，如缴费，退费等
+     *  结果使用CommonResponse封装
+     */
+    @PutMapping("/api/unregistration/{id}")
+    public CommonResponse unregister(@PathVariable("id") int unreg_id){
+        boolean result = registrationService.unregister(unreg_id);
+        return result?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
     }
 }
