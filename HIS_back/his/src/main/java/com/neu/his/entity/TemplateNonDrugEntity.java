@@ -10,7 +10,7 @@ public class TemplateNonDrugEntity {
     private String name;
     private int doctorId;
     private Date createTime;
-    private String range;
+    private int range;
     private int recordCategory;
     private byte isDeleted;
 
@@ -56,11 +56,11 @@ public class TemplateNonDrugEntity {
 
     @Basic
     @Column(name = "range")
-    public String getRange() {
+    public int getRange() {
         return range;
     }
 
-    public void setRange(String range) {
+    public void setRange(int range) {
         this.range = range;
     }
 
@@ -97,7 +97,7 @@ public class TemplateNonDrugEntity {
         if (isDeleted != that.isDeleted) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        if (range != null ? !range.equals(that.range) : that.range != null) return false;
+        if (range != that.range) return false;
 
         return true;
     }
@@ -108,7 +108,7 @@ public class TemplateNonDrugEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + doctorId;
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (range != null ? range.hashCode() : 0);
+        result = 31 * result + range;
         result = 31 * result + recordCategory;
         result = 31 * result + (int) isDeleted;
         return result;

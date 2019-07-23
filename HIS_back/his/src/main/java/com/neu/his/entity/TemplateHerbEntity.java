@@ -16,7 +16,7 @@ public class TemplateHerbEntity {
     private String treatment;
     private String treatmentDetail;
     private String doctorAdvice;
-    private String range;
+    private int range;
     private byte isDeleted;
 
     @Id
@@ -121,11 +121,11 @@ public class TemplateHerbEntity {
 
     @Basic
     @Column(name = "range")
-    public String getRange() {
+    public int getRange() {
         return range;
     }
 
-    public void setRange(String range) {
+    public void setRange(int range) {
         this.range = range;
     }
 
@@ -159,7 +159,7 @@ public class TemplateHerbEntity {
         if (treatmentDetail != null ? !treatmentDetail.equals(that.treatmentDetail) : that.treatmentDetail != null)
             return false;
         if (doctorAdvice != null ? !doctorAdvice.equals(that.doctorAdvice) : that.doctorAdvice != null) return false;
-        if (range != null ? !range.equals(that.range) : that.range != null) return false;
+        if (range != that.range) return false;
 
         return true;
     }
@@ -176,7 +176,7 @@ public class TemplateHerbEntity {
         result = 31 * result + (treatment != null ? treatment.hashCode() : 0);
         result = 31 * result + (treatmentDetail != null ? treatmentDetail.hashCode() : 0);
         result = 31 * result + (doctorAdvice != null ? doctorAdvice.hashCode() : 0);
-        result = 31 * result + (range != null ? range.hashCode() : 0);
+        result = 31 * result + range;
         result = 31 * result + (int) isDeleted;
         return result;
     }

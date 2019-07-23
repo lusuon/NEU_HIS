@@ -1,15 +1,16 @@
 package com.neu.his.service.doctor;
 
 import com.neu.his.Dao.interfaces.CaseMapper;
+import com.neu.his.Dao.interfaces.Prescriptions.PrescriptionMedicineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DoctorService {
     @Autowired
     CaseMapper caseMapper;
-
+    @Autowired
+    PrescriptionMedicineMapper prescriptionMedicineMapper;
     /**
      * 录入诊断信息
      * @return
@@ -39,5 +40,16 @@ public class DoctorService {
                 dia_res,
                 adv
         );
+    }
+
+    /**
+     * 开药（目前只支持成药）
+     * @param rid
+     * @param gpn
+     * @param list
+     * @return
+     */
+    public boolean apply(int rid,String gpn,String list){
+        return prescriptionMedicineMapper.apply(rid,gpn,list);
     }
 }

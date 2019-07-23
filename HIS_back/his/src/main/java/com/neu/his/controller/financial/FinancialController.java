@@ -1,9 +1,19 @@
 package com.neu.his.controller.financial;
 
+import com.neu.his.common.response.CommonResponse;
+import com.neu.his.service.financial.FinancialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class FinancialController {
+    @Autowired
+    FinancialService financialService;
     /**
      * 5. 完成收费功能（必做，参考界面如下）
      *
@@ -15,4 +25,25 @@ public class FinancialController {
      * 5.4 点击“收费”，保存收费信息到数据库。
      */
 
+    /**
+     * 根据病历号，获取病人信息
+     * @param c
+     * @return
+     */
+    @GetMapping("/pay")
+    public CommonResponse getPatientUnPayDtl(@RequestParam("case_no") int c){
+        List<Object> result = financialService.getPatientUnPayMedicineDtl(c);
+        return CommonResponse.succuess(result);
+    }
+
+    @PostMapping("/pay")
+    public CommonResponse pay(
+            @RequestParam("pid")int pid,
+            @RequestParam("oid") int oid,
+            @RequestParam("ityp") int ityp,
+            @RequestParam("ptyp") int ptyp
+    ){
+        boolean result = financialService.pay(pid,oid,ityp,ptyp);
+        return result?CommonResponse.succuess():CommonResponse.fail("Fail to pay.");
+    }
 }

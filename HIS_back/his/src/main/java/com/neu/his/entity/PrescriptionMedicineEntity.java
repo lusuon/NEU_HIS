@@ -12,7 +12,7 @@ public class PrescriptionMedicineEntity {
     private int doctorId;
     private String prescriptionName;
     private Date generateTime;
-    private String prescriptionStatus;
+    private int prescriptionStatus;
     private byte isDeleted;
 
     @Id
@@ -77,11 +77,11 @@ public class PrescriptionMedicineEntity {
 
     @Basic
     @Column(name = "prescription_status")
-    public String getPrescriptionStatus() {
+    public int getPrescriptionStatus() {
         return prescriptionStatus;
     }
 
-    public void setPrescriptionStatus(String prescriptionStatus) {
+    public void setPrescriptionStatus(int prescriptionStatus) {
         this.prescriptionStatus = prescriptionStatus;
     }
 
@@ -110,7 +110,7 @@ public class PrescriptionMedicineEntity {
         if (prescriptionName != null ? !prescriptionName.equals(that.prescriptionName) : that.prescriptionName != null)
             return false;
         if (generateTime != null ? !generateTime.equals(that.generateTime) : that.generateTime != null) return false;
-        if (prescriptionStatus != null ? !prescriptionStatus.equals(that.prescriptionStatus) : that.prescriptionStatus != null)
+        if (prescriptionStatus != that.prescriptionStatus)
             return false;
 
         return true;
@@ -124,7 +124,7 @@ public class PrescriptionMedicineEntity {
         result = 31 * result + doctorId;
         result = 31 * result + (prescriptionName != null ? prescriptionName.hashCode() : 0);
         result = 31 * result + (generateTime != null ? generateTime.hashCode() : 0);
-        result = 31 * result + (prescriptionStatus != null ? prescriptionStatus.hashCode() : 0);
+        result = 31 * result + prescriptionStatus;
         result = 31 * result + (int) isDeleted;
         return result;
     }
