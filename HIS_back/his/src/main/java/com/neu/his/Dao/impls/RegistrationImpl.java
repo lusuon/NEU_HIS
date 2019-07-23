@@ -1,7 +1,6 @@
-package com.neu.his.Dao.impls;
+package com.neu.his.dao.impls;
 
-import com.neu.his.Dao.interfaces.RegistrationMapper;
-import com.neu.his.entity.RegistrationEntity;
+import com.neu.his.dao.interfaces.RegistrationMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -1,4 +1,4 @@
-package com.neu.his.Dao.interfaces.templates;
+package com.neu.his.dao.interfaces.templates;
 
 import com.neu.his.entity.TemplateDtlHerbEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

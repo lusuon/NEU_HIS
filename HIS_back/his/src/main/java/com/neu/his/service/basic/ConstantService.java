@@ -1,7 +1,7 @@
 package com.neu.his.service.basic;
 
 
-import com.neu.his.Dao.interfaces.ConstantMapper;
+import com.neu.his.dao.interfaces.ConstantMapper;
 import com.neu.his.entity.ConstantEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

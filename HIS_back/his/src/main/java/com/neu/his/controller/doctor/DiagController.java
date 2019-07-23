@@ -2,13 +2,11 @@ package com.neu.his.controller.doctor;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
+import com.neu.his.requestBody.doctor.DiagBody;
 import com.neu.his.service.doctor.DoctorService;
 import com.neu.his.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
  * 3.5 保存后更改就诊信息，“已就诊”的患者不能执行退号操作
  */
 @RestController
-public class SeeController {
+public class DiagController {
     @Autowired
     RegistrationService registrationService;
     @Autowired
@@ -32,16 +30,16 @@ public class SeeController {
     /**
      * 当日、未诊
      */
-    @GetMapping("/doctor/toSee")
-    public CommonResponse showPatientToSee(@RequestParam("doc_id") int doc_id){
+    @GetMapping("/doctor/{doc_id}/toSee")
+    public CommonResponse showPatientToSee(@PathVariable("doc_id") int doc_id){
         List<RegistrationEntity> result = registrationService.showPatientToSee(doc_id);
         return CommonResponse.succuess(result);
     }
     /**
      * 当日、以诊
      */
-    @GetMapping("/doctor/seen")
-    public CommonResponse showPatientSeen(@RequestParam("doc_id") int doc_id){
+    @GetMapping("/doctor/{doc_id}/seen")
+    public CommonResponse showPatientSeen(@PathVariable("doc_id") int doc_id){
         List<RegistrationEntity> result = registrationService.showPatientSeen(doc_id);
         return CommonResponse.succuess(result);
     }
@@ -50,32 +48,21 @@ public class SeeController {
      * 调用存储过程记录诊断
      */
     @PostMapping("/doctor/see")
-    public CommonResponse see(
-            @RequestParam(value="reg_id") int reg_id,
-            @RequestParam(value="sym") String sym,
-            @RequestParam(value="cur_med_his") String cur_med_his,
-            @RequestParam(value="cur_dis_tre") String cur_dis_tre,
-            @RequestParam(value="med_his") String med_his,
-            @RequestParam(value="in_allergy") String in_allergy,
-            @RequestParam(value="bod_ins") String bod_ins,
-            @RequestParam(value="sug") String sug,
-            @RequestParam(value="att") String att,
-            @RequestParam(value="ins_res") String ins_res,
-            @RequestParam(value="dia_res") String dia_res,
-            @RequestParam(value="adv")String adv
-    ){
-       boolean result = doctorService.see(reg_id,
-               sym,
-               cur_med_his,
-               cur_dis_tre,
-               med_his,
-               in_allergy,
-               bod_ins,
-               sug,
-               att,
-               ins_res,
-               dia_res,
-               adv);
+    public CommonResponse diag(@RequestBody DiagBody diagBody){
+       boolean result = doctorService.see(
+               diagBody.getReg_id(),
+               diagBody.getSym(),
+               diagBody.getCur_med_his(),
+               diagBody.getCur_dis_tre(),
+               diagBody.getMed_his(),
+               diagBody.getIn_allergy(),
+               diagBody.getBod_ins(),
+               diagBody.getSug(),
+               diagBody.getAtt(),
+               diagBody.getIns_res(),
+               diagBody.getDia_res(),
+               diagBody.getAdv()
+       );
         return result?CommonResponse.succuess("Insert successfully"):CommonResponse.fail("Fail to unreg.");
     }
 }

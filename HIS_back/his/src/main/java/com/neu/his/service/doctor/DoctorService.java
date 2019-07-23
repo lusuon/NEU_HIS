@@ -1,7 +1,7 @@
 package com.neu.his.service.doctor;
 
-import com.neu.his.Dao.interfaces.CaseMapper;
-import com.neu.his.Dao.interfaces.Prescriptions.PrescriptionMedicineMapper;
+import com.neu.his.dao.interfaces.CaseMapper;
+import com.neu.his.dao.interfaces.Prescriptions.PrescriptionMedicineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

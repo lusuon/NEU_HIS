@@ -1,12 +1,10 @@
 package com.neu.his.controller.financial;
 
 import com.neu.his.common.response.CommonResponse;
+import com.neu.his.requestBody.financial.PaymentBody;
 import com.neu.his.service.financial.FinancialService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,23 +25,22 @@ public class FinancialController {
 
     /**
      * 根据病历号，获取病人信息
-     * @param c
      * @return
      */
-    @GetMapping("/pay")
-    public CommonResponse getPatientUnPayDtl(@RequestParam("case_no") int c){
-        List<Object> result = financialService.getPatientUnPayMedicineDtl(c);
+    @GetMapping("/api/payment/{case_no}")
+    public CommonResponse getPatientUnPayDtl(@PathVariable("case_no") int case_no){
+        List<Object> result = financialService.getPatientUnPayMedicineDtl(case_no);
         return CommonResponse.succuess(result);
     }
 
-    @PostMapping("/pay")
-    public CommonResponse pay(
-            @RequestParam("pid")int pid,
-            @RequestParam("oid") int oid,
-            @RequestParam("ityp") int ityp,
-            @RequestParam("ptyp") int ptyp
-    ){
-        boolean result = financialService.pay(pid,oid,ityp,ptyp);
+    /**
+     * 输入处方id进行缴费
+     *
+     * @return
+     */
+    @PostMapping("/api/payment")
+    public CommonResponse pay(@RequestBody PaymentBody pb){
+        boolean result = financialService.pay(pb.getPid(),pb.getOid(),pb.getItyp(),pb.getPtyp());
         return result?CommonResponse.succuess():CommonResponse.fail("Fail to pay.");
     }
 }

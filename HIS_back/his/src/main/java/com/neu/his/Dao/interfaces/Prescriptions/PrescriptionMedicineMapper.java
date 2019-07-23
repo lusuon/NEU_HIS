@@ -1,4 +1,4 @@
-package com.neu.his.Dao.interfaces.Prescriptions;
+package com.neu.his.dao.interfaces.Prescriptions;
 
 import com.neu.his.entity.PrescriptionMedicineEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

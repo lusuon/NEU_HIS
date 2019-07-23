@@ -2,7 +2,7 @@ package com.neu.his.controller.registration;
 
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.requestBodyClass.Patient;
+import com.neu.his.requestBody.registration.RegistrationBody;
 import com.neu.his.service.basic.CategoryRegService;
 import com.neu.his.service.basic.ConstantService;
 import com.neu.his.service.basic.DeptService;
@@ -93,22 +93,23 @@ public class RegistrationController {
      */
     @PostMapping("/api/registration")
     public CommonResponse register(
-            @RequestBody RegistrationInfo registrationInfo
+            @RequestBody RegistrationBody r
     ){
-        @RequestParam(value="reg_pid") String reg_pid,
-        @RequestParam(value="reg_name") String reg_name,
-        @RequestParam(value="reg_sex") int reg_sex,
-        @RequestParam(value="reg_birth") String reg_birth,
-        @RequestParam(value="reg_addr") String reg_addr,
-        @RequestParam(value="reg_ins_date") String reg_ins_date,
-        @RequestParam(value="reg_noon") String reg_noon,
-        @RequestParam(value="reg_dept") int reg_dept,
-        @RequestParam(value="reg_doc") int reg_doc,
-        @RequestParam(value="reg_reg_level") int reg_reg_level,
-        @RequestParam(value="reg_settle") int reg_settle,
-        @RequestParam(value="reg_need") int reg_need,
-        @RequestParam(value="reg_oper") int reg_oper
-       boolean result = registrationService.register(reg_pid,reg_name,reg_sex,reg_birth,reg_addr,reg_ins_date,reg_noon,reg_dept,reg_doc,reg_reg_level,reg_settle,reg_need,reg_oper);
+       boolean result = registrationService.register(
+               r.getReg_pid(),
+               r.getReg_name(),
+               r.getReg_sex(),
+               r.getReg_birth(),
+               r.getReg_addr(),
+               r.getReg_ins_date(),
+               r.getReg_noon(),
+               r.getReg_dept(),
+               r.getReg_doc(),
+               r.getReg_reg_level(),
+               r.getReg_settle(),
+               r.getReg_need(),
+               r.getReg_oper()
+       );
        return result?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
     }
 

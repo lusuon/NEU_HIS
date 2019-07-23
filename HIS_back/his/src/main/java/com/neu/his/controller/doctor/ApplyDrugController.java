@@ -1,14 +1,12 @@
 package com.neu.his.controller.doctor;
 
 import com.neu.his.common.response.CommonResponse;
+import com.neu.his.requestBody.doctor.ApplyBody;
 import com.neu.his.service.doctor.DoctorService;
 import com.neu.his.service.doctor.TemplateDtlService;
 import com.neu.his.service.doctor.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 医生开药
@@ -24,32 +22,28 @@ public class ApplyDrugController {
 
     /**
      * 获取医生可用处方
-     * @param doc
      * @return
      */
-    @GetMapping("/apply")
-    public CommonResponse findUsableTemplate(@RequestParam("doc_id") int doc){
-        return CommonResponse.succuess(templateService.findUsableTemplates(doc));
+    @GetMapping("/api/doctor/{doc_id}/apply/template")
+    public CommonResponse findUsableTemplate(@PathVariable("doc_id") int doc_id){
+        return CommonResponse.succuess(templateService.findUsableTemplates(doc_id));
     }
-
-
 
     /**
      * 根据模板号显示模板明细
      */
-    @GetMapping("/apply/detail")
+    @GetMapping("/api/template/{type}/{id}/Dtl")
     public CommonResponse showDtl(
-            @RequestParam("template_type") String t,
-            @RequestParam("template_id") int i
+            @PathVariable("type") String t,
+            @PathVariable("id") int i
     ){
-        if (t.equals("h")) {
+        if (t.equals("herb")) {
             return CommonResponse.succuess(templateDtlService.getTemplateDtlHerb(i));
-        }else if (t.equals("m")){
+        }else if (t.equals("medi")){
             return CommonResponse.succuess(templateDtlService.getTemplateDtlMedi(i));
-        }else if (t.equals("n")){
+        }else if (t.equals("nonDrug")){
             return CommonResponse.succuess(templateDtlService.getTemplateDtlNonDrug(i));
-        }
-        else{
+        }else{
             return CommonResponse.fail("无效参数");
         }
     }
@@ -57,12 +51,8 @@ public class ApplyDrugController {
     /**
      *  根据
      */
-    @PostMapping("/apply")
-    public CommonResponse apply(
-            @RequestParam("rid") int rid,
-            @RequestParam("gpn") String gpn,
-            @RequestParam("list") String list
-    ){
-        return doctorService.apply(rid,gpn,list)?CommonResponse.succuess("OK"):CommonResponse.fail("Fail.");
+    @PostMapping("/api/doctor/apply")
+    public CommonResponse apply(@RequestBody ApplyBody applyBody){
+        return doctorService.apply(applyBody.getRid(),applyBody.getGpn(),applyBody.getList())?CommonResponse.succuess("OK"):CommonResponse.fail("Fail.");
     }
 }

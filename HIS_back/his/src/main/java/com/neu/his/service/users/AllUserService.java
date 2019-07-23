@@ -1,6 +1,6 @@
 package com.neu.his.service.users;
 
-import com.neu.his.Dao.interfaces.AllUserMapper;
+import com.neu.his.dao.interfaces.AllUserMapper;
 import com.neu.his.entity.AllUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

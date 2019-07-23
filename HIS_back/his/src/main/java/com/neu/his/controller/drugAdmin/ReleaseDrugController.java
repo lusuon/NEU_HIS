@@ -1,12 +1,10 @@
 package com.neu.his.controller.drugAdmin;
 
 import com.neu.his.common.response.CommonResponse;
+import com.neu.his.requestBody.drugAdmin.ReleaseDrugBody;
 import com.neu.his.service.drug.DrugService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +18,9 @@ public class ReleaseDrugController {
     @Autowired
     DrugService drugService;
 
-    @GetMapping("/drug")
-    public CommonResponse getDrugToRelease(@RequestParam("case_no") int c){
-        List<Object> result = drugService.findAllToReleaseDrugs(c);
+    @GetMapping("/api/drug/toRelease/{case_no}")
+    public CommonResponse getDrugToRelease(@PathVariable("case_no") int case_no){
+        List<Object> result = drugService.findAllToReleaseDrugs(case_no);
         return CommonResponse.succuess(result);
     }
 
@@ -30,9 +28,9 @@ public class ReleaseDrugController {
      * 发药，入参为pid组成的，以逗号分隔字符串
      * @return
      */
-    @PutMapping("/drug/release")
-    public CommonResponse releaseDrugs(@RequestParam("pids") String pidstr){
-        String[] pstr = pidstr.split(",");
+    @PutMapping("/api/drug/release")
+    public CommonResponse releaseDrugs(@RequestBody ReleaseDrugBody rb){
+        String[] pstr = rb.getList().split(",");
         ArrayList<Integer> pids = new ArrayList<>();
         for(String pst :pstr){
             pids.add(Integer.parseInt(pst));

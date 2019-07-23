@@ -1,4 +1,4 @@
-package com.neu.his.Dao.interfaces.financial;
+package com.neu.his.dao.interfaces.financial;
 
 import com.neu.his.entity.InvoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

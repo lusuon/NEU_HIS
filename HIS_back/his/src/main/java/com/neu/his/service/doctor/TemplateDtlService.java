@@ -1,8 +1,8 @@
 package com.neu.his.service.doctor;
 
-import com.neu.his.Dao.interfaces.templates.TemplateDtlHerbMapper;
-import com.neu.his.Dao.interfaces.templates.TemplateDtlMediMapper;
-import com.neu.his.Dao.interfaces.templates.TemplateDtlNonDrugMapper;
+import com.neu.his.dao.interfaces.templates.TemplateDtlHerbMapper;
+import com.neu.his.dao.interfaces.templates.TemplateDtlMediMapper;
+import com.neu.his.dao.interfaces.templates.TemplateDtlNonDrugMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

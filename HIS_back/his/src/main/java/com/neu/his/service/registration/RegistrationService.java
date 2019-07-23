@@ -1,19 +1,13 @@
 package com.neu.his.service.registration;
 
-import com.neu.his.Dao.impls.RegistrationImpl;
-import com.neu.his.Dao.interfaces.RegistrationMapper;
+import com.neu.his.dao.impls.RegistrationImpl;
+import com.neu.his.dao.interfaces.RegistrationMapper;
 
 
 import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.entity.RegistrationEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,9 +31,7 @@ public class RegistrationService {
      * 用于诊断页面，展示医生当天待诊 / 已诊断
      * @return
      */
-    public List<RegistrationEntity> showPatientToSee(int doc_id) {
-        return registrationMapper.findPatients(doc_id,1);
-    }
+    public List<RegistrationEntity> showPatientToSee(int doc_id) {return registrationMapper.findPatients(doc_id,1);}
 
     /**
      * 用于诊断页面，展示医生当天已诊断
