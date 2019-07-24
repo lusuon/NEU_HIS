@@ -24,7 +24,7 @@ public class ApplyDrugController {
      * 获取医生可用处方
      * @return
      */
-    @GetMapping("/api/doctor/{doc_id}/apply/template")
+    @GetMapping("/api/doctor/{doc_id}/template")
     public CommonResponse findUsableTemplate(@PathVariable("doc_id") int doc_id){
         return CommonResponse.succuess(templateService.findUsableTemplates(doc_id));
     }

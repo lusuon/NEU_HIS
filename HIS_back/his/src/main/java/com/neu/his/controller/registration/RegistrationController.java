@@ -75,7 +75,7 @@ public class RegistrationController {
     /**
      * 根据病历号显示所有挂号信息
      */
-    @GetMapping("/api/unregistration/all/{case_no}")
+    @GetMapping("/api/registration/all/{case_no}")
     public CommonResponse getPatientRegistrationRecord(@PathVariable("case_no") int case_no){
         List<RegistrationEntity> result =  registrationService.findAllRegistrationByCaseNo(case_no);
         return CommonResponse.succuess(result);
@@ -91,7 +91,7 @@ public class RegistrationController {
      * 挂号，直接调用存储过程
      * @return
      */
-    @PostMapping("/api/registration")
+    @PostMapping("/api/registration/reg")
     public CommonResponse register(
             @RequestBody RegistrationBody r
     ){
@@ -120,7 +120,7 @@ public class RegistrationController {
      * “已退号”状态不能进行后续操作，如缴费，退费等
      *  结果使用CommonResponse封装
      */
-    @PutMapping("/api/unregistration/{id}")
+    @PutMapping("/api/registration/unerg/{id}")
     public CommonResponse unregister(@PathVariable("id") int unreg_id){
         int result = registrationService.unregister(unreg_id);
         return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
