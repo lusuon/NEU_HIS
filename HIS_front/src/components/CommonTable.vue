@@ -1,16 +1,20 @@
 <template>
-  <el-table :data="data_list">
-    <el-table-column :label="date" v-for="(date, key) in header">
-      <template scope="scope">{{data_list[scope.$index][key]}}</template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <h1>{{name}}</h1>
+    <h2>表格在下面</h2>
+    <el-table :data="data_list">
+      <el-table-column :label="header" v-for="(header, key) in tableHeaders">
+        <template scope="scope">{{data_list[scope.$index][key]}}</template>
+      </el-table-column>
+    </el-table>
+    <h2>表格在上面</h2>
+  </div>
 </template>
 <script>
 export default {
+  props: ['tableHeaders', 'name', 'data_list'],
   data () {
     return {
-      header: ['column1', 'column2', 'column3'],
-      data_list: [[1, 2, 3], [4, 5, 6]]
     }
   }
 }

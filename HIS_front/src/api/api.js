@@ -20,7 +20,7 @@ export const getBasicInfo = () => { return axios.get(`${regURL}/basic`) }
 // 根据病历号获取患者信息
 export const getPatientInfo = caseNo => { return axios.get(`${regURL}/first/${caseNo}`) }
 // 根据病历号获取所有挂号记录
-export const getAllPatientInfo = caseNo => { return axios.get(`${reg}/all/${caseNo}`) }
+export const getAllPatientInfo = caseNo => { return axios.get(`${regURL}/all/${caseNo}`) }
 
 // POST
 // 提交挂号信息，未测试

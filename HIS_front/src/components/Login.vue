@@ -25,8 +25,7 @@ export default {
   },
   methods: {
     login () {
-      this.$api.user
-        .login({
+      this.$api.login({
           user: this.loginForm.username,
           pass: this.loginForm.password
         })
@@ -40,6 +39,5 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 </style>
