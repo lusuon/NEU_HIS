@@ -1,0 +1,82 @@
+import axios from '@/utils/http' // 导入http中创建的axios实例
+/**
+ * 接口域名的管理
+ */
+
+const baseURL = '/api'
+const doctorURL = baseURL + '/doctor'
+const templateURL = baseURL + '/template'
+const drugURL = baseURL + '/drug'
+const loginURL = baseURL + '/login'
+const payURL = baseURL + '/payment'
+const regURL = baseURL + '/registration'
+
+/**
+ * 挂号操作员
+ */
+// GET
+// 基础信息
+export const getBasicInfo = () => { return axios.get(`${regURL}/basic`) }
+// 根据病历号获取患者信息
+export const getPatientInfo = caseNo => { return axios.get(`${regURL}/first/${caseNo}`) }
+// 根据病历号获取所有挂号记录
+export const getAllPatientInfo = caseNo => { return axios.get(`${reg}/all/${caseNo}`) }
+
+// POST
+// 提交挂号信息，未测试
+export const reg = params => { return axios.post(`${reg}/reg`, params) }
+// 提交退号信息，未测试
+export const unreg = (id, params) => { return axios.post(`${reg}/unreg/${id}`, params) }
+
+/**
+ * User 用户相关
+ */
+
+// GET
+// EMPTY YET
+
+// POST
+// 提交登录信息
+export const login = param => { return axios.post(`${loginURL}`, param) }
+
+/**
+ * 医生相关
+ */
+
+// GET
+// 医生待诊患者
+export const showToSeePatient = docId => { return axios.get(`${doctorURL}/${docId}/toSee`) }
+// 医生已诊患者
+export const showSeenPatient = docId => { return axios.get(`${doctorURL}/${docId}/seen`) }
+// 当前医生可用模板
+export const usableTemplateList = docId => { return axios.get(`${doctorURL}/${docId}/template`) }
+// 选定模板详情
+export const showTemplateDtl = (type, id) => { return axios.get(`${templateURL}/${type}/${id}/Dtl`) }
+
+// POST
+// 提交开药,未测试
+export const apply = params => { return axios.post(`${doctorURL}/apply`, params) }
+// 提交诊断,未测试
+export const diag = params => { return axios.post(`${doctorURL}/diag`, params) }
+
+/**
+ * 药房管理员
+ */
+
+// GET
+// 待发药
+export const showToReleaseDrug = caseNo => { return axios.get(`${drugURL}/toRelease/${caseNo}`) }
+// POST
+// 提交待开药品id,未测试
+export const releaseDrug = params => { return axios.post(`${drugURL}/release`, params) }
+
+/**
+ * 财务操作员
+ */
+
+// GET
+// 根据病历号查看收费项目
+export const showToPay = caseNo => { return axios.get(`${payURL}/${caseNo}`) }
+// POST
+// 提交处方id进行缴费
+export const pay = params => { return axios.post(`${payURL}`, params) }

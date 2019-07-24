@@ -30,7 +30,7 @@ public class DiagController {
     /**
      * 当日、未诊
      */
-    @GetMapping("/doctor/{doc_id}/toSee")
+    @GetMapping("/api/doctor/{doc_id}/toSee")
     public CommonResponse showPatientToSee(@PathVariable("doc_id") int doc_id){
         List<RegistrationEntity> result = registrationService.showPatientToSee(doc_id);
         return CommonResponse.succuess(result);
@@ -38,7 +38,7 @@ public class DiagController {
     /**
      * 当日、以诊
      */
-    @GetMapping("/doctor/{doc_id}/seen")
+    @GetMapping("/api/doctor/{doc_id}/seen")
     public CommonResponse showPatientSeen(@PathVariable("doc_id") int doc_id){
         List<RegistrationEntity> result = registrationService.showPatientSeen(doc_id);
         return CommonResponse.succuess(result);
@@ -47,7 +47,7 @@ public class DiagController {
     /**
      * 调用存储过程记录诊断
      */
-    @PostMapping("/doctor/see")
+    @PostMapping("/api/doctor/see")
     public CommonResponse diag(@RequestBody DiagBody diagBody){
        boolean result = doctorService.see(
                diagBody.getReg_id(),
