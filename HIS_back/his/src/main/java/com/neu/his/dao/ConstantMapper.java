@@ -1,4 +1,4 @@
-package com.neu.his.dao.interfaces;
+package com.neu.his.dao;
 
 import com.neu.his.entity.ConstantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

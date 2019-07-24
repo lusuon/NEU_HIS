@@ -95,7 +95,7 @@ public class RegistrationController {
     public CommonResponse register(
             @RequestBody RegistrationBody r
     ){
-       boolean result = registrationService.register(
+       int result = registrationService.register(
                r.getReg_pid(),
                r.getReg_name(),
                r.getReg_sex(),
@@ -110,7 +110,7 @@ public class RegistrationController {
                r.getReg_need(),
                r.getReg_oper()
        );
-       return result?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
+       return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
     }
 
 
@@ -122,7 +122,7 @@ public class RegistrationController {
      */
     @PutMapping("/api/unregistration/{id}")
     public CommonResponse unregister(@PathVariable("id") int unreg_id){
-        boolean result = registrationService.unregister(unreg_id);
-        return result?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
+        int result = registrationService.unregister(unreg_id);
+        return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
     }
 }

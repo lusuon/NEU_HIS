@@ -1,6 +1,6 @@
 package com.neu.his.service.doctor;
 
-import com.neu.his.dao.interfaces.templates.*;
+import com.neu.his.dao.templates.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

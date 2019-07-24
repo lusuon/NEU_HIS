@@ -1,6 +1,6 @@
 package com.neu.his.service.users;
 
-import com.neu.his.dao.interfaces.AllUserMapper;
+import com.neu.his.dao.AllUserMapper;
 import com.neu.his.entity.AllUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class AllUserService{
      * @return
      */
     public boolean login(String user,String pass) {
-        //考虑将此类的功能并入AllUserService
-        String truePass = allUserMapper.findByUsername(user).getPassword();
-        return truePass.equals(pass);
+        AllUserEntity userInDB = allUserMapper.findByUsername(user);
+        if(userInDB != null) return pass.equals(userInDB.getPassword());
+        else return false;
     }
 }

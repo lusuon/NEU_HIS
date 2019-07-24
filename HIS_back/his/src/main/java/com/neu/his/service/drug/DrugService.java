@@ -1,6 +1,6 @@
 package com.neu.his.service.drug;
 
-import com.neu.his.dao.interfaces.Prescriptions.PrescriptionMedicineDtlMapper;
+import com.neu.his.dao.Prescriptions.PrescriptionMedicineDtlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
