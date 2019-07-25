@@ -36,7 +36,7 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
     public RegistrationEntity findTopByOrderByCaseNoDesc();
 
     /**
-     * 找出该医生下待诊断 / 已诊断患者
+     * 找出该医生当日待诊断 / 已诊断患者
      * @param d
      * @param i
      * @return

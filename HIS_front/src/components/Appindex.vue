@@ -67,7 +67,8 @@
         </el-dropdown>
         <span>王小虎</span>
       </el-header>
-      <UnRegistration>挂号申请</UnRegistration>
+      <!-- <UnRegistration>挂号申请</UnRegistration> -->
+      <Diagnose></Diagnose>
     </el-container>
   </el-container>
 </template>
@@ -85,14 +86,15 @@
 </style>
 
 <script>
-import UnRegistration from '../reg/UnRegistration'
+// import UnRegistration from '../reg/UnRegistration';
+import Diagnose from './doctor/Diagnose';
 export default {
   components: {
-    UnRegistration
+    // UnRegistration,
+    Diagnose
   },
   data () {
-    return {
-    }
+    return {}
   }
 }
 </script>

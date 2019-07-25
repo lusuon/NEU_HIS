@@ -16,9 +16,14 @@
           <el-col :span="8">身份证号: {{currentPatient.pid}}</el-col>
           <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
         </el-row>
-        <p>患者挂号信息</p>
       </el-form>
-      <CommonTable :data_list="tableData" :table-headers="tableHeaders" :tableName="tableName">表格</CommonTable>
+      <CommonTable
+        :data_list="tableData"
+        :table-headers="tableHeaders"
+        :tableName="tableName"
+        :selectable="true"
+      ></CommonTable>
+      <el-button type="primary" plain>结算</el-button>
     </el-col>
   </el-row>
 </template>
@@ -29,17 +34,8 @@ export default {
   components: { CommonTable },
   data () {
     return {
-      tableHeaders: [
-        '病历号',
-        '姓名',
-        '身份证号',
-        '挂号日期',
-        '午别',
-        '看诊科室',
-        '看诊状态',
-        '操作'
-      ],
-      tableName: '挂号信息表',
+      tableHeaders: ['项目名称', '单价', '数量', '开立时间'],
+      tableName: '患者消费信息',
       tableData: [],
       form: {
         caseNo: '',
@@ -55,43 +51,34 @@ export default {
     }
   },
   methods: {
-    getNewestPatientInfo (objects) {
-      let object = objects[objects.length - 1]
+    getNewestPatientInfo (object) {
       this.currentPatient.name = object.patientName
       this.currentPatient.pid = object.personalId
       this.currentPatient.address = object.address
     },
-    projection (registration) {
-      console.log('!')
-      console.log(registration)
-      let projection = []
-      projection.push(
-        registration.caseNo,
-        registration.patientName,
-        registration.personalId,
-        registration.regTime,
-        registration.noon,
-        registration.deptId,
-        registration.inspectionStatus
-      )
-      return projection
-    },
     onSubmit () {
       console.log('submit!')
       this.$api
-        .getAllPatientInfo(this.form.caseNo)
+        .getPatientInfo(this.form.caseNo)
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             console.log(successResponse.data.data)
-            let objects = successResponse.data.data
-            this.getNewestPatientInfo(objects)
-            this.tableData = objects.map(current => this.projection(current))
+            this.getNewestPatientInfo(successResponse.data.data)
           }
         })
         .catch(failResponse => {
           console.log(failResponse)
         })
-      console.log('submit!')
+      this.$api
+        .getToPay(this.form.caseNo)
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
+            this.tableData = successResponse.data.data
+          }
+        })
+        .catch(failResponse => {
+          console.log(failResponse)
+        })
     }
   }
 }

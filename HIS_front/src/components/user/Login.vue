@@ -25,7 +25,8 @@ export default {
   },
   methods: {
     login () {
-      this.$api.login({
+      this.$api
+        .login({
           user: this.loginForm.username,
           pass: this.loginForm.password
         })
