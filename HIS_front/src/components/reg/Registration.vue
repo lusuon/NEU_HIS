@@ -7,6 +7,7 @@
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="病历号">
             <el-input v-model="form.caseNo"></el-input>
+            <el-button type="primary" @click="onSubmit">搜索</el-button>
           </el-form-item>
           <el-form-item label="姓名">
             <el-input v-model="form.name"></el-input>
@@ -16,30 +17,6 @@
               <el-option label="男" value="71"></el-option>
               <el-option label="女" value="72"></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="年龄">
-            <el-input v-model="form.age"></el-input>
-          </el-form-item>
-          <el-form-item label="年龄类型">
-            <el-select v-model="form.ageType" placeholder="请选择活动区域">
-              <el-option label="岁" value="岁"></el-option>
-              <el-option label="月" value="月"></el-option>
-              <el-option label="天" value="天"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="出生日期">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="form.birth"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-            </el-col>
           </el-form-item>
           <el-form-item label="身份证号">
             <el-input v-model="form.pid"></el-input>
@@ -112,8 +89,8 @@
             <el-switch v-model="form.needCaseBook"></el-switch>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="onSubmit">挂号</el-button>
+            <el-button>清空</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -141,6 +118,16 @@ export default {
   methods: {
     onSubmit () {
       console.log('submit!')
+      this.$api.getPatientInfo(this.form.caseNo).then(successResponse => {
+        if (successResponse.data.code === 200) {
+          console.log(successResponse.data.data)
+          let objects = successResponse.data.data
+          console.log(objects)
+        }
+      })
+        .catch(failResponse => {
+          console.log(failResponse)
+        })
     }
   }
 }

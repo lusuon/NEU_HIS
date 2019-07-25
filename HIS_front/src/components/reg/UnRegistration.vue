@@ -16,7 +16,6 @@
           <el-col :span="8">身份证号: {{currentPatient.pid}}</el-col>
           <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
         </el-row>
-        <p>患者挂号信息</p>
       </el-form>
       <CommonTable :data_list="tableData" :table-headers="tableHeaders" :tableName="tableName">表格</CommonTable>
     </el-col>

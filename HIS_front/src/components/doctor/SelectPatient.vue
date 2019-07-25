@@ -4,7 +4,7 @@
     <CommonTable
       :data_list="toSeeTableData"
       :table-headers="TableHeaders"
-      :tableName="toSeetableName"
+      :tableName="toSeeTableName"
     ></CommonTable>
     <p></p>
     <CommonTable
@@ -15,14 +15,14 @@
   </div>
 </template>
 <script>
-import CommonTable from '../common/CommonTable';
+import CommonTable from '../common/CommonTable'
 export default {
   components: { CommonTable },
   data () {
     return {
       docId: 1,
       TableHeaders: ['病历号', '姓名', '年龄'],
-      toSeetableName: '未诊患者',
+      toSeeTableName: '未诊患者',
       toSeeTableData: [],
       seenTableName: '已诊患者',
       seenTableData: []
@@ -57,12 +57,10 @@ export default {
       .getSeenPatient(this.docId)
       .then(successResponse => {
         if (successResponse.data.code === 200) {
-          console.log(successResponse.data.data)
           let objects = successResponse.data.data
           this.seenTableData = objects.map(current =>
             this.simplestPatientProjection(current)
           )
-          console.log(this.seenTableData)
         }
       })
       .catch(failResponse => {

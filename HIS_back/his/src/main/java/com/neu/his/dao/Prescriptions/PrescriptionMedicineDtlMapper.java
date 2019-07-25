@@ -30,7 +30,7 @@ public interface PrescriptionMedicineDtlMapper extends JpaRepository<Prescriptio
      * @param cid
      * @return
      */
-    @Query(value = "SELECT prescription_id,drug_name,unit_price,quantity,prescription_medicine_dtl.prescription_status,prescription_name,real_name,generate_time " +
+    @Query(value = "SELECT drug_name,unit_price,quantity,prescription_name,real_name,generate_time,prescription_id " +
             "FROM prescription_medicine join prescription_medicine_dtl join drug join all_user " +
             "on prescription_medicine.id = prescription_medicine_dtl.prescription_id " +
             "and medicine_id = drug.id " +
@@ -42,7 +42,7 @@ public interface PrescriptionMedicineDtlMapper extends JpaRepository<Prescriptio
     List<Object> findAllToReleasePrescriptionDtlByCaseId(int cid);
 
     /**
-     * 更新处方明细内项目的状态，6为已发药
+     * 更新处方明细内项目的状态，未发药5->6为已发药
      * @param pids
      * @return
      */

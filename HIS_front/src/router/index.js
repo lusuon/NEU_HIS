@@ -4,7 +4,12 @@ import HelloWorld from '@/components/HelloWorld'
 // 导入组件:登录与首页
 import AppIndex from '@/components/AppIndex'
 import Login from '@/components/user/Login'
+import Reg from '@/components/reg/Registration'
+import UnReg from '@/components/reg/UnRegistration'
+import Diagnose from '@/components/doctor/Diagnose'
+import Apply from '@/components/doctor/apply'
 import Pay from '@/components/financial/Pay'
+import ReleaseDrug from '@/components/drugAdmin/ReleaseDrug'
 Vue.use(Router)
 
 export default new Router({
@@ -12,11 +17,6 @@ export default new Router({
     path: '/',
     name: 'HelloWorld',
     component: HelloWorld
-  },
-  {
-    path: '/pay',
-    name: 'Pay',
-    component: Pay
   },
   {
     path: '/login',
@@ -27,6 +27,36 @@ export default new Router({
     path: '/index',
     name: 'AppIndex',
     component: AppIndex
+  },
+  {
+    path: '/reg',
+    name: 'Registration',
+    component: Reg
+  },
+  {
+    path: '/unreg',
+    name: 'UnRegistration',
+    component: UnReg
+  },
+  {
+    path: '/diag',
+    name: 'Diagnose',
+    component: Diagnose
+  },
+  {
+    path: '/apply',
+    name: 'Apply',
+    component: Apply
+  },
+  {
+    path: '/pay',
+    name: 'Pay',
+    component: Pay
+  },
+  {
+    path: '/releaseDrug',
+    name: 'releaseDrug',
+    component: ReleaseDrug
   }
   ]
 })

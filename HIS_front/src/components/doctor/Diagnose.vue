@@ -5,6 +5,7 @@
       <SelectPatient></SelectPatient>
     </el-col>
     <el-col :span="18">
+      <h1>姓名，病历号，年龄，性别</h1>
       <div class="grid-content bg-purple-light"></div>
       <el-form label-width="80px">
         <p>病史内容</p>
@@ -31,8 +32,19 @@
   </el-col>
 </template>
 <script>
-import SelectPatient from './SelectPatient';
+import SelectPatient from './SelectPatient'
 export default {
-  components: { SelectPatient }
+  components: { SelectPatient },
+  data () {
+    return {
+      currentPatient: {
+        name: '',
+        caseNo: '',
+        age: '',
+        sex: ''
+      },
+      doc_id: 1
+    }
+  }
 }
 </script>

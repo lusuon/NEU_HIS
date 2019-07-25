@@ -89,7 +89,7 @@ export const diag = params => {
 
 // GET
 // 待发药
-export const showToReleaseDrug = caseNo => {
+export const getToReleaseDrug = caseNo => {
   return axios.get(`${drugURL}/toRelease/${caseNo}`)
 }
 // POST

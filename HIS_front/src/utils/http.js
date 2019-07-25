@@ -4,7 +4,7 @@
  */
 import axios from 'axios'
 import router from '../router'
-import store from '../store/index'
+import store from '../vuex'
 import { Message } from 'element-ui'
 
 /**
