@@ -12,6 +12,8 @@ import com.neu.his.service.users.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -97,13 +99,15 @@ public class RegistrationController {
     public CommonResponse register(
             @RequestBody RegistrationBody r
     ){
-       int result = registrationService.register(
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+       Boolean result = registrationService.register(
                r.getPid(),
                r.getName(),
                r.getSex(),
-               r.getBirth(),
+               ft.format(r.getBirth()),
                r.getAddress(),
-               r.getSeeDate(),
+               ft.format(r.getSeeDate()),
                r.getNoon(),
                r.getDept(),
                r.getDoctor(),
@@ -112,7 +116,7 @@ public class RegistrationController {
                r.getNeedCaseBook(),
                r.getOperator()
        );
-       return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
+       return result?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
     }
 
 

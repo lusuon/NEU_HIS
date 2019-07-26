@@ -17,7 +17,7 @@
           <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
         </el-row>
       </el-form>
-      <CommonTable :data_list="tableData" :table-headers="tableHeaders" :tableName="tableName">表格</CommonTable>
+      <CommonTable :data_list="tableData" :table-headers="tableHeaders" :tableName="tableName" :need-operate="true">表格</CommonTable>
     </el-col>
   </el-row>
 </template>
@@ -36,8 +36,7 @@ export default {
         '挂号日期',
         '午别',
         '看诊科室',
-        '看诊状态',
-        '操作'
+        '看诊状态'
       ],
       tableName: '挂号信息表',
       tableData: [],

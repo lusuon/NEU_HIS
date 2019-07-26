@@ -28,10 +28,6 @@ export default {
   components: { CommonTable },
   watch: {
     getSelectingTemplateId (newVal, oldVal) {
-      console.log('old')
-      console.log(oldVal)
-      console.log('new')
-      console.log(newVal)
       this.$api
         .getTemplateDtl('medi', newVal)
         .then(resp => {
@@ -46,8 +42,8 @@ export default {
     }
   },
   computed: {
-    getSelectingTemplateId () {
-      return this.$store.state.currentTemplateId
+    getSelectingRow () {
+      return this.$store.state.currentRow()
     }
   },
   mounted () {

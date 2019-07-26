@@ -2,6 +2,7 @@ package com.neu.his.service.registration;
 
 import com.neu.his.dao.RegistrationMapper;
 import com.neu.his.entity.RegistrationEntity;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +70,7 @@ public class RegistrationService {
      * @param reg_oper
      * @return
      */
-    public int register(String reg_pid, String reg_name, int reg_sex, Date reg_birth, String reg_addr, Date reg_ins_date, String reg_noon, int reg_dept, int reg_doc, int reg_reg_level, int reg_settle, int reg_need, int reg_oper) {
+    public Boolean register(String reg_pid, String reg_name, int reg_sex, String reg_birth, String reg_addr, String reg_ins_date, String reg_noon, int reg_dept, int reg_doc, int reg_reg_level, int reg_settle, int reg_need, int reg_oper) {
         return registrationMapper.register( reg_pid,  reg_name, reg_sex,  reg_birth,  reg_addr,  reg_ins_date,  reg_noon, reg_dept, reg_doc, reg_reg_level, reg_settle, reg_need, reg_oper);
     }
 

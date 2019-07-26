@@ -45,12 +45,12 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
     List<RegistrationEntity> findPatients(int d,int i);
 
     @Query(value = "call reg(:i1,:i2,:i3,:i4,:i5,:i6,:i7,:i8,:i9,:i10,:i11,:i12,:i13)", nativeQuery = true)
-    Integer register(@Param("i1") String rpid,
+    Boolean register(@Param("i1") String rpid,
                 @Param("i2") String rname,
                 @Param("i3") int rsex,
-                @Param("i4") Date rbirth,
+                @Param("i4") String rbirth,
                 @Param("i5") String raddr,
-                @Param("i6") Date rinsdate,
+                @Param("i6") String rinsdate,
                 @Param("i7") String rnoon,
                 @Param("i8") int rdept,
                 @Param("i9") int rdoc,

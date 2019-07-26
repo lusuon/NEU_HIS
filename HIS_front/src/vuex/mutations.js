@@ -1,5 +1,6 @@
 export default {
-  getCurrentTemplateId (state, id) {
-    state.currentTemplateId = id
+  getCurrentRow (state, row) {
+    console.log('mutation called.')
+    state.currentRow = row
   }
 }
