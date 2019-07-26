@@ -1,3 +1,4 @@
-export default{
-  currentDocId: 1
+export default {
+  currentDocId: 1,
+  currentTemplateId: ''
 }

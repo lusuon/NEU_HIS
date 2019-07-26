@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import CommonTable from '../common/CommonTable';
+// eslint-disable-next-line
+import CommonTable from "../common/CommonTable";
 export default {
   components: { CommonTable },
   data () {

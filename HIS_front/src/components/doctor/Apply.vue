@@ -8,7 +8,8 @@
       <h1>姓名，病历号，年龄，性别</h1>
       <div class="grid-content bg-purple-light"></div>
       <p>门诊诊断</p>
-      <p>门诊处方</p>
+      <GeneratePrescription></GeneratePrescription>
+      <p>当前处方</p>
       <p>处方金额统计</p>
       <select-template></select-template>
     </el-col>
@@ -16,10 +17,11 @@
 </template>
 
 <script>
-import SelectPatient from './SelectPatient'
-import SelectTemplate from './SelectTemplate'
+import SelectPatient from './SelectPatient';
+import SelectTemplate from './SelectTemplate';
+import GeneratePrescription from './GeneratePrescription';
 export default {
-  components: { SelectPatient, SelectTemplate },
+  components: { SelectPatient, SelectTemplate, GeneratePrescription },
   data () {
     return {
       currentPatient: {
@@ -34,5 +36,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

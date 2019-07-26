@@ -49,6 +49,8 @@ public class RegistrationController {
         HashMap<String,Object> info = new HashMap<>();
         // 初始化性别
         info.put("sex",constantService.getSexConstant());
+        // 初始化付款方式
+        info.put("pay",constantService.getPayConstant());
         // 初始化号别
         info.put("reg_level",categoryRegService.getAllCategoryReg());
         // 初始化科室与医生信息
@@ -96,19 +98,19 @@ public class RegistrationController {
             @RequestBody RegistrationBody r
     ){
        int result = registrationService.register(
-               r.getReg_pid(),
-               r.getReg_name(),
-               r.getReg_sex(),
-               r.getReg_birth(),
-               r.getReg_addr(),
-               r.getReg_ins_date(),
-               r.getReg_noon(),
-               r.getReg_dept(),
-               r.getReg_doc(),
-               r.getReg_reg_level(),
-               r.getReg_settle(),
-               r.getReg_need(),
-               r.getReg_oper()
+               r.getPid(),
+               r.getName(),
+               r.getSex(),
+               r.getBirth(),
+               r.getAddress(),
+               r.getSeeDate(),
+               r.getNoon(),
+               r.getDept(),
+               r.getDoctor(),
+               r.getRegCategory(),
+               r.getSettlement(),
+               r.getNeedCaseBook(),
+               r.getOperator()
        );
        return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to insert");
     }

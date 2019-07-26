@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface TemplateDtlMediMapper extends JpaRepository<TemplateDtlMediEntity,Integer> {
 
-    @Query("select d.drugName,t from DrugEntity d , TemplateDtlMediEntity t where t.templateId = ?1 and d.id = t.medicineId")
+    @Query("select d.drugName,d.standard,d.unit,t.method,t.consumption,t.frequency " +
+            "from DrugEntity d , TemplateDtlMediEntity t " +
+            "where t.templateId = ?1 and d.id = t.medicineId")
     List<Object> findAllByTemplateId(int tid);
 }

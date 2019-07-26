@@ -31,11 +31,11 @@ export const getAllPatientInfo = caseNo => {
 // POST
 // 提交挂号信息，未测试
 export const reg = params => {
-  return axios.post(`${reg}/reg`, params)
+  return axios.post(`${regURL}/reg`, params)
 }
 // 提交退号信息，未测试
 export const unreg = (id, params) => {
-  return axios.post(`${reg}/unreg/${id}`, params)
+  return axios.post(`${regURL}/unreg/${id}`, params)
 }
 
 /**
@@ -69,7 +69,7 @@ export const usableTemplateList = docId => {
   return axios.get(`${doctorURL}/${docId}/template`)
 }
 // 选定模板详情
-export const showTemplateDtl = (type, id) => {
+export const getTemplateDtl = (type, id) => {
   return axios.get(`${templateURL}/${type}/${id}/Dtl`)
 }
 

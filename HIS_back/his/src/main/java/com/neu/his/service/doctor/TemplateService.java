@@ -4,7 +4,6 @@ import com.neu.his.dao.templates.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -27,6 +26,10 @@ public class TemplateService {
      * @param d
      * @return
      */
+    public List<Object> findUsableTemplates(int d){
+        return templateMediMapper.findAllUsableTeamplate(d);
+    }
+    /*
     public HashMap<String,List> findUsableTemplates(int d){
         HashMap<String,List> allTemplates = new HashMap<>(3);
         allTemplates.put("h",templateHerbMapper.findAllUsableTeamplate(d));
@@ -34,4 +37,5 @@ public class TemplateService {
         allTemplates.put("n",templateNonDrugMapper.findAllUsableTeamplate(d));
         return allTemplates;
     }
+    */
 }
