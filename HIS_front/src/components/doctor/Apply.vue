@@ -8,9 +8,9 @@
       <h1>姓名，病历号，年龄，性别</h1>
       <div class="grid-content bg-purple-light"></div>
       <p>门诊诊断</p>
+      <!-- 处方管理：增删改查（todo） -->
       <GeneratePrescription></GeneratePrescription>
-      <p>当前处方</p>
-      <p>处方金额统计</p>
+      <!-- 处方模板管理 -->
       <select-template></select-template>
     </el-col>
   </el-col>

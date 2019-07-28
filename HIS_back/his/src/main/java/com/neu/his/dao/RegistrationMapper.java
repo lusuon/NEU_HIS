@@ -67,7 +67,7 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
      * @return
      */
     @Query(value = "call unreg(:i1)",nativeQuery = true)
-    Integer unregister(@Param("i1") int unreg_id);
+    Boolean unregister(@Param("i1") int unreg_id);
 
     /**
      *s 调用挂号存储过程(hibernate ver)

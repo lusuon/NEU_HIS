@@ -241,6 +241,7 @@ export default {
     }
   },
   mounted () {
+    // 获取基本信息
     this.$api
       .getBasicInfo()
       .then(successResponse => {
@@ -264,6 +265,10 @@ export default {
           if (successResponse.data.code === 200) {
             console.log(successResponse.data.data)
             let objects = successResponse.data.data
+            this.form.pid = objects.personalId
+            this.form.name = objects.patientName
+            this.form.needCaseBook = false
+            this.form.birth = objects.birth
             console.log(objects)
           }
         })

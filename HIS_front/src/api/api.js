@@ -34,8 +34,8 @@ export const reg = params => {
   return axios.post(`${regURL}/reg`, params)
 }
 // 提交退号信息，未测试
-export const unreg = (id, params) => {
-  return axios.post(`${regURL}/unreg/${id}`, params)
+export const unreg = id => {
+  return axios.put(`${regURL}/unreg/${id}`)
 }
 
 /**

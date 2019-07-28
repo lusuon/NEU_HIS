@@ -17,7 +17,12 @@
           <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
         </el-row>
       </el-form>
-      <CommonTable :data_list="tableData" :table-headers="tableHeaders" :tableName="tableName" :need-operate="true">表格</CommonTable>
+      <CommonTable
+        :data_list="tableData"
+        :table-headers="tableHeaders"
+        :tableName="tableName"
+        :need-operate="true"
+      >表格</CommonTable>
     </el-col>
   </el-row>
 </template>
@@ -25,6 +30,7 @@
 <script>
 // eslint-disable-next-line
 import CommonTable from "../common/CommonTable";
+import Message from 'element-ui';
 export default {
   components: { CommonTable },
   data () {
@@ -53,6 +59,44 @@ export default {
       }
     }
   },
+  computed: {
+    getCurrentOperate () {
+      return this.$store.state.currentOperate
+    }
+  },
+  watch: {
+    // 检测到点击导致操作对象改变
+    getCurrentOperate (newVal, oldVal) {
+      console.log('detect currentOperate change. The id is: ')
+      console.log(oldVal)
+      console.log(newVal)
+      this.$api
+        .unreg(newVal[newVal.length - 1])
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
+            console.log(successResponse.data.data)
+            Message(successResponse.data.data)
+          }
+        })
+        .catch(failResponse => {
+          console.log(failResponse)
+        })
+      // 刷新
+      this.$api
+        .getAllPatientInfo(this.form.caseNo)
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
+            console.log(successResponse.data.data)
+            let objects = successResponse.data.data
+            this.getNewestPatientInfo(objects)
+            this.tableData = objects.map(current => this.projection(current))
+          }
+        })
+        .catch(failResponse => {
+          console.log(failResponse)
+        })
+    }
+  },
   methods: {
     getNewestPatientInfo (objects) {
       let object = objects[objects.length - 1]
@@ -71,7 +115,8 @@ export default {
         registration.regTime,
         registration.noon,
         registration.deptId,
-        registration.inspectionStatus
+        registration.inspectionStatus,
+        registration.id
       )
       return projection
     },

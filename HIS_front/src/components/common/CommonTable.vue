@@ -12,13 +12,9 @@
       <el-table-column v-bind:key="header[0]" :label="header" v-for="(header, key) in tableHeaders">
         <template scope="scope">{{data_list[scope.$index][key]}}</template>
       </el-table-column>
-      <el-table-column
-        v-if ="needOperate"
-        fixed="right"
-        label="操作"
-        width="100">
+      <el-table-column v-if="needOperate" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" >查看</el-button>
+          <el-button @click="handleOperate(scope.row)" type="primary">退号</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -26,7 +22,13 @@
 </template>
 <script>
 export default {
-  props: ['tableHeaders', 'tableName', 'data_list', 'selectable','needOperate'],
+  props: [
+    'tableHeaders',
+    'tableName',
+    'data_list',
+    'selectable',
+    'needOperate'
+  ],
   data () {
     return {
       multipleSelection: [],
@@ -34,8 +36,9 @@ export default {
     }
   },
   methods: {
-    handleClick (row) {
-      console.log(row)
+    handleOperate (currentOperate) {
+      this.$store.commit('getCurrentOperate', currentOperate)
+      // console.log(currentOperate)
     },
     setCurrent (row) {
       this.$refs.commonTable.setCurrentRow(row)
@@ -43,7 +46,7 @@ export default {
     },
     handleCurrentChange (val) {
       this.currentRow = val
-      console.log(this.currentRow)
+      // console.log(this.currentRow)
       this.$store.commit('getCurrentRow', this.currentRow)
     },
     handleSelectionChange (val) {

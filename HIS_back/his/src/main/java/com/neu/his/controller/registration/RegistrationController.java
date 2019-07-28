@@ -126,9 +126,9 @@ public class RegistrationController {
      * “已退号”状态不能进行后续操作，如缴费，退费等
      *  结果使用CommonResponse封装
      */
-    @PutMapping("/api/registration/unerg/{id}")
+    @PutMapping("/api/registration/unreg/{id}")
     public CommonResponse unregister(@PathVariable("id") int unreg_id){
-        int result = registrationService.unregister(unreg_id);
-        return (result!=0)?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
+        Boolean result = registrationService.unregister(unreg_id);
+        return result?CommonResponse.succuess():CommonResponse.fail("Fail to unreg.");
     }
 }

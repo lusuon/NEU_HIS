@@ -5,7 +5,9 @@
 import axios from 'axios'
 import router from '../router'
 import store from '../vuex'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 
 /**
  * 提示函数
@@ -31,10 +33,10 @@ const toLogin = () => {
   })
 }
 
-/**
+/*
+
  * 请求失败后的错误统一处理
  * @param {Number} status 请求失败的状态码
- */
 const errorHandle = (status, other) => {
   // 状态码判断
   switch (status) {
@@ -60,9 +62,12 @@ const errorHandle = (status, other) => {
       console.log(other)
   }
 }
+*/
 
 // 创建axios实例
-var instance = axios.create({timeout: 1000 * 12})
+var instance = axios.create({
+  timeout: 1000 * 12
+})
 /**
 // 设置post请求头
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -90,7 +95,9 @@ instance.interceptors.response.use(
   res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),
   // 请求失败
   error => {
-    const { response } = error
+    const {
+      response
+    } = error
     if (response) {
       // 请求已发出，但是不在2xx的范围
       errorHandle(response.status, response.data.message)

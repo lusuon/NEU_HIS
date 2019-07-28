@@ -2,11 +2,9 @@ package com.neu.his.service.registration;
 
 import com.neu.his.dao.RegistrationMapper;
 import com.neu.his.entity.RegistrationEntity;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -79,7 +77,7 @@ public class RegistrationService {
      * @param unreg_id
      * @return
      */
-    public int unregister(int unreg_id) {
+    public Boolean unregister(int unreg_id) {
         return registrationMapper.unregister(unreg_id);
     }
 

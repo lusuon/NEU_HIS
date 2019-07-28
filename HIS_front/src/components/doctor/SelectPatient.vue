@@ -2,6 +2,7 @@
   <div class="grid-content bg-purple">
     <p>选择患者</p>
     <CommonTable
+      ref="toSee"
       :data_list="toSeeTableData"
       :table-headers="TableHeaders"
       :tableName="toSeeTableName"
@@ -12,10 +13,11 @@
       :table-headers="TableHeaders"
       :tableName="seenTableName"
     ></CommonTable>
+    <el-button type="primary" @click="test">test_ref</el-button>
   </div>
 </template>
 <script>
-import CommonTable from '../common/CommonTable'
+import CommonTable from '../common/CommonTable';
 export default {
   components: { CommonTable },
   data () {
@@ -28,7 +30,24 @@ export default {
       seenTableData: []
     }
   },
+  watch: {
+    getCurrentRowToSee (newVal, oldVal) {
+      console.log('selecting')
+      console.log(newVal)
+    }
+  },
+  computed: {
+    getCurrentRowToSee () {
+      console.log('row change')
+      return this.$refs.toSee.currentRow
+    }
+  },
   methods: {
+    test () {
+      console.log('test_ref')
+      console.log(this.$refs.toSee.currentRow)
+      return this.$refs.toSee
+    },
     simplestPatientProjection (registration) {
       let projection = []
       projection.push(

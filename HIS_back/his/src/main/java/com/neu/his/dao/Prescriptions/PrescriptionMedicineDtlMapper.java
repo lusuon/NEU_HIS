@@ -15,7 +15,7 @@ public interface PrescriptionMedicineDtlMapper extends JpaRepository<Prescriptio
      * @param cid
      * @return
      */
-    @Query(value = "SELECT drug_name,unit_price,quantity,generate_time " +
+    @Query(value = "SELECT prescription_medicine.id, drug_name,unit_price,quantity,generate_time " +
             "FROM prescription_medicine join prescription_medicine_dtl join drug " +
             "on prescription_medicine.id = prescription_medicine_dtl.prescription_id " +
             "and medicine_id = drug.id " +
