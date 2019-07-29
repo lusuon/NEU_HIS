@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
 import java.util.List;
 
 public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Integer> {
@@ -22,12 +21,7 @@ public interface RegistrationMapper extends JpaRepository<RegistrationEntity,Int
      * @return
      */
     public RegistrationEntity findFirstByCaseNo(int c);
-    /**
-     * TODO:通过时间与状态查找
-     * 当前使用的不能查找到当日
-     * @return
-     */
-    public List<RegistrationEntity> findAllByRegTimeAndInspectionStatus(Date d,int i);
+
 
     /**
      * 找出最大病历号

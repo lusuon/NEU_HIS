@@ -64,6 +64,10 @@ export const getToSeePatient = docId => {
 export const getSeenPatient = docId => {
   return axios.get(`${doctorURL}/${docId}/seen`)
 }
+// 已诊患者的详细记录
+export const getDiag = regId => {
+  return axios.get(`${doctorURL}/diag/${regId}`)
+}
 // 当前医生可用模板
 export const usableTemplateList = docId => {
   return axios.get(`${doctorURL}/${docId}/template`)

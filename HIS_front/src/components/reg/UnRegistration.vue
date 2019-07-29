@@ -17,22 +17,23 @@
           <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
         </el-row>
       </el-form>
+      <!--
       <CommonTable
         :data_list="tableData"
         :table-headers="tableHeaders"
         :tableName="tableName"
         :need-operate="true"
       >表格</CommonTable>
+      -->
     </el-col>
   </el-row>
 </template>
 
 <script>
 // eslint-disable-next-line
-import CommonTable from "../common/CommonTable";
+
 import Message from 'element-ui';
 export default {
-  components: { CommonTable },
   data () {
     return {
       tableHeaders: [

@@ -3,14 +3,14 @@ export default {
    * 全局
    */
   // 用于根据身份判断路由、加载
-  currentUserId: '',
+  currentUserId: 1,
   currentDocId: 1,
 
   /**
    * 看诊
    */
   // 用于记录当前患者个人信息
-  currentPatient: '',
+  currentPatient: {},
   // 用于记录当前查询用的病历号
   currentCaseNo: '',
   /**

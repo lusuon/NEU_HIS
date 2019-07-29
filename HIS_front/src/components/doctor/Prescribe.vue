@@ -1,31 +1,33 @@
 <template>
-  <el-row>
-    <el-col :span="8">
-      <CommonTable
-        ref="templateTable"
-        :data_list="templateTableData"
-        :table-headers="templateTableHeaders"
-        :table-name="templateTableName"
-      ></CommonTable>
-    </el-col>
-    <el-col :span="16">
-      <CommonTable
-        :data_list="templateDtlTableData"
-        :table-headers="templateDtlTableHeaders"
-        :table-name="templateDtlTableName"
-      ></CommonTable>
-      <el-row>
-        <el-button>使用该模板</el-button>
-      </el-row>
-    </el-col>
-  </el-row>
+  <div>
+    <p>当前处方</p>
+    <p>处方金额统计</p>
+    <el-row>
+      <el-col :span="8">
+        <CommonTable
+          ref="templateTable"
+          :data_list="templateTableData"
+          :table-headers="templateTableHeaders"
+          :table-name="templateTableName"
+        ></CommonTable>
+      </el-col>
+      <el-col :span="16">
+        <CommonTable
+          :data_list="templateDtlTableData"
+          :table-headers="templateDtlTableHeaders"
+          :table-name="templateDtlTableName"
+        ></CommonTable>
+        <el-row>
+          <el-button>使用该模板</el-button>
+        </el-row>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import CommonTable from '../common/CommonTable';
 export default {
   name: 'SelectTemplate',
-  components: { CommonTable },
   watch: {
     getSelectingTemplateId (newVal, oldVal) {
       this.$api
@@ -82,6 +84,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

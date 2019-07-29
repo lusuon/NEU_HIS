@@ -6,8 +6,7 @@ import AppIndex from '@/components/AppIndex'
 import Login from '@/components/user/Login'
 import Reg from '@/components/reg/Registration'
 import UnReg from '@/components/reg/UnRegistration'
-import Diagnose from '@/components/doctor/Diagnose'
-import Apply from '@/components/doctor/apply'
+import DoctorMainPanel from '@/components/doctor/DoctorMainPanel'
 import Pay from '@/components/financial/Pay'
 import ReleaseDrug from '@/components/drugAdmin/ReleaseDrug'
 Vue.use(Router)
@@ -41,12 +40,12 @@ export default new Router({
   {
     path: '/diag',
     name: 'Diagnose',
-    component: Diagnose
+    component: DoctorMainPanel
   },
   {
     path: '/apply',
     name: 'Apply',
-    component: Apply
+    component: DoctorMainPanel
   },
   {
     path: '/pay',

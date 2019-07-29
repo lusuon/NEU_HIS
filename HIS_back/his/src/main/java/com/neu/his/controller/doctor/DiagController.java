@@ -1,6 +1,7 @@
 package com.neu.his.controller.doctor;
 
 import com.neu.his.common.response.CommonResponse;
+import com.neu.his.entity.CaseEntity;
 import com.neu.his.entity.RegistrationEntity;
 import com.neu.his.requestBody.doctor.DiagBody;
 import com.neu.his.service.doctor.DoctorService;
@@ -44,23 +45,29 @@ public class DiagController {
         return CommonResponse.succuess(result);
     }
 
+    @GetMapping("/api/doctor/diag/{regId}")
+    public CommonResponse showPatientDiag(@PathVariable("regId") int regId){
+        CaseEntity caseEntity = doctorService.showCase(regId);
+        return CommonResponse.succuess(caseEntity);
+    }
+
     /**
      * 调用存储过程记录诊断
      */
-    @PostMapping("/api/doctor/see")
+    @PostMapping("/api/doctor/diag")
     public CommonResponse diag(@RequestBody DiagBody diagBody){
-       boolean result = doctorService.see(
-               diagBody.getReg_id(),
+       boolean result = doctorService.diag(
+               diagBody.getRegId(),
                diagBody.getSym(),
-               diagBody.getCur_med_his(),
-               diagBody.getCur_dis_tre(),
-               diagBody.getMed_his(),
-               diagBody.getIn_allergy(),
-               diagBody.getBod_ins(),
+               diagBody.getCurMedHis(),
+               diagBody.getCurDisTre(),
+               diagBody.getMedHis(),
+               diagBody.getInAllergy(),
+               diagBody.getBodIns(),
                diagBody.getSug(),
                diagBody.getAtt(),
-               diagBody.getIns_res(),
-               diagBody.getDia_res(),
+               diagBody.getInsRes(),
+               diagBody.getDiaRes(),
                diagBody.getAdv()
        );
         return result?CommonResponse.succuess("Insert successfully"):CommonResponse.fail("Fail to unreg.");
