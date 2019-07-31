@@ -23,4 +23,7 @@ public interface CaseMapper extends JpaRepository<CaseEntity,Integer> {
                 @Param("i11") String diaRes,
                 @Param("i12") String adv
     );
+
+    @Query(value = "update `case` set case_status = 1 where reg_id = :i1",nativeQuery = true)
+    boolean tempSave(@Param("i1") int regId);
 }

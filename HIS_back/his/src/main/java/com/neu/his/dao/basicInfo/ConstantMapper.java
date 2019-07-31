@@ -1,4 +1,4 @@
-package com.neu.his.dao;
+package com.neu.his.dao.basicInfo;
 
 import com.neu.his.entity.ConstantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +11,5 @@ public interface ConstantMapper extends JpaRepository<ConstantEntity,Integer> {
      * @param id
      * @return
      */
-    public List<ConstantEntity> getConstantEntitiesByCategoryId(int id);
+    List<ConstantEntity> getConstantEntitiesByCategoryId(int id);
 }

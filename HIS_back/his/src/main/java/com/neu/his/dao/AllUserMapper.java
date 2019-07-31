@@ -10,6 +10,6 @@ public interface AllUserMapper extends JpaRepository<AllUserEntity,Integer> {
      * 获得所有医生
      * @return
      */
-    public List<AllUserEntity> findAllByUserType(String ut);
-    public AllUserEntity findByUsername(String un);
+    List<AllUserEntity> findAllByUserType(String ut);
+    AllUserEntity findByUsername(String un);
 }

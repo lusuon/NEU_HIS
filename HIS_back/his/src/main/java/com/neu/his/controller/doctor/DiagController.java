@@ -4,11 +4,13 @@ import com.neu.his.common.response.CommonResponse;
 import com.neu.his.entity.CaseEntity;
 import com.neu.his.entity.RegistrationEntity;
 import com.neu.his.requestBody.doctor.DiagBody;
+import com.neu.his.requestBody.doctor.DiagnosisBody;
 import com.neu.his.service.doctor.DoctorService;
 import com.neu.his.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,6 +28,14 @@ public class DiagController {
     @Autowired
     DoctorService doctorService;
 
+    /**
+     * 发药，入参为pid组成的，以逗号分隔字符串
+     * @return
+     */
+    @PostMapping("/api/doctor/diagnosis")
+    public CommonResponse releaseDrugs(@RequestBody DiagnosisBody[] list){
+        return doctorService.recordDiagnosis(list)?CommonResponse.succuess("有条目修改"):CommonResponse.fail("无条目修改");
+    }
 
 
     /**
@@ -47,8 +57,12 @@ public class DiagController {
 
     @GetMapping("/api/doctor/diag/{regId}")
     public CommonResponse showPatientDiag(@PathVariable("regId") int regId){
+        HashMap<String,Object> resultSet = new HashMap<>(2);
         CaseEntity caseEntity = doctorService.showCase(regId);
-        return CommonResponse.succuess(caseEntity);
+        List<Object> diagnosisEntities = doctorService.showAllDiagnosisByRegId(regId);
+        resultSet.put("case",caseEntity);
+        resultSet.put("diagnosis",diagnosisEntities);
+        return CommonResponse.succuess(resultSet);
     }
 
     /**

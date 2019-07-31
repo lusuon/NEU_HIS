@@ -10,6 +10,20 @@ const drugURL = baseURL + '/drug'
 const loginURL = baseURL + '/login'
 const payURL = baseURL + '/payment'
 const regURL = baseURL + '/registration'
+const diseaseURL = baseURL + '/disease'
+
+// GET
+// 全部疾病信息
+export const getAllDisease = () => {
+  return axios.get(`${diseaseURL}`)
+}
+// 单个疾病详细信息
+export const getDiseaseInfo = diseaseId => {
+  return axios.get(`${diseaseURL}/${diseaseId}`)
+}
+export const postDiagnosis = params => {
+  return axios.post(`${doctorURL}/diagnosis`, params)
+}
 
 /**
  * 挂号操作员
