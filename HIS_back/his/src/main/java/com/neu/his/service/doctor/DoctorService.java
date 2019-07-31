@@ -27,7 +27,7 @@ public class DoctorService {
 
     /**
      * 录入诊断明细（疾病）
-     * @param dids
+     * @param bodys
      */
     public boolean recordDiagnosis(DiagnosisBody[] bodys){
         ArrayList<DiagnosisEntity> list = new ArrayList<>();

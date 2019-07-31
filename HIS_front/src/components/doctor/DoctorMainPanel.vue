@@ -43,8 +43,8 @@
     </el-col>
     <el-col :span="18">
       <h5>姓名:{{currentPatient.patientName}} 病历号:{{currentPatient.caseNo}} 年龄:{{currentPatient.ageWithType}}</h5>
-      <!-- <Prescribe></Prescribe> -->
-      <Diagnose @callRefresh="getAllRelatedPatients"></Diagnose>
+      <Prescribe @callRefresh="getAllRelatedPatients"></Prescribe>
+      <!--<Diagnose @callRefresh="getAllRelatedPatients"></Diagnose>-->
     </el-col>
   </el-col>
 </template>

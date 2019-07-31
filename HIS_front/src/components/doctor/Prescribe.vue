@@ -4,19 +4,33 @@
     <p>处方金额统计</p>
     <el-row>
       <el-col :span="8">
-        <CommonTable
-          ref="templateTable"
-          :data_list="templateTableData"
-          :table-headers="templateTableHeaders"
-          :table-name="templateTableName"
-        ></CommonTable>
+        <h1>{{templateTableName}}</h1>
+        <el-table
+          :data="templateTableData"
+          stripe
+          highlight-current-row
+          @current-change="handleCurrentChange"
+        >
+          <el-table-column
+            v-bind:key="key"
+            :label="header"
+            v-for="(header, key) in templateTableHeaders"
+          >
+            <template scope="scope">{{templateTableData[scope.$index][key]}}</template>
+          </el-table-column>
+        </el-table>
       </el-col>
       <el-col :span="16">
-        <CommonTable
-          :data_list="templateDtlTableData"
-          :table-headers="templateDtlTableHeaders"
-          :table-name="templateDtlTableName"
-        ></CommonTable>
+        <h1>{{templateDtlTableName}}</h1>
+        <el-table :data="templateDtlTableData" stripe>
+          <el-table-column
+            v-bind:key="key"
+            :label="header"
+            v-for="(header, key) in templateDtlTableHeaders"
+          >
+            <template scope="scope">{{templateDtlTableData[scope.$index][key]}}</template>
+          </el-table-column>
+        </el-table>
         <el-row>
           <el-button>使用该模板</el-button>
         </el-row>
@@ -27,7 +41,11 @@
 
 <script>
 export default {
-  name: 'SelectTemplate',
+  methods: {
+    handleCurrentChange (val) {
+      this.currentSelectingTemplate = val
+    }
+  },
   watch: {
     getSelectingTemplateId (newVal, oldVal) {
       this.$api
@@ -44,8 +62,9 @@ export default {
     }
   },
   computed: {
-    getSelectingRow () {
-      return this.$store.state.currentRow()
+    getSelectingTemplateId () {
+      console.log(this.currentSelectingTemplate)
+      return this.currentSelectingTemplate
     }
   },
   mounted () {
@@ -79,7 +98,8 @@ export default {
       templateTableName: '可用模板',
       templateDtlTableName: '所选模板明细',
       templateTableData: [],
-      templateDtlTableData: []
+      templateDtlTableData: [],
+      currentSelectingTemplate: []
     }
   }
 }
