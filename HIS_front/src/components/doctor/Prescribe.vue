@@ -1,7 +1,39 @@
 <template>
   <div>
-    <p>当前处方</p>
-    <p>处方金额统计</p>
+    <el-row>
+      <el-col :span="8">
+        <h1>当前处方</h1>
+        todo：增删方；开立（提交）；作废（清空）
+        <el-table
+          :data="usingTemplates"
+          stripe
+        >
+          <el-table-column
+            prop="name"
+            label="模板名称"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="range"
+            label="状态"
+            width="180">
+          </el-table-column>
+        </el-table>
+      </el-col>
+      <el-col :span="16">
+        <h1>处方金额统计：{{totalPrice}}</h1>
+        todo:增删药(级联)
+        <el-table :data="templateDtlTableData" stripe>
+          <el-table-column
+            v-bind:key="header[0]"
+            :label="header"
+            v-for="(header, key) in templateDtlTableHeaders"
+          >
+            <template scope="scope">{{templateDtlTableData[scope.$index][key]}}</template>
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="8">
         <h1>{{templateTableName}}</h1>
@@ -12,11 +44,14 @@
           @current-change="handleCurrentChange"
         >
           <el-table-column
-            v-bind:key="key"
-            :label="header"
-            v-for="(header, key) in templateTableHeaders"
-          >
-            <template scope="scope">{{templateTableData[scope.$index][key]}}</template>
+            prop="name"
+            label="模板名称"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="range"
+            label="使用范围"
+            width="180">
           </el-table-column>
         </el-table>
       </el-col>
@@ -24,7 +59,7 @@
         <h1>{{templateDtlTableName}}</h1>
         <el-table :data="templateDtlTableData" stripe>
           <el-table-column
-            v-bind:key="key"
+            v-bind:key="header[0]"
             :label="header"
             v-for="(header, key) in templateDtlTableHeaders"
           >
@@ -32,7 +67,7 @@
           </el-table-column>
         </el-table>
         <el-row>
-          <el-button>使用该模板</el-button>
+          <el-button @click="useTemplate" type="primary">使用该模板</el-button>
         </el-row>
       </el-col>
     </el-row>
@@ -44,6 +79,21 @@ export default {
   methods: {
     handleCurrentChange (val) {
       this.currentSelectingTemplate = val
+      console.log(this.currentSelectingTemplate)
+    },
+    useTemplate () {
+      this.usingTemplates.push(this.currentSelectingTemplate)
+    }
+  },
+  computed: {
+    getSelectingTemplateId () {
+      return this.currentSelectingTemplate.id
+    },
+    totalPrice () {
+      return 0
+    },
+    getUsingTemplates () {
+      return this.usingTemplates
     }
   },
   watch: {
@@ -59,17 +109,13 @@ export default {
         .catch(failResponse => {
           console.log(failResponse)
         })
-    }
-  },
-  computed: {
-    getSelectingTemplateId () {
-      console.log(this.currentSelectingTemplate)
-      return this.currentSelectingTemplate
+    },
+    getUsingTemplates (newVal, oldVal) {
+      // 允许级联删除
+
     }
   },
   mounted () {
-    // console.log('tamplates for currentDocId')
-    // console.log(this.$store.state.currentDocId)
     this.doc_id = this.$store.state.currentDocId
     this.$api
       .usableTemplateList(this.doc_id)
@@ -85,8 +131,8 @@ export default {
   },
   data () {
     return {
+      usingTemplates: [],
       doc_id: '',
-      templateTableHeaders: ['模板名称', '范围'],
       templateDtlTableHeaders: [
         '药品名称',
         '规格',
@@ -99,7 +145,11 @@ export default {
       templateDtlTableName: '所选模板明细',
       templateTableData: [],
       templateDtlTableData: [],
-      currentSelectingTemplate: []
+      currentSelectingTemplate: {
+        name: '',
+        id: '',
+        range: ''
+      }
     }
   }
 }
