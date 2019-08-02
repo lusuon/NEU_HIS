@@ -23,13 +23,13 @@
       <el-col :span="16">
         <h1>处方金额统计：{{totalPrice}}</h1>
         todo:增删药(级联)
-        <el-table :data="templateDtlTableData" stripe>
+        <el-table :data="usingTemplatesDtlData" stripe>
           <el-table-column
-            v-bind:key="header[0]"
+            v-bind:key="key"
             :label="header"
             v-for="(header, key) in templateDtlTableHeaders"
           >
-            <template scope="scope">{{templateDtlTableData[scope.$index][key]}}</template>
+            <template scope="scope">{{usingTemplatesDtlData[scope.$index][key]}}</template>
           </el-table-column>
         </el-table>
       </el-col>
@@ -59,7 +59,7 @@
         <h1>{{templateDtlTableName}}</h1>
         <el-table :data="templateDtlTableData" stripe>
           <el-table-column
-            v-bind:key="header[0]"
+            v-bind:key="key"
             :label="header"
             v-for="(header, key) in templateDtlTableHeaders"
           >
@@ -75,6 +75,7 @@
 </template>
 
 <script>
+
 export default {
   methods: {
     handleCurrentChange (val) {
@@ -94,7 +95,10 @@ export default {
     },
     getUsingTemplates () {
       return this.usingTemplates
-    }
+    },
+      totalPrice(){
+        return 0
+      }
   },
   watch: {
     getSelectingTemplateId (newVal, oldVal) {
@@ -111,8 +115,21 @@ export default {
         })
     },
     getUsingTemplates (newVal, oldVal) {
+      this.usingTemplatesDtlData = []
       // 允许级联删除
-
+      newVal.map(current => {
+        this.$api
+          .getTemplateDtl('medi', current.id)
+          .then(resp => {
+            if (resp.data.code === 200) {
+              let objects = resp.data.data
+              objects.map(current => { this.usingTemplatesDtlData.push(current) })
+            }
+          })
+          .catch(failResponse => {
+            console.log(failResponse)
+          })
+      })
     }
   },
   mounted () {
@@ -145,6 +162,7 @@ export default {
       templateDtlTableName: '所选模板明细',
       templateTableData: [],
       templateDtlTableData: [],
+      usingTemplatesDtlData: [],
       currentSelectingTemplate: {
         name: '',
         id: '',
