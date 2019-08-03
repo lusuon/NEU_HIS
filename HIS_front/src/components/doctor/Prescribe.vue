@@ -2,69 +2,93 @@
   <div>
     <el-row>
       <el-col :span="8">
+        <el-button-group>
+          <el-button type="primary" @click="addPrescription">增方</el-button>
+          <el-button type="primary" @click="applyTemplate">开立</el-button>
+          <el-button type="primary" @click="clearTemplate">作废</el-button>
+        </el-button-group>
+      </el-col>
+      <el-col :span="8">
+        <el-button-group>
+          <el-button type="primary">增药</el-button>
+          <el-button type="primary">删药</el-button>
+        </el-button-group>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="8">
         <h1>当前处方</h1>
-        todo：增删方；开立（提交）；作废（清空）
         <el-table
           :data="usingTemplates"
           stripe
+          highlight-current-row
+          @current-change="handleCurrentUsingTemplateChange"
         >
-          <el-table-column
-            prop="name"
-            label="模板名称"
-            width="180">
+          <el-table-column prop="name" label="名称" width="180">
+            <template scope="scope">
+              <el-input
+                size="small"
+                v-model="scope.row.name"
+                placeholder="请输入处方名称"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
           </el-table-column>
-          <el-table-column
-            prop="range"
-            label="状态"
-            width="180">
+          <el-table-column fixed="right" label="操作" width="120">
+            <template slot-scope="scope">
+              <el-button
+                @click.native.prevent="deleteRow(scope.$index, usingTemplates)"
+                type="text"
+                size="small"
+              >移除</el-button>
+            </template>
           </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="16">
         <h1>处方金额统计：{{totalPrice}}</h1>
-        todo:增删药(级联)
         <el-table :data="usingTemplatesDtlData" stripe>
-          <el-table-column
-            v-bind:key="key"
-            :label="header"
-            v-for="(header, key) in templateDtlTableHeaders"
-          >
-            <template scope="scope">{{usingTemplatesDtlData[scope.$index][key]}}</template>
+          <el-table-column prop="drug.drugName" label="药品名称" width="180"></el-table-column>
+          <el-table-column label="数量" width="180">
+            <template scope="scope">
+              <el-input
+                size="small"
+                v-model="scope.row.quantity"
+                placeholder="请输入数量"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
           </el-table-column>
+          <el-table-column prop="drug.standard" label="规格" width="180"></el-table-column>
+          <el-table-column prop="drug.unit" label="单位" width="180"></el-table-column>
+          <el-table-column prop="dtl.method" label="用法" width="180"></el-table-column>
+          <el-table-column prop="dtl.consumption" label="用量" width="180"></el-table-column>
+          <el-table-column prop="dtl.frequency" label="频次" width="180"></el-table-column>
         </el-table>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
-        <h1>{{templateTableName}}</h1>
+        <h1>可用模板</h1>
         <el-table
           :data="templateTableData"
           stripe
           highlight-current-row
           @current-change="handleCurrentChange"
         >
-          <el-table-column
-            prop="name"
-            label="模板名称"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="range"
-            label="使用范围"
-            width="180">
-          </el-table-column>
+          <el-table-column prop="name" label="模板名称" width="180"></el-table-column>
+          <el-table-column prop="range" label="使用范围" width="180"></el-table-column>
         </el-table>
       </el-col>
       <el-col :span="16">
-        <h1>{{templateDtlTableName}}</h1>
+        <h1>所选模板明细</h1>
         <el-table :data="templateDtlTableData" stripe>
-          <el-table-column
-            v-bind:key="key"
-            :label="header"
-            v-for="(header, key) in templateDtlTableHeaders"
-          >
-            <template scope="scope">{{templateDtlTableData[scope.$index][key]}}</template>
-          </el-table-column>
+          <el-table-column prop="drug.drugName" label="药品名称" width="180"></el-table-column>
+          <el-table-column prop="drug.standard" label="规格" width="180"></el-table-column>
+          <el-table-column prop="drug.unit" label="单位" width="180"></el-table-column>
+          <el-table-column prop="dtl.method" label="用法" width="180"></el-table-column>
+          <el-table-column prop="dtl.consumption" label="用量" width="180"></el-table-column>
+          <el-table-column prop="dtl.frequency" label="频次" width="180"></el-table-column>
         </el-table>
         <el-row>
           <el-button @click="useTemplate" type="primary">使用该模板</el-button>
@@ -75,15 +99,85 @@
 </template>
 
 <script>
-
+import { Message } from 'element-ui';
 export default {
   methods: {
+    handleCurrentUsingTemplateChange (val) {
+      this.currentUsingTemplate = val
+      console.log(this.currentUsingTemplate)
+    },
+    deleteRow (index, rows) {
+      rows.splice(index, 1)
+    },
+    addPrescription () {
+      this.usingTemplates.push({ id: -1 })
+    },
     handleCurrentChange (val) {
       this.currentSelectingTemplate = val
       console.log(this.currentSelectingTemplate)
     },
+    handleEdit (index, row) {
+      console.log('row change')
+      console.log(row)
+    },
     useTemplate () {
       this.usingTemplates.push(this.currentSelectingTemplate)
+    },
+    applyTemplate () {
+      // 开立处方
+      // 构造request
+      let rid = this.$store.state.currentPatient.regId
+      this.toApplyItem = []
+      // gpn:处方名称, list:药品id，逗号分隔
+      this.usingTemplates.map(current => {
+        let templateId = current.id
+        let templateName = current.name
+        let correspondDtl = this.usingTemplatesDtlData.filter(current => {
+          return current.dtl.templateId === templateId
+        })
+        let listStr = '';
+        correspondDtl.map(current => {
+          this.toApplyItem.push({
+            rid: rid,
+            gpn: templateName,
+            list:
+              listStr +
+              current.drug.id +
+              ',' +
+              current.dtl.method +
+              ',' +
+              current.dtl.consumption +
+              ',' +
+              current.dtl.frequency +
+              ',' +
+              current.quantity
+          })
+        })
+      })
+      console.log(this.toApplyItem)
+
+      //提交
+      this.toApplyItem.map(current => {
+        this.$api
+          .apply(current)
+          .then(resp => {
+            if (resp.data.code === 200) {
+              Message({
+                message: current.gpn + '开立成功',
+                duration: 1000
+              })
+            }
+          })
+          .catch(failResponse => {
+            console.log(failResponse)
+          })
+      })
+
+      this.toApplyItem = []
+      this.usingTemplates = []
+    },
+    clearTemplate () {
+      this.usingTemplates = []
     }
   },
   computed: {
@@ -91,14 +185,16 @@ export default {
       return this.currentSelectingTemplate.id
     },
     totalPrice () {
-      return 0
+      // 明细项费用
+      let sepSum = this.usingTemplatesDtlData.map(current => {
+        return current.drug.unitPrice * current.quantity
+      })
+      // 对明细求和
+      return eval(sepSum.join('+'))
     },
     getUsingTemplates () {
       return this.usingTemplates
-    },
-      totalPrice(){
-        return 0
-      }
+    }
   },
   watch: {
     getSelectingTemplateId (newVal, oldVal) {
@@ -107,6 +203,7 @@ export default {
         .then(resp => {
           if (resp.data.code === 200) {
             let objects = resp.data.data
+            console.log(objects)
             this.templateDtlTableData = objects
           }
         })
@@ -118,17 +215,22 @@ export default {
       this.usingTemplatesDtlData = []
       // 允许级联删除
       newVal.map(current => {
-        this.$api
-          .getTemplateDtl('medi', current.id)
-          .then(resp => {
-            if (resp.data.code === 200) {
-              let objects = resp.data.data
-              objects.map(current => { this.usingTemplatesDtlData.push(current) })
-            }
-          })
-          .catch(failResponse => {
-            console.log(failResponse)
-          })
+        if (current.id !== -1) {
+          this.$api
+            .getTemplateDtl('medi', current.id)
+            .then(resp => {
+              if (resp.data.code === 200) {
+                let objects = resp.data.data
+                objects.map(current => {
+                  this.usingTemplatesDtlData.push(current)
+                  this.newTemplateId--
+                })
+              }
+            })
+            .catch(failResponse => {
+              console.log(failResponse)
+            })
+        }
       })
     }
   },
@@ -145,21 +247,13 @@ export default {
       .catch(failResponse => {
         console.log(failResponse)
       })
+    this.newTemplateId = -1
   },
   data () {
     return {
+      toApplyItem: [],
       usingTemplates: [],
       doc_id: '',
-      templateDtlTableHeaders: [
-        '药品名称',
-        '规格',
-        '单位',
-        '用法',
-        '用量',
-        '频次'
-      ],
-      templateTableName: '可用模板',
-      templateDtlTableName: '所选模板明细',
       templateTableData: [],
       templateDtlTableData: [],
       usingTemplatesDtlData: [],

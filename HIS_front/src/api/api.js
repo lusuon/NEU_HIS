@@ -92,11 +92,11 @@ export const getTemplateDtl = (type, id) => {
 }
 
 // POST
-// 提交开药,未测试
+// 提交开药
 export const apply = params => {
   return axios.post(`${doctorURL}/apply`, params)
 }
-// 提交诊断,未测试
+// 提交诊断
 export const diag = params => {
   return axios.post(`${doctorURL}/diag`, params)
 }
