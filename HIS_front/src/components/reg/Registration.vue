@@ -1,147 +1,197 @@
 <template>
   <div class="registration">
-    <el-row>
-      <el-col :span="4"></el-col>
-      <el-col :span="16">
-        <div class="grid-content bg-purple-light"></div>
-        <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="病历号">
-            <el-input v-model="form.caseNo"></el-input>
-            <el-button type="primary" @click="onSubmit">搜索</el-button>
-          </el-form-item>
-          <el-form-item label="姓名">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="性别">
-            <el-select v-model="form.sex" placeholder="请选择性别">
-              <el-option
-                v-bind:key="sex_item.id"
-                v-for="sex_item in this.basicInfo.sex"
-                :label="sex_item.constantName"
-                :value="sex_item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="身份证号">
-            <el-input v-model="form.pid"></el-input>
-          </el-form-item>
-          <el-form-item label="出生日期">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="form.birth"
-                style="width: 100%;"
-              ></el-date-picker>
+    <el-col>
+      <div class="grid-content bg-purple-light"></div>
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-card class="个人信息填写" shadow="hover">
+          <div slot="header" class="clearfix">
+            <p align="left">
+              <span>一、个人信息填写</span>
+            </p>
+          </div>
+          <el-row class="caseNo-and-name-and-sex">
+            <el-col span="8" class="search-by-caseNo">
+              <el-form-item label="病历号">
+                <el-col :span="12">
+                  <el-input v-model="form.caseNo"></el-input>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="primary" @click="onSubmit">搜索</el-button>
+                </el-col>
+              </el-form-item>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="form.seeDate" style="width: 100%;"></el-time-picker>
+            <el-col :span="8">
+              <el-form-item label="姓名" required="true">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
             </el-col>
-          </el-form-item>
-          <el-form-item label="看诊日期">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="form.seeDate"
-                style="width: 100%;"
-              ></el-date-picker>
+            <el-col :span="8">
+              <el-form-item label="性别" required="true">
+                <el-select v-model="form.sex" placeholder="请选择性别">
+                  <el-option
+                    v-bind:key="sex_item.id"
+                    v-for="sex_item in this.basicInfo.sex"
+                    :label="sex_item.constantName"
+                    :value="sex_item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="form.seeDate" style="width: 100%;"></el-time-picker>
+          </el-row>
+          <el-row class="pid-and-addr-and-birth">
+            <el-col :span="8">
+              <el-form-item label="身份证号">
+                <el-input v-model="form.pid"></el-input>
+              </el-form-item>
             </el-col>
-          </el-form-item>
-          <el-form-item label="家庭住址">
-            <el-input v-model="form.address"></el-input>
-          </el-form-item>
-          <el-form-item label="结算类别">
-            <el-select v-model="form.settlement" placeholder="请选择结算类别">
-              <el-option label="自费" value="1"></el-option>
-              <el-option label="市医保" value="2"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="看诊日期">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="form.seeDate"
-                style="width: 100%;"
-              ></el-date-picker>
+            <el-col :span="8">
+              <el-form-item label="家庭住址">
+                <el-input v-model="form.address"></el-input>
+              </el-form-item>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="form.seeDate" style="width: 100%;"></el-time-picker>
+            <el-col :span="8">
+              <el-form-item label="出生日期">
+                <el-col :span="11">
+                  <el-date-picker
+                    type="date"
+                    placeholder="选择日期"
+                    v-model="form.birth"
+                    style="width: 100%;"
+                  ></el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="11">
+                  <el-time-picker placeholder="选择时间" v-model="form.seeDate" style="width: 100%;"></el-time-picker>
+                </el-col>
+              </el-form-item>
             </el-col>
-          </el-form-item>
-          <el-form-item label="午别">
-            <el-select v-model="form.noon" placeholder="请选择午别">
-              <el-option label="上午" value="上"></el-option>
-              <el-option label="下午" value="下"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="挂号科室">
-            <el-select v-model="form.dept" placeholder="请选择挂号科室">
-              <el-option
-                v-bind:key="item.id"
-                v-for="item in this.basicInfo.dept"
-                :label="item.deptName"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="看诊医生">
-            <el-select v-model="form.doctor" placeholder="请选择活动区域">
-              <el-option
-                v-bind:key="item.id"
-                v-for="item in selectableDocs"
-                :label="item.realName"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="号别">
-            <el-select v-model="form.regCategory" placeholder="请选择号别">
-              <el-option
-                v-bind:key="item.id"
-                v-for="item in selectableregCategory"
-                :label="item.categoryName"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="初始号额">
-            <el-input v-model="payForm.initLimit"></el-input>
-          </el-form-item>
-          <el-form-item label="已用号额">
-            <el-input v-model="payForm.occupy"></el-input>
-          </el-form-item>
-          <el-form-item label="应收金额">
-            <el-input :value="fee"></el-input>
-          </el-form-item>
-          <el-form-item label="收费方式">
-            <el-select v-model="payForm.method" placeholder="请选择收费方式">
-              <el-option
-                v-bind:key="item.id"
-                v-for="item in selecatablePayMethod"
-                :label="item.constantName"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="需要病历本">
-            <el-switch v-model="form.needCaseBook"></el-switch>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="reg">挂号</el-button>
-            <el-button>清空</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-      <el-col :span="4"></el-col>
-    </el-row>
+          </el-row>
+        </el-card>
+        <el-row>
+          <el-col :span="12">
+            <el-card class="挂号信息填写" shadow="hover">
+              <div slot="header" class="clearfix">
+                <p align="left">
+                  <span>二、挂号信息填写</span>
+                </p>
+              </div>
+              <el-row class="reg-doc-select">
+                <el-col :span="12">
+                  <el-form-item label="科室">
+                    <el-select v-model="form.dept" placeholder="请选择科室">
+                      <el-option
+                        v-bind:key="item.id"
+                        v-for="item in this.basicInfo.dept"
+                        :label="item.deptName"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="医生">
+                    <el-select v-model="form.doctor" placeholder="请选择医生">
+                      <el-option
+                        v-bind:key="item.id"
+                        v-for="item in selectableDocs"
+                        :label="item.realName"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row class="reg-type-and-limit">
+                <el-col :span="12">
+                  <el-form-item label="号别">
+                    <el-select v-model="form.regCategory" placeholder="请选择号别">
+                      <el-option
+                        v-bind:key="item.id"
+                        v-for="item in selectableregCategory"
+                        :label="item.categoryName"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="号额已用">{{this.payForm.occupy + '/' + this.payForm.initLimit}}</el-form-item>
+                </el-col>
+              </el-row>
+              <el-row class="reg-time">
+                <el-col :span="12">
+                  <el-form-item label="看诊日期">
+                    <el-col :span="11">
+                      <el-date-picker
+                        type="date"
+                        placeholder="日期"
+                        v-model="form.seeDate"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-col>
+                    <el-col class="line" :span="2">-</el-col>
+                    <el-col :span="11">
+                      <el-time-picker placeholder="时间" v-model="form.seeDate" style="width: 100%;"></el-time-picker>
+                    </el-col>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="午别">
+                    <el-select v-model="form.noon" placeholder="请选择午别">
+                      <el-option label="上午" value="上"></el-option>
+                      <el-option label="下午" value="下"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-card>
+          </el-col>
+
+          <el-col :span="12">
+            <el-card class="付款信息填写" shadow="hover">
+              <div slot="header" class="clearfix">
+                <p align="left">
+                  <span>三、付款信息填写</span>
+                </p>
+              </div>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="结算类别">
+                    <el-select v-model="form.settlement" placeholder="请选择结算类别">
+                      <el-option label="自费" value="1"></el-option>
+                      <el-option label="市医保" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="收费方式">
+                    <el-select v-model="payForm.method" placeholder="请选择收费方式">
+                      <el-option
+                        v-bind:key="item.id"
+                        v-for="item in selecatablePayMethod"
+                        :label="item.constantName"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="需病历本">
+                    <el-switch v-model="form.needCaseBook"></el-switch>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <h5>应收金额:{{fee}}</h5>
+              <el-form-item>
+                <el-button type="primary" @click="reg">挂号</el-button>
+                <el-button>清空</el-button>
+              </el-form-item>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-col>
   </div>
 </template>
 

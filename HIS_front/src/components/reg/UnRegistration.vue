@@ -1,32 +1,55 @@
 <template>
-  <el-row>
-    <el-col :span="23">
-      <div class="grid-content bg-purple-light"></div>
-      <el-form ref="form" :model="form" label-width="80px">
-        <p>患者信息查询</p>
-        <el-form-item label="病历号">
-          <el-input v-model="form.caseNo"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">搜索</el-button>
-        </el-form-item>
-        <p>患者信息确认</p>
-        <el-row :gutter="20">
-          <el-col :span="8">姓名: {{currentPatient.name}}</el-col>
-          <el-col :span="8">身份证号: {{currentPatient.pid}}</el-col>
-          <el-col :span="8">家庭住址: {{currentPatient.address}}</el-col>
-        </el-row>
-      </el-form>
-      <!--
+  <el-form ref="form" :model="form" label-width="80px">
+    <el-row>
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <div slot="header" class="clearfix">
+            <p align="left">
+              <span>患者信息查询</span>
+            </p>
+          </div>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="病历号">
+                <el-input v-model="form.caseNo"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">搜索</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <div slot="header" class="clearfix">
+            <p align="left">
+              <span>患者信息确认</span>
+            </p>
+          </div>
+          <el-form-item label="姓名">
+            <el-input :value="this.currentPatient.name" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号">
+            <el-input :value="this.currentPatient.pid" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="家庭住址">
+            <el-input :value="this.currentPatient.address" :disabled="true"></el-input>
+          </el-form-item>
+        </el-card>
+      </el-col>
+    </el-row>
+  </el-form>
+  <!--
       <CommonTable
         :data_list="tableData"
         :table-headers="tableHeaders"
         :tableName="tableName"
         :need-operate="true"
       >表格</CommonTable>
-      -->
-    </el-col>
-  </el-row>
+  -->
 </template>
 
 <script>

@@ -1,13 +1,29 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view />
+    <el-container>
+      <el-header class="el-header">
+        <header></header>
+      </el-header>
+      <el-container>
+        <el-col :span="3">
+          <navmenu></navmenu>
+        </el-col>
+        <el-col :span="21">
+          <router-view />
+        </el-col>
+      </el-container>
+    </el-container>
   </div>
 </template>
-
 <script>
+import NavMenu from '@/components/common/NavMenu';
+import Header from '@/components/common/Header';
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    navmenu: NavMenu,
+    header: Header
+  }
 }
 </script>
 
@@ -19,5 +35,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: #ffffff;
+}
+.el-header {
+  background-color: #409eff;
+  color: #fff;
+  line-height: 60px;
 }
 </style>

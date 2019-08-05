@@ -1,8 +1,8 @@
 <template>
-  <el-col>
-    <el-col :span="6">
-      <!-- 左侧为选择患者栏 -->
-      <el-row>
+  <div>
+    <!-- 选择患者栏 -->
+    <el-row>
+      <el-card shadow="hover">
         <el-col :span="12">
           <p>选择患者</p>
         </el-col>
@@ -10,50 +10,39 @@
           <el-button type="primary" icon="el-icon-refresh
 " @click="getAllRelatedPatients"></el-button>
         </el-col>
-      </el-row>
-      <div>
-        <h1>{{toSeeTableName}}</h1>
-        <el-table
-          highlight-current-row
-          @current-change="handleCurrentChange"
-          :data="toSeeTableData"
+      </el-card>
+    </el-row>
+    <!-- 待诊断患者-->
+    <el-card shadow="hover" class="toSeeCard">
+      <h1>{{toSeeTableName}}</h1>
+      <el-table highlight-current-row @current-change="handleCurrentChange" :data="toSeeTableData">
+        <el-table-column
+          v-bind:key="header[0]"
+          :label="header"
+          v-for="(header, key) in TableHeaders"
         >
-          <el-table-column
-            v-bind:key="header[0]"
-            :label="header"
-            v-for="(header, key) in TableHeaders"
-          >
-            <template scope="scope">{{toSeeTableData[scope.$index][key]}}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-
-      <div>
-        <h1>{{seenTableName}}</h1>
-        <el-table highlight-current-row @current-change="handleCurrentChange" :data="seenTableData">
-          <el-table-column
-            v-bind:key="header[0]"
-            :label="header"
-            v-for="(header, key) in TableHeaders"
-          >
-            <template scope="scope">{{seenTableData[scope.$index][key]}}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </el-col>
-    <el-col :span="18">
-      <h5>姓名:{{currentPatient.patientName}} 病历号:{{currentPatient.caseNo}} 年龄:{{currentPatient.ageWithType}}</h5>
-      <Prescribe @callRefresh="getAllRelatedPatients"></Prescribe>
-      <!--<Diagnose @callRefresh="getAllRelatedPatients"></Diagnose>-->
-    </el-col>
-  </el-col>
+          <template scope="scope">{{toSeeTableData[scope.$index][key]}}</template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+    <!-- 已诊断患者 -->
+    <el-card shadow="hover" class="seenCard">
+      <h1>{{seenTableName}}</h1>
+      <el-table highlight-current-row @current-change="handleCurrentChange" :data="seenTableData">
+        <el-table-column
+          v-bind:key="header[0]"
+          :label="header"
+          v-for="(header, key) in TableHeaders"
+        >
+          <template scope="scope">{{seenTableData[scope.$index][key]}}</template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+  </div>
 </template>
 
 <script>
-import Prescribe from './Prescribe.vue';
-import Diagnose from './Diagnose';
 export default {
-  components: { Prescribe, Diagnose },
   data () {
     return {
       docId: this.$store.state.currentDocId,
