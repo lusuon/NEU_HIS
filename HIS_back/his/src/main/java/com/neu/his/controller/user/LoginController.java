@@ -3,6 +3,7 @@ package com.neu.his.controller.user;
 import com.neu.his.common.response.CommonResponse;
 import com.neu.his.requestBody.user.LoginBody;
 import com.neu.his.service.users.AllUserService;
+import com.neu.his.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,6 @@ public class LoginController {
      */
     @PostMapping("/api/login")
     public CommonResponse login(@RequestBody LoginBody loginBody){
-        return allUserService.login(loginBody.getUser(), loginBody.getPass())?CommonResponse.succuess():CommonResponse.fail();
+        return allUserService.login(loginBody.getUser(), loginBody.getPass())?CommonResponse.succuess(JWTUtil.sign(loginBody.getUser(),loginBody.getPass())):CommonResponse.fail();
     }
 }

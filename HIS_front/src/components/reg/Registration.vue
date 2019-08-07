@@ -21,12 +21,12 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="姓名" required="true">
+              <el-form-item label="姓名" required>
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="性别" required="true">
+              <el-form-item label="性别" required>
                 <el-select v-model="form.sex" placeholder="请选择性别">
                   <el-option
                     v-bind:key="sex_item.id"

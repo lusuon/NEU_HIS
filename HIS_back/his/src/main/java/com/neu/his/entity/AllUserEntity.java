@@ -11,6 +11,7 @@ public class AllUserEntity {
     private String realName;
     private String userType;
     private String titleId;
+    private String permission;
     private Byte scheduleParticipation;
     private int deptId;
     private int regLevelId;
@@ -74,6 +75,17 @@ public class AllUserEntity {
 
     public void setTitleId(String titleId) {
         this.titleId = titleId;
+    }
+
+
+    @Basic
+    @Column(name = "permission")
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     @Basic

@@ -1,10 +1,8 @@
 package com.neu.his.common.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class CommonResponse {
     // 状态码 0:成功"
     private int code;

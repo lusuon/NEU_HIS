@@ -13,6 +13,10 @@ public class AllUserService{
     AllUserMapper allUserMapper;
 
     /**
+     * 按照获取用户名用户
+     */
+    public AllUserEntity getUserByUsername(String username){ return allUserMapper.findByUsername(username);}
+    /**
      * 获取科室下所有医生
      * @return
      */
