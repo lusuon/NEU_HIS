@@ -1,11 +1,10 @@
 package com.neu.his.service.drug;
 
-import com.neu.his.dao.Prescriptions.PrescriptionMedicineDtlMapper;
-import com.neu.his.dao.Prescriptions.PrescriptionMedicineMapper;
+import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineDtlMapper;
+import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

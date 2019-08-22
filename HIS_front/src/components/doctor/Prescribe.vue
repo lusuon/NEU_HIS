@@ -6,27 +6,24 @@
     </el-col>
     <!-- 处方开立栏 -->
     <el-col :span="18">
-      <!-- 操作栏 -->
-      <el-row>
-        <el-col :span="8">
-          <el-button-group>
-            <el-button type="primary" @click="addPrescription">增方</el-button>
-            <el-button type="primary" @click="applyTemplate">开立</el-button>
-            <el-button type="primary" @click="clearTemplate">作废</el-button>
-          </el-button-group>
-        </el-col>
-        <el-col :span="8">
-          <el-button-group>
-            <el-button type="primary">增药</el-button>
-            <el-button type="primary">删药</el-button>
-          </el-button-group>
-        </el-col>
-      </el-row>
       <!-- 当前处方 -->
       <el-row>
         <el-col :span="8">
           <el-card shadow="hover">
-            <h1>当前处方</h1>
+            <el-row>
+              <el-col :span="8">
+                <h1>当前处方</h1>
+              </el-col>
+              <el-col :span="16">
+                <h1>
+                  <el-button-group>
+                    <el-button type="primary" size="mini" @click="addPrescription">增方</el-button>
+                    <el-button type="primary" size="mini" @click="applyTemplate">开立</el-button>
+                    <el-button type="primary" size="mini" @click="clearTemplate">作废</el-button>
+                  </el-button-group>
+                </h1>
+              </el-col>
+            </el-row>
             <el-table
               :data="usingTemplates"
               stripe
@@ -55,13 +52,24 @@
             </el-table>
           </el-card>
         </el-col>
-
         <el-col :span="16">
           <el-card shadow="hover">
-            <h1>处方金额统计：{{totalPrice}}</h1>
+            <el-row>
+              <el-col :span="6">
+                <h1>
+                  <el-button-group>
+                    <el-button type="primary" size="mini">增药</el-button>
+                    <el-button type="primary" size="mini">删药</el-button>
+                  </el-button-group>
+                </h1>
+              </el-col>
+              <el-col :span="18">
+                <h1>处方金额统计：{{totalPrice}}</h1>
+              </el-col>
+            </el-row>
             <el-table :data="usingTemplatesDtlData" stripe>
               <el-table-column prop="drug.drugName" label="药品名称" min-width="25%"></el-table-column>
-              <el-table-column label="数量" min-width="10%">
+              <el-table-column label="数量" min-width="18%">
                 <template scope="scope">
                   <el-input
                     size="small"
@@ -71,7 +79,7 @@
                   ></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="drug.standard" label="规格" min-width="27%"></el-table-column>
+              <el-table-column prop="drug.standard" label="规格" min-width="19%"></el-table-column>
               <el-table-column prop="drug.unit" label="单位" min-width="8%"></el-table-column>
               <el-table-column prop="dtl.method" label="用法" min-width="10%"></el-table-column>
               <el-table-column prop="dtl.consumption" label="用量" min-width="10%"></el-table-column>
@@ -215,7 +223,8 @@ export default {
         return current.drug.unitPrice * current.quantity
       })
       // 对明细求和
-      return eval(sepSum.join('+'))
+      let total = eval(sepSum.join('+'))
+      return isNaN(total) ? '请输入数量以计算总和' : total
     },
     getUsingTemplates () {
       return this.usingTemplates

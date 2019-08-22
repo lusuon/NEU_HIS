@@ -1,12 +1,13 @@
 package com.neu.his.controller.doctor;
 
-import com.neu.his.common.response.CommonResponse;
-import com.neu.his.entity.CaseEntity;
-import com.neu.his.entity.RegistrationEntity;
-import com.neu.his.requestBody.doctor.DiagBody;
-import com.neu.his.requestBody.doctor.DiagnosisBody;
+import com.neu.his.util.response.CommonResponse;
+import com.neu.his.dao.entity.CaseEntity;
+import com.neu.his.dao.entity.RegistrationEntity;
+import com.neu.his.util.requestBody.doctor.DiagBody;
+import com.neu.his.util.requestBody.doctor.DiagnosisBody;
 import com.neu.his.service.doctor.DoctorService;
 import com.neu.his.service.registration.RegistrationService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,11 @@ public class DiagController {
     DoctorService doctorService;
 
     /**
-     * 发药，入参为pid组成的，以逗号分隔字符串
+     * 提交诊断
      * @return
      */
     @PostMapping("/api/doctor/diagnosis")
+    @RequiresRoles("3")
     public CommonResponse releaseDrugs(@RequestBody DiagnosisBody[] list){
         return doctorService.recordDiagnosis(list)?CommonResponse.succuess("有条目修改"):CommonResponse.fail("无条目修改");
     }
@@ -50,12 +52,14 @@ public class DiagController {
      * 当日、以诊
      */
     @GetMapping("/api/doctor/{doc_id}/seen")
+    @RequiresRoles("3")
     public CommonResponse showPatientSeen(@PathVariable("doc_id") int doc_id){
         List<RegistrationEntity> result = registrationService.showPatientSeen(doc_id);
         return CommonResponse.succuess(result);
     }
 
     @GetMapping("/api/doctor/diag/{regId}")
+    @RequiresRoles("3")
     public CommonResponse showPatientDiag(@PathVariable("regId") int regId){
         HashMap<String,Object> resultSet = new HashMap<>(2);
         CaseEntity caseEntity = doctorService.showCase(regId);
@@ -69,6 +73,7 @@ public class DiagController {
      * 调用存储过程记录诊断
      */
     @PostMapping("/api/doctor/diag")
+    @RequiresRoles("3")
     public CommonResponse diag(@RequestBody DiagBody diagBody){
        boolean result = doctorService.diag(
                diagBody.getRegId(),

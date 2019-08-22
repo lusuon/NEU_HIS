@@ -1,7 +1,7 @@
 package com.neu.his.service.registration;
 
-import com.neu.his.dao.RegistrationMapper;
-import com.neu.his.entity.RegistrationEntity;
+import com.neu.his.dao.mapper.RegistrationMapper;
+import com.neu.his.dao.entity.RegistrationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

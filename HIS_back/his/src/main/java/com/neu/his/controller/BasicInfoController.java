@@ -1,6 +1,6 @@
 package com.neu.his.controller;
 
-import com.neu.his.common.response.CommonResponse;
+import com.neu.his.util.response.CommonResponse;
 import com.neu.his.service.BasicInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

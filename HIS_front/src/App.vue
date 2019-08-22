@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-header class="el-header">
-        <header></header>
-      </el-header>
+    <el-container direction="vertical">
+      <keep-alive>
+        <el-header class="el-header">
+          <headerBanner></headerBanner>
+        </el-header>
+      </keep-alive>
       <el-container>
-        <el-col :span="3">
-          <navmenu></navmenu>
-        </el-col>
+        <keep-alive>
+          <el-col v-if="isLogin" :span="3">
+            <navmenu></navmenu>
+          </el-col>
+        </keep-alive>
         <el-col :span="21">
           <router-view />
         </el-col>
@@ -22,12 +26,22 @@ export default {
   name: 'App',
   components: {
     navmenu: NavMenu,
-    header: Header
+    headerBanner: Header
+  },
+  computed: {
+    isLogin: function () {
+      console.log(this.$store.state.currentUser === '')
+      return !(this.$store.state.currentUser === '')
+    }
   }
 }
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

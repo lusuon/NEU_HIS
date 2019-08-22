@@ -1,13 +1,12 @@
 package com.neu.his.service.financial;
 
-import com.neu.his.dao.financial.InvoiceMapper;
-import com.neu.his.dao.Prescriptions.PrescriptionMedicineDtlMapper;
-import com.neu.his.dao.Prescriptions.PrescriptionMedicineMapper;
-import com.neu.his.dao.financial.PaymentDtlMapper;
+import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineDtlMapper;
+import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineMapper;
+import com.neu.his.dao.mapper.financial.InvoiceMapper;
+import com.neu.his.dao.mapper.financial.PaymentDtlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -27,7 +26,6 @@ public class FinancialService {
 
 
     public List<Object> getPatientUnPayMedicineDtl(int c) {
-        HashMap<String,Object> result = new HashMap<>();
         List<Object> dtl = prescriptionMedicineDtlMapper.findAllToPayPrescriptionDtlByCaseId(c);
         return dtl;
     }

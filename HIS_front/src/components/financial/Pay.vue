@@ -26,7 +26,7 @@
     <!-- 结算及其弹出框 -->
     <el-row>
       <!-- dialogFormVisible = true-->
-      <el-button type="primary" plain @click="pay">结算</el-button>
+      <el-button type="primary" plain @click="calculateToPay">结算</el-button>
       <el-dialog title="缴费结算" :visible.sync="dialogFormVisible">
         <el-form :model="dialogForm">
           <el-form-item>
@@ -55,7 +55,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="pay">确 定</el-button>
         </div>
       </el-dialog>
     </el-row>
@@ -66,6 +66,9 @@
 import SelectPatient from '../common/SelectPatient';
 export default {
   components: { SelectPatient },
+  computed: {
+    total () {}
+  },
   mounted: function () {
     // 获取支付方法
     this.$api
@@ -141,21 +144,7 @@ export default {
     }
   },
   methods: {
-    // 处理表格多选变更
-    handleSelectionChange (val) {
-      this.multipleSelection = val
-      console.log(this.multipleSelection)
-    },
-    // 进行结算
     pay () {
-      // 显示对话框
-      this.dialogFormVisible = true
-      // 计算应支付
-      this.dialogForm.total = this.dtlTotal(this.multipleSelection).reduce(
-        function (prev, cur, index, arr) {
-          return prev + cur
-        }
-      )
       // 遍历待支付处方
       this.toPayPid.map(current =>
         this.$api.pay({
@@ -164,6 +153,22 @@ export default {
           ityp: 1, // 发票类型
           ptyp: this.dialogForm.payMethod // 付费方式
         })
+      )
+    },
+    // 处理表格多选变更
+    handleSelectionChange (val) {
+      this.multipleSelection = val
+      console.log(this.multipleSelection)
+    },
+    // 进行结算
+    calculateToPay () {
+      // 显示对话框
+      this.dialogFormVisible = true
+      // 计算应支付
+      this.dialogForm.total = this.dtlTotal(this.multipleSelection).reduce(
+        function (prev, cur, index, arr) {
+          return prev + cur
+        }
       )
     },
     // 以下为工具方法，无关业务逻辑

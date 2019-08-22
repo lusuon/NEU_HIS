@@ -1,11 +1,11 @@
 package com.neu.his.service.doctor;
 
-import com.neu.his.dao.CaseMapper;
-import com.neu.his.dao.DiagnosisMapper;
-import com.neu.his.dao.Prescriptions.PrescriptionMedicineMapper;
-import com.neu.his.entity.CaseEntity;
-import com.neu.his.entity.DiagnosisEntity;
-import com.neu.his.requestBody.doctor.DiagnosisBody;
+import com.neu.his.dao.mapper.CaseMapper;
+import com.neu.his.dao.mapper.DiagnosisMapper;
+import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineMapper;
+import com.neu.his.dao.entity.CaseEntity;
+import com.neu.his.dao.entity.DiagnosisEntity;
+import com.neu.his.util.requestBody.doctor.DiagnosisBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

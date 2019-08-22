@@ -1,7 +1,6 @@
 <template>
   <div class="registration">
     <el-col>
-      <div class="grid-content bg-purple-light"></div>
       <el-form ref="form" :model="form" label-width="80px">
         <el-card class="个人信息填写" shadow="hover">
           <div slot="header" class="clearfix">
@@ -196,6 +195,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui';
 export default {
   data () {
     return {
@@ -295,6 +295,7 @@ export default {
     this.$api
       .getBasicInfo()
       .then(successResponse => {
+        console.log(localStorage.jwt)
         if (successResponse.data.code === 200) {
           console.log(successResponse.data.data)
           this.basicInfo = successResponse.data.data
@@ -308,18 +309,27 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('submit!')
+      console.log('根据病历号获得病人信息如下')
       this.$api
         .getPatientInfo(this.form.caseNo)
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             console.log(successResponse.data.data)
             let objects = successResponse.data.data
-            this.form.pid = objects.personalId
-            this.form.name = objects.patientName
-            this.form.needCaseBook = false
-            this.form.birth = objects.birth
-            console.log(objects)
+            if (objects === null) {
+              Message({
+                message: '不存在的病历号',
+                type: 'warning'
+              })
+            } else {
+              this.form.pid = objects.personalId
+              this.form.name = objects.patientName
+              this.form.needCaseBook = false
+              this.form.address = objects.address
+              this.form.birth = objects.birth
+              this.form.sex = objects.sex
+              this.form.birth = objects.birthday
+            }
           }
         })
         .catch(failResponse => {
@@ -335,6 +345,7 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             console.log(successResponse)
+            Message({ message: '挂号成功！', type: 'success' })
           }
         })
         .catch(failResponse => {

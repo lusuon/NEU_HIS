@@ -1,7 +1,7 @@
 package com.neu.his.service.basic;
 
-import com.neu.his.dao.CategoryRegMapper;
-import com.neu.his.entity.CategoryRegEntity;
+import com.neu.his.dao.mapper.CategoryRegMapper;
+import com.neu.his.dao.entity.CategoryRegEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

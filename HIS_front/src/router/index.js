@@ -1,50 +1,71 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// 导入组件:登录与首页
-import Login from '@/components/user/Login'
-import Reg from '@/components/reg/Registration'
-import UnReg from '@/components/reg/UnRegistration'
-import Diag from '@/components/doctor/Diagnose'
-import Prescribe from '@/components/doctor/Prescribe'
-import Pay from '@/components/financial/Pay'
-import ReleaseDrug from '@/components/drugAdmin/ReleaseDrug'
+
 Vue.use(Router)
 
-export default new Router({
+// 路由表：挂号收费员
+export const registrarRouteTable = []
+
+// 路由表：医生
+export const doctorRouteTable = []
+
+// 路由表：发药人员
+export const drugReleaserRouteTable = []
+
+const router = new Router({
   routes: [{
+    path: '/',
+    name: 'root',
+    component: () => import('@/Index')
+  }, {
     path: '/login',
     name: 'Login',
-    component: Login
-  },
-  {
-    path: '/reg',
-    name: 'Registration',
-    component: Reg
-  },
-  {
-    path: '/unreg',
-    name: 'UnRegistration',
-    component: UnReg
-  },
-  {
+    component: () => import('@/components/user/Login')
+  }, {
+    path: '/404',
+    name: '404',
+    component: () => import('@/components/common/404')
+  }, {
     path: '/diag',
     name: 'diag',
-    component: Diag
+    component: () => import('@/components/doctor/Diagnose')
   },
   {
     path: '/prescribe',
     name: 'prescribe',
-    component: Prescribe
+    component: () => import('@/components/doctor/Prescribe')
+  }, {
+    path: '/reg',
+    name: 'Registration',
+    component: () => import('@/components/reg/Registration')
+  },
+  {
+    path: '/unreg',
+    name: 'UnRegistration',
+    component: () => import('@/components/reg/UnRegistration')
   },
   {
     path: '/pay',
     name: 'Pay',
-    component: Pay
-  },
-  {
+    component: () => import('@/components/financial/Pay')
+  }, {
     path: '/releaseDrug',
     name: 'releaseDrug',
-    component: ReleaseDrug
+    component: () => import('@/components/drugAdmin/ReleaseDrug')
   }
   ]
 })
+
+/**
+ * 路由拦截：无jwt时返回到登录
+ */
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && !localStorage.jwt) {
+    console.log('not login')
+    return next('/login')
+  }
+  console.log('next')
+  next()
+})
+
+export default router

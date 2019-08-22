@@ -1,4 +1,9 @@
 export default {
+  // 更新当前登录的用户
+  getCurrentUser (state, user) {
+    console.log('current user change')
+    state.currentUser = user
+  },
   // 更新当前选择的患者
   getCurrentPatient (state, patient) {
     console.log('modifying currentPatient.')

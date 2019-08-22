@@ -7,50 +7,26 @@
     unique-opened
     router
   >
-    <el-submenu index="1">
-      <template slot="title">
-        <i class="el-icon-document"></i>
-        <span>医生</span>
-      </template>
-      <el-menu-item-group class="over-hide">
-        <el-menu-item index="diag">诊断</el-menu-item>
-        <el-menu-item index="prescribe">开立处方</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
-    <el-submenu index="2">
-      <template slot="title">
-        <i class="el-icon-document"></i>
-        <span>挂号人员</span>
-      </template>
-      <el-menu-item-group class="over-hide">
-        <el-menu-item index="reg">挂号</el-menu-item>
-        <el-menu-item index="unreg">退号</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
-    <el-submenu index="3">
-      <template slot="title">
-        <i class="el-icon-document"></i>
-        <span>收费员</span>
-      </template>
-      <el-menu-item-group class="over-hide">
-        <el-menu-item index="pay">收费</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
-    <el-submenu index="4">
-      <template slot="title">
-        <i class="el-icon-document"></i>
-        <span>发药人员</span>
-      </template>
-      <el-menu-item-group class="over-hide">
-        <el-menu-item index="releaseDrug">发药</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
+    <el-menu-item v-if="getRole() == 3" index="diag">诊断</el-menu-item>
+    <el-menu-item v-if="getRole() == 3" index="prescribe">开立处方</el-menu-item>
+
+    <el-menu-item index="reg" v-if="getRole() == 2">挂号</el-menu-item>
+    <el-menu-item index="unreg" v-if="getRole() == 2">退号</el-menu-item>
+    <el-menu-item index="pay" v-if="getRole() == 2">收费</el-menu-item>
+
+    <el-menu-item v-if="getRole() == 1" index="releaseDrug">发药</el-menu-item>
   </el-menu>
 </template>
 
 <script>
 export default {
   methods: {
+    getRole () {
+      return this.$store.state.currentUser.userType
+    },
+    getUsername () {
+      return this.$store.state.currentUser.username
+    },
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
     },

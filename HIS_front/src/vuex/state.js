@@ -5,7 +5,7 @@ export default {
   // 用于根据身份判断路由、加载
   currentUserId: 1,
   currentDocId: 1,
-
+  currentUser: {},
   /**
    * 看诊
    */

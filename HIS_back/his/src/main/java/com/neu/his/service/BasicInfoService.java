@@ -1,7 +1,7 @@
 package com.neu.his.service;
 
-import com.neu.his.dao.basicInfo.DiseaseMapper;
-import com.neu.his.entity.DiseaseEntity;
+import com.neu.his.dao.mapper.basicInfo.DiseaseMapper;
+import com.neu.his.dao.entity.DiseaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
