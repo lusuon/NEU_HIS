@@ -29,28 +29,34 @@
       <el-button type="primary" plain @click="calculateToPay">结算</el-button>
       <el-dialog title="缴费结算" :visible.sync="dialogFormVisible">
         <el-form :model="dialogForm">
-          <el-form-item>
-            <el-col :span="12">患者姓名:{{this.$store.state.currentPatient.patientName}}</el-col>
-            <el-col :span="12">病历号:{{this.$store.state.currentPatient.caseNo}}</el-col>
-          </el-form-item>
-          <el-form-item label="收费方式">
-            <el-select v-model="dialogForm.payMethod" placeholder="请选择收费方式">
-              <el-option
-                v-bind:key="item.id"
-                v-for="item in selecatablePayMethod"
-                :label="item.constantName"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <el-col :span="12">患者姓名:{{this.$store.state.currentPatient.patientName}}</el-col>
+                <el-col :span="12">病历号:{{this.$store.state.currentPatient.caseNo}}</el-col>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="收费方式">
+                <el-select v-model="dialogForm.payMethod" placeholder="请选择收费方式">
+                  <el-option
+                    v-bind:key="item.id"
+                    v-for="item in selecatablePayMethod"
+                    :label="item.constantName"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-form-item label="应收金额" :label-width="formLabelWidth">
-            <el-input v-model="dialogForm.total" autocomplete="off"></el-input>
+            <el-input autocomplete="off" :disabled="true" :value="calculateTotal"></el-input>
           </el-form-item>
           <el-form-item label="实收金额" :label-width="formLabelWidth">
             <el-input v-model="dialogForm.receive" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="找零金额" :label-width="formLabelWidth">
-            <el-input :value="calculateExchange" autocomplete="off"></el-input>
+            <el-input :value="calculateExchange" autocomplete="off" :disabled="true"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -66,9 +72,6 @@
 import SelectPatient from '../common/SelectPatient';
 export default {
   components: { SelectPatient },
-  computed: {
-    total () {}
-  },
   mounted: function () {
     // 获取支付方法
     this.$api
@@ -105,7 +108,6 @@ export default {
             console.log(successResponse.data.data)
             let objects = successResponse.data.data
             this.tableData = objects
-            this.spanArr = this.getSpanArr(this.tableData)
           }
         })
         .catch(failResponse => {
@@ -114,8 +116,25 @@ export default {
     }
   },
   computed: {
+    calculateTotal () {
+      let total = 0
+      if (this.multipleSelection.length !== 0) {
+        console.log(this.multipleSelection)
+        total = this.dtlTotal(this.multipleSelection).reduce(function (
+          prev,
+          cur,
+          index,
+          arr
+        ) {
+          return prev + cur
+        })
+      }
+      this.dialogForm.total = total
+      // 计算应支付
+      return total
+    },
     calculateExchange () {
-      return this.dialogForm.receive - this.dialogForm.total
+      return (this.dialogForm.receive - this.dialogForm.total).toFixed(2)
     },
     getCurrentCaseNo () {
       return this.$store.state.currentCaseNo
@@ -164,17 +183,11 @@ export default {
     calculateToPay () {
       // 显示对话框
       this.dialogFormVisible = true
-      // 计算应支付
-      this.dialogForm.total = this.dtlTotal(this.multipleSelection).reduce(
-        function (prev, cur, index, arr) {
-          return prev + cur
-        }
-      )
     },
     // 以下为工具方法，无关业务逻辑
     // 对每行求和，返回明细金额
     dtlTotal (arr) {
-      return arr.map(current => current[1] * current[2])
+      return arr.map(current => current[2] * current[3])
     }
   }
 }

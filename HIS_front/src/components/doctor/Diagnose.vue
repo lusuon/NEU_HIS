@@ -4,7 +4,7 @@
       <doctorMainPanel />
     </el-col>
     <el-col :span="18">
-      <el-card class="grid-content bg-purple-light" shadow="hover">
+      <el-card shadow="hover">
         <el-form label-width="80px">
           <el-button-group>
             <el-button
@@ -146,15 +146,12 @@ export default {
     }
   },
   mounted () {
-    console.log('获取疾病信息')
     // 获取诊断所需疾病信息
     this.$api
       .getAllDisease()
       .then(successResponse => {
         if (successResponse.data.code === 200) {
           this.selectableDisease = successResponse.data.data
-          console.log('selectable disease:')
-          console.log(this.selectableDisease)
         }
       })
       .catch(failResponse => {
@@ -170,10 +167,6 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             toAddDisease = successResponse.data.data
-            console.log('toAdd')
-            console.log(toAddDisease)
-            console.log('toAddDisease')
-            console.log(toAddDisease)
             this.diagnosisTableData.push([
               toAddDisease.icd,
               toAddDisease.deseaseName,
@@ -216,12 +209,15 @@ export default {
       }
     },
     diagnose () {
+      console.log('提交诊断')
       if (this.diagnoseForm.regId === '') {
         Message({
           message: '请先选择患者',
           duration: 1000
         })
       } else {
+        console.log('上交表单:')
+        console.log(this.diagnoseForm)
         this.$api
           .diag(this.diagnoseForm)
           .then(successResponse => {
@@ -236,8 +232,10 @@ export default {
           .catch(failResponse => {
             console.log(failResponse)
           })
+
+        console.log('上交疾病明细:')
+        console.log(this.diagnosisTableData)
         // 添加疾病明细
-        console.log('mapping')
         this.$api
           .postDiagnosis(
             this.diagnosisTableData.map(arr => {
@@ -266,18 +264,25 @@ export default {
             console.log(failResponse)
           })
       }
+      console.log('结束API请求')
       // 清空状态
-      this.$store.commit('getCurrentPatient', {})
+      // this.$store.commit('getCurrentPatient', {})
     }
   },
   watch: {
     getCurrentPatientId (newVal, oldVal) {
+      console.log('CurrentPatientId 变更，新的当前id：')
+      console.log(newVal)
       this.diagnoseForm.regId = newVal
+      console.log('CurrentPatientId 变更，新的表单：')
+      console.log(this.diagnoseForm)
+      // 对于已诊断患者，仅获取其信息
       if (this.$store.state.currentPatient.status === 2) {
         this.$api
           .getDiag(newVal)
           .then(successResponse => {
             if (successResponse.data.code === 200) {
+              console.log('Got info of diagnosed patient.')
               console.log(successResponse.data.data)
               let patientCase = successResponse.data.data.case
               this.diagnoseForm.regId = patientCase.regId

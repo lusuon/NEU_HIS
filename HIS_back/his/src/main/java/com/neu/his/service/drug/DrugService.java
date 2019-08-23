@@ -18,7 +18,7 @@ public class DrugService {
         return prescriptionMedicineDtlMapper.findAllToReleasePrescriptionDtlByCaseId(c);
     }
 
-    public Integer releaseDrugByPrescriptionIds(List<Integer> pids){
+    public Integer releaseDrugByPrescriptionIds(Integer[] pids){
         // todo:检查，如果对应处方id下全开药，更改处方状态
         return prescriptionMedicineDtlMapper.releaseDrugByPrescriptionIds(pids);
     }

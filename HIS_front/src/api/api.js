@@ -111,9 +111,8 @@ export const getToReleaseDrug = caseNo => {
   return axios.get(`${drugURL}/toRelease/${caseNo}`)
 }
 // POST
-// 提交待开药品id,未测试
 export const releaseDrug = params => {
-  return axios.post(`${drugURL}/release`, params)
+  return axios.put(`${drugURL}/release`, params)
 }
 
 /**

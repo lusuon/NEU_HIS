@@ -49,5 +49,5 @@ public interface PrescriptionMedicineDtlMapper extends JpaRepository<Prescriptio
     @Transactional
     @Modifying
     @Query("update PrescriptionMedicineDtlEntity d set d.prescriptionStatus = 6 where d.prescriptionId in :pids")
-    Integer releaseDrugByPrescriptionIds(@Param("pids") List<Integer> pids);
+    Integer releaseDrugByPrescriptionIds(@Param("pids") Integer[] pids);
 }

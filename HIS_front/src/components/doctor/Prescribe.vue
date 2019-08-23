@@ -71,12 +71,16 @@
               <el-table-column prop="drug.drugName" label="药品名称" min-width="25%"></el-table-column>
               <el-table-column label="数量" min-width="18%">
                 <template scope="scope">
-                  <el-input
-                    size="small"
-                    v-model="scope.row.quantity"
-                    placeholder="请输入数量"
-                    @change="handleEdit(scope.$index, scope.row)"
-                  ></el-input>
+                  <el-form :model="scope.row" :rules="checkParamsRule" ref="scope.row">
+                    <el-form-item prop="quantity">
+                      <el-input
+                        size="small"
+                        v-model="scope.row.quantity"
+                        placeholder="请输入数量"
+                        @change="handleEdit(scope.$index, scope.row)"
+                      ></el-input>
+                    </el-form-item>
+                  </el-form>
                 </template>
               </el-table-column>
               <el-table-column prop="drug.standard" label="规格" min-width="19%"></el-table-column>
@@ -301,6 +305,14 @@ export default {
     this.newTemplateId = -1
   },
   data () {
+    var validateQuantityValueInput = (rule, value, callback) => {
+      let re = /^\+?[1-9][0-9]*$/
+      if (!re.test(value)) {
+        return callback(new Error('请输入正整数'))
+      } else {
+        callback()
+      }
+    }
     return {
       toApplyItem: [],
       usingTemplates: [],
@@ -312,6 +324,9 @@ export default {
         name: '',
         id: '',
         range: ''
+      },
+      checkParamsRule: {
+        quantity: [{ validator: validateQuantityValueInput, trigger: 'blur' }]
       }
     }
   }

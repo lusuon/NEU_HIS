@@ -43,6 +43,7 @@ public class FinancialController {
     @PostMapping("/api/payment")
     @RequiresRoles(logical= Logical.OR,value={"2"})
     public CommonResponse pay(@RequestBody PaymentBody pb){
+        System.out.println(pb.toString());
         boolean result = financialService.pay(pb.getPid(),pb.getOid(),pb.getItyp(),pb.getPtyp());
         return result?CommonResponse.succuess():CommonResponse.fail("Fail to pay.");
     }

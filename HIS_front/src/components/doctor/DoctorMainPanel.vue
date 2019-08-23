@@ -56,14 +56,14 @@ export default {
   },
   watch: {
     getCurrentPatient (newVal, oldVal) {
-      console.log('selecting patient:')
+      console.log('当前选择患者')
       console.log(newVal)
       this.currentPatient = newVal
     }
   },
   computed: {
     getCurrentPatient () {
-      console.log('currentPatient in vuex change')
+      console.log('vuex当前患者变更')
       return this.$store.state.currentPatient
     }
   },
@@ -72,7 +72,6 @@ export default {
      * 获取当前医生相关的患者
      */
     getAllRelatedPatients () {
-      console.log('Loading current related patients!')
       this.$api
         .getToSeePatient(this.docId)
         .then(successResponse => {

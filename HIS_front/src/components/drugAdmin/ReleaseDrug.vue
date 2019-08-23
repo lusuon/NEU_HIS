@@ -1,34 +1,41 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="病历号">
-        <el-col :span="12">
-          <el-input v-model="form.caseNo"></el-input>
-        </el-col>
-        <el-col :span="12">
-          <el-button type="primary" @click="searchToReleaseByCaseNo">搜索</el-button>
-        </el-col>
-      </el-form-item>
-    </el-form>
-    <el-row>
-      <div>
-        <h1>{{tableName}}</h1>
-        <el-table ref="table" :data="tableData" @selection-change="handleSelectionChange">
-          <!-- 多选框 -->
-          <el-table-column type="selection" width="55"></el-table-column>
-          <!-- 表头 -->
-          <el-table-column v-bind:key="key" :label="header" v-for="(header, key) in tableHeaders">
-            <!-- 遍历结果数据 -->
-            <template scope="scope">{{tableData[scope.$index][key]}}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </el-row>
-    <el-button type="primary" @click="releaseDrug">开药</el-button>
+    <el-card shadow="hover">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="病历号">
+          <el-col :span="12">
+            <el-row>
+              <el-col :span="12">
+                <el-input v-model="form.caseNo"></el-input>
+              </el-col>
+              <el-col :span="12">
+                <el-button type="primary" size="small" @click="searchToReleaseByCaseNo">搜索</el-button>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <el-row>
+        <div>
+          <h1>{{tableName}}</h1>
+          <el-table ref="table" :data="tableData" @selection-change="handleSelectionChange">
+            <!-- 多选框 -->
+            <el-table-column type="selection" width="55"></el-table-column>
+            <!-- 表头 -->
+            <el-table-column v-bind:key="key" :label="header" v-for="(header, key) in tableHeaders">
+              <!-- 遍历结果数据 -->
+              <template scope="scope">{{tableData[scope.$index][key]}}</template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-row>
+      <el-button type="primary" @click="releaseDrug">开药</el-button>
+    </el-card>
   </div>
 </template>
 
 <script>
+import { Message } from 'element-ui';
 export default {
   data () {
     return {
@@ -79,19 +86,31 @@ export default {
       // 对所选明细所属处方id去重
       let distinctPrescriptionIds = [...new Set(selectedPrescriptionIds)]
       console.log(distinctPrescriptionIds)
-      /**
       this.$api
-        .releaseDrug(selectedDrugIds)
+        .releaseDrug(distinctPrescriptionIds)
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             console.log('selected drug id coomited.')
             console.log(successResponse.data.data)
+            Message({ message: '发药成功', type: 'success' })
+          }
+        })
+        .catch(failResponse => {
+          Message({ message: '操作失败', type: 'error' })
+          console.log(failResponse)
+        })
+      this.$api
+        .getToReleaseDrug(this.form.caseNo)
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
+            console.log(successResponse.data.data)
+            // 更新表格
+            this.tableData = successResponse.data.data
           }
         })
         .catch(failResponse => {
           console.log(failResponse)
         })
-       }**/
     }
   }
 }

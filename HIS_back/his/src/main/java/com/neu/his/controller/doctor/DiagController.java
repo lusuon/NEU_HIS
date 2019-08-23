@@ -75,6 +75,7 @@ public class DiagController {
     @PostMapping("/api/doctor/diag")
     @RequiresRoles("3")
     public CommonResponse diag(@RequestBody DiagBody diagBody){
+        System.out.println(diagBody.toString());
        boolean result = doctorService.diag(
                diagBody.getRegId(),
                diagBody.getSym(),
