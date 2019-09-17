@@ -55,15 +55,35 @@
         <el-col :span="16">
           <el-card shadow="hover">
             <el-row>
-              <el-col :span="6">
-                <h1>
-                  <el-button-group>
-                    <el-button type="primary" size="mini">增药</el-button>
-                    <el-button type="primary" size="mini">删药</el-button>
-                  </el-button-group>
-                </h1>
+              <el-col :span="12">
+                <el-form>
+                  <el-row>
+                    <h1>
+                      <el-col :span="12">
+                        <el-form-item>
+                          <el-select placeholder="可用药品" v-model="toUseDrug">
+                            <el-option
+                              v-bind:key="item.id"
+                              v-for="item in this.drugs"
+                              :label="item.drugName"
+                              :value="item.id"
+                            ></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item>
+                          <el-button-group>
+                            <el-button type="primary" size="mini" @click="addDrug">增药</el-button>
+                            <el-button type="primary" size="mini">删药</el-button>
+                          </el-button-group>
+                        </el-form-item>
+                      </el-col>
+                    </h1>
+                  </el-row>
+                </el-form>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="12">
                 <h1>处方金额统计：{{totalPrice}}</h1>
               </el-col>
             </el-row>
@@ -139,6 +159,13 @@ export default {
     doctorMainPanel: DoctorMainPanel
   },
   methods: {
+    // 增药
+    addDrug () {
+      this.usingTemplatesDtlData.push({
+        drug: this.drugs.filter(drug => drug.id === this.toUseDrug)[0],
+        dtl: {}
+      })
+    },
     handleCurrentUsingTemplateChange (val) {
       this.currentUsingTemplate = val
       console.log(this.currentUsingTemplate)
@@ -192,8 +219,12 @@ export default {
         })
       })
       console.log(this.toApplyItem)
-
-      //提交
+      this.toApplyItem.push({
+        gpn: 'hello',
+        list: '23,静脉注射,100ml,一日一次,2',
+        rid: 228
+      })
+      // 提交
       this.toApplyItem.map(current => {
         this.$api
           .apply(current)
@@ -228,13 +259,17 @@ export default {
       })
       // 对明细求和
       let total = eval(sepSum.join('+'))
-      return isNaN(total) ? '请输入数量以计算总和' : total
+      return isNaN(total) ? 0 : total.toFixed(2)
     },
     getUsingTemplates () {
       return this.usingTemplates
     }
   },
   watch: {
+    toUseDrug (newVal, oldVal) {
+      console.log('toUseDrug')
+      console.log(newVal)
+    },
     getSelectingTemplateId (newVal, oldVal) {
       this.$api
         .getTemplateDtl('medi', newVal)
@@ -281,6 +316,19 @@ export default {
   mounted () {
     this.doc_id = this.$store.state.currentDocId
     this.$api
+      .getDrugs()
+      .then(successResponse => {
+        if (successResponse.data.code === 200) {
+          console.log(successResponse.data.data)
+          this.drugs = successResponse.data.data
+        }
+      })
+      .catch(failResponse => {
+        console.log(failResponse)
+      })
+    console.log('drugs')
+    console.log(this.drugs)
+    this.$api
       .usableTemplateList(this.doc_id)
       .then(successResponse => {
         if (successResponse.data.code === 200) {
@@ -314,6 +362,8 @@ export default {
       }
     }
     return {
+      toUseDrug: '',
+      drugs: [],
       toApplyItem: [],
       usingTemplates: [],
       doc_id: '',

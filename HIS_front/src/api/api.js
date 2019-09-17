@@ -24,6 +24,9 @@ export const getDiseaseInfo = diseaseId => {
 export const postDiagnosis = params => {
   return axios.post(`${doctorURL}/diagnosis`, params)
 }
+export const getDrugs = () => {
+  return axios.get(`${drugURL}`)
+}
 
 /**
  * 挂号操作员
@@ -114,7 +117,6 @@ export const getToReleaseDrug = caseNo => {
 export const releaseDrug = params => {
   return axios.put(`${drugURL}/release`, params)
 }
-
 /**
  * 财务操作员
  */

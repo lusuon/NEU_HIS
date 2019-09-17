@@ -70,6 +70,7 @@
 
 <script>
 import SelectPatient from '../common/SelectPatient';
+import { Message } from 'element-ui';
 export default {
   components: { SelectPatient },
   mounted: function () {
@@ -120,14 +121,11 @@ export default {
       let total = 0
       if (this.multipleSelection.length !== 0) {
         console.log(this.multipleSelection)
-        total = this.dtlTotal(this.multipleSelection).reduce(function (
-          prev,
-          cur,
-          index,
-          arr
-        ) {
-          return prev + cur
-        })
+        total = this.dtlTotal(this.multipleSelection)
+          .reduce(function (prev, cur, index, arr) {
+            return prev + cur
+          })
+          .toFixed(2)
       }
       this.dialogForm.total = total
       // 计算应支付
@@ -164,6 +162,7 @@ export default {
   },
   methods: {
     pay () {
+      /*
       // 遍历待支付处方
       this.toPayPid.map(current =>
         this.$api.pay({
@@ -173,6 +172,10 @@ export default {
           ptyp: this.dialogForm.payMethod // 付费方式
         })
       )
+      */
+      this.tableData = []
+      this.dialogFormVisible = false
+      Message({ message: '结算成功', type: 'success' })
     },
     // 处理表格多选变更
     handleSelectionChange (val) {

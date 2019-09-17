@@ -1,5 +1,7 @@
 package com.neu.his.service.drug;
 
+import com.neu.his.dao.entity.DrugEntity;
+import com.neu.his.dao.mapper.DrugMapper;
 import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineDtlMapper;
 import com.neu.his.dao.mapper.Prescriptions.PrescriptionMedicineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ public class DrugService {
     PrescriptionMedicineDtlMapper prescriptionMedicineDtlMapper;
     @Autowired
     PrescriptionMedicineMapper prescriptionMedicineMapper;
+    @Autowired
+    DrugMapper drugMapper;
 
     public List<Object> findAllToReleaseDrugs(int c){
         return prescriptionMedicineDtlMapper.findAllToReleasePrescriptionDtlByCaseId(c);
@@ -22,4 +26,6 @@ public class DrugService {
         // todo:检查，如果对应处方id下全开药，更改处方状态
         return prescriptionMedicineDtlMapper.releaseDrugByPrescriptionIds(pids);
     }
+
+    public List<DrugEntity> findAllDrugs(){return drugMapper.findAll();}
 }

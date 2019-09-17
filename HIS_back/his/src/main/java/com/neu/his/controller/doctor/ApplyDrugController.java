@@ -1,5 +1,6 @@
 package com.neu.his.controller.doctor;
 
+import com.neu.his.service.drug.DrugService;
 import com.neu.his.util.response.CommonResponse;
 import com.neu.his.util.requestBody.doctor.ApplyBody;
 import com.neu.his.service.doctor.DoctorService;
@@ -20,7 +21,16 @@ public class ApplyDrugController {
     TemplateDtlService templateDtlService;
     @Autowired
     DoctorService doctorService;
+    @Autowired
+    DrugService drugService;
 
+    /**
+     * 获取可用药
+     */
+    @GetMapping("/api/drug")
+    public CommonResponse findAllDrugs(){
+        return CommonResponse.succuess(drugService.findAllDrugs());
+    }
     /**
      * 获取医生可用处方
      * @return
